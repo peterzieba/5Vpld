@@ -26,9 +26,9 @@ While logic for these parts can be written via WinCUPL, the experience may be fr
 
 The good news is that WinCUPL is really just a front-end / IDE for the command-line compiler CUPL.EXE, which can process a .PLD file and turn it into a .JED file ready for programming (in the case of PLD devices), or produce a netlist which can then be passed to the appropriate fitter for the particular CPLD. As of this writing, there are two extensions that have been created for VS Code which support CUPL:
 * https://marketplace.visualstudio.com/items?itemName=tlgkccampbell.code-cupl
-** This handles just syntax highlighting
+  * This handles just syntax highlighting
 * https://marketplace.visualstudio.com/items?itemName=VaynerSystems.VS-Cupl
-** This is an entire workflow
+  * This is an entire workflow
 
 The secret to getting CUPL.EXE to turn a .PLD into a .JED is the following:
 <code>
@@ -59,9 +59,9 @@ These parts require an EPROM programmer. <span style="color: red;">Additionally,
 ## CPLD Devices (ATF1502, ATF1504, ATF1508)
 These parts can be programmed via JTAG, so there are a few options.
 * Official programmer: https://www.kanda.com/CPLD-Programmers.175.html
-** Software: https://www.microchip.com/en-us/development-tool/ATMISP
+  * Software: https://www.microchip.com/en-us/development-tool/ATMISP
 * OpenOCD: https://openocd.org/
-** You will need an SVF file to program a device via OpenOCD. This can be created by converting the .JED file using either ATMISP, or fuseconv.py from whitequark/prjbureau
+  * You will need an SVF file to program a device via OpenOCD. This can be created by converting the .JED file using either ATMISP, or fuseconv.py from whitequark/prjbureau
 
 * To generate a .JED file for these devices, you will need the fitters. While WinCUPL has fitters within it, a much more updated version of the fitters is available inside of Atmel Prochip from <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Microchip's website</a>
 
