@@ -32,30 +32,30 @@ class JESD3Lexer:
     """
 
     # This follows the JESD3-C grammar, with the exception that spaces are more permissive.
-    # As described, only 0x0D is allowed in between fields, which is absurd.
+    # As described, only 0x0D (CR) is allowed in between fields, which is absurd.
     _fields = (
-        (r"N",  r"[ \r\n]*(.*?)"),
-        (r"D",  r".*?"),
-        (r"QF", r"([0-9]+)"),
-        (r"QP", r"([0-9]+)"),
-        (r"QV", r"([0-9]+)"),
-        (r"F",  r"([01])"),
-        (r"L",  r"([0-9]+)[ \r\n]+([01 \r\n]+)"),
-        (r"C",  r"([0-9A-F]{4})"),
-        (r"EH", r"([0-9A-F]+)"),
-        (r"E",  r"([01]+)"),
-        (r"UA", r"([\r\n\x20-\x29\x2B-\x7E]+)"),
-        (r"UH", r"([0-9A-F]+)"),
-        (r"U",  r"([01]+)"),
-        (r"J",  r"([0-9]+)[ \r\n]+([0-9]+)"),
-        (r"G",  r"([01])"),
-        (r"X",  r"([01])"),
-        (r"P",  r"([ \r\n]*[0-9]+)+"),
-        (r"V",  r"([0-9]+)[ \r\n]+([0-9BCDFHTUXZ]+)"),
-        (r"S",  r"([01]+)"),
-        (r"R",  r"([0-9A-F]{8})"),
-        (r"T",  r"([0-9]+)"),
-        (r"A",  r"([\r\n\x20-\x29\x2B-\x7E]*)([0-9]+)"),
+        (r"N",  r"[ \r\n]*(.*?)"), #Note
+        (r"D",  r".*?"),           #Device (Obsolete)
+        (r"QF", r"([0-9]+)"),      #Number of Fuses
+        (r"QP", r"([0-9]+)"),      #Number of Pins
+        (r"QV", r"([0-9]+)"),      #Number of Test Vectors
+        (r"F",  r"([01])"),        #Default Fuse State
+        (r"L",  r"([0-9]+)[ \r\n]+([01 \r\n]+)"), #Fuse List
+        (r"C",  r"([0-9A-F]{4})"), #Fuse Checksum (this is not the transmission checksum)
+        (r"EH", r"([0-9A-F]+)"),   #
+        (r"E",  r"([01]+)"),       #Electrical Data (Fuses which do not affect the logical functionality of the chip. (Power miser and similar features.))
+        (r"UA", r"([\r\n\x20-\x29\x2B-\x7E]+)"), #
+        (r"UH", r"([0-9A-F]+)"),   #
+        (r"U",  r"([01]+)"),       #User Data (Fuses which do not affect logical or electrical functionality)
+        (r"J",  r"([0-9]+)[ \r\n]+([0-9]+)"), #Device Identification
+        (r"G",  r"([01])"),        #Security Fuse
+        (r"X",  r"([01])"),        #Default Test Conditions
+        (r"P",  r"([ \r\n]*[0-9]+)+"), #Pin Sequence
+        (r"V",  r"([0-9]+)[ \r\n]+([0-9BCDFHTUXZ]+)"), #Test Vectors
+        (r"S",  r"([01]+)"),           #Signature Analysis
+        (r"R",  r"([0-9A-F]{8})"),     #Signature Analysis
+        (r"T",  r"([0-9]+)"),          #Signature Analysis
+        (r"A",  r"([\r\n\x20-\x29\x2B-\x7E]*)([0-9]+)"), #Access Time
     )
     _stx_spec_re  = re.compile(r"\x02(.*?)\*[ \r\n]*", re.A|re.S)
     _stx_quirk_re = re.compile(r"\x02()[ \r\n]*", re.A|re.S)
