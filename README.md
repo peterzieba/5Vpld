@@ -8,13 +8,13 @@ This repository aims to make it easier to work with the following parts:
 * ATF16V8, ATF22V10 (Require an EPROM Programmer)
 
 # Terminology
-CPLD - Complex Programmable Logic Device
-GAL - Generic Array Logic ()
-WinCUPL - A Windows front-end to the CUPL compiler and related programs
-CUPL - Compiler for Universal Programmable Logic (A old programming language for logic. Modern examples would be Verilog/VHDL)
-FITTER - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the CPLD devices.
-.JED/JEDEC File - A fuse map intended to be "burned/programmed" into a logic device.
-.SVF File - Serial Vector Format. This file can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.
+CPLD - Complex Programmable Logic Device<br />
+GAL - Generic Array Logic ()<br />
+WinCUPL - A Windows front-end to the CUPL compiler and related programs<br />
+CUPL - Compiler for Universal Programmable Logic (A old programming language for logic. Modern examples would be Verilog/VHDL)<br />
+FITTER - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the CPLD devices.<br />
+.JED/JEDEC File - A fuse map intended to be "burned/programmed" into a logic device.<br />
+.SVF File - Serial Vector Format. This file can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.<br />
 
 
 # Writing logic for these parts
