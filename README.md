@@ -58,7 +58,9 @@ The above example is for an ATF1502 in a TQFP-44 package. You will need to use t
 https://github.com/hneemann/Digital
 
 ## Yosys
-One can use Yosys Open SYnthesis Suite (Yosys) with the help of the Atmel Fitters a specific CPLD and a techmap to produce .JED files. This allows an almost entirely open-source workflow using Verilog. A good place to start would be using the <a href="https://github.com/YosysHQ/oss-cad-suite-build">OSS CAD Suite</a> to get the
+One can use Yosys Open SYnthesis Suite (Yosys) with the help of the Atmel Fitters a specific CPLD and a techmap to produce .JED files. This allows an almost entirely open-source workflow using Verilog. A good place to start would be using the <a href="https://github.com/YosysHQ/oss-cad-suite-build">OSS CAD Suite</a> to get the big parts of the suite set up. There are two approaches to making this work:
+* https://github.com/whitequark/prjbureau
+* https://github.com/hoglet67/atf15xx_yosys/
 
 # Programming / Burning
 There are a few choices on how the part can actually be programmed depending on whether it support JTAG.
