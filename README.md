@@ -19,24 +19,19 @@ Wine - Wine is not an emulator. Allows running Windows programs under Linux.<br 
 
 
 # Writing logic for these parts: Possible Workflows
-Each of these subsections represents a potential workflow.
-## CUPL / WinCUPL
-While logic for these parts can be written via WinCUPL, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows. While it does run under Linux via Wine, it is nonetheless not worth the trouble to use it for serious work considering the number of other options for setting up a workflow. It is worth installing simply to use its help files / documentation / examples, however. To get it working within Wine, you'll need winetricks so you can install mfc40 and mfc42. On Ubuntu, this would look something like:
+Each of these subsections represents a potential workflow to design logic equations for these parts. The majority of the focus will be on modern methods.
+## Old Approach: WinCUPL
+While logic for these parts can be written via WinCUPL, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows. While it does run under Linux via Wine, it is nonetheless not worth the trouble to use it for serious work considering the number of other options for setting up a workflow, however, it has value in the help files / documentation / examples. To get it working within Wine, you'll need winetricks so you can install mfc40 and mfc42. On Ubuntu, this would look something like:
 <code>
 sudo apt-get install wine winetricks playonlinux
 winetricks mfc40 mfc42
 </code>
+This diagram is from the help files built into WinCUPL:
+![WinCUPL Data Flow Diagram](images/WinCUPL-data-flow-diagram.png)
 
-## Atmel Prochip
-Atmel Prochip is not free, however, you may be able to get a trial license from Microchip. It is nonetheless worth installing regardless because there are newer fitters for the ATF150x devices that can be extracted from this package. These can be used with other workflows and so having these is pretty useful. The newer versions of the fitters should be 1918 (3-21-07).
-
-## CUPL via VS Code (or just a text editor)
-
-The good news is that WinCUPL is really just a front-end / IDE for the command-line compiler CUPL.EXE, which can process a .PLD file and turn it into a .JED file ready for programming (in the case of PLD devices), or produce a netlist which can then be passed to the appropriate fitter for the particular CPLD. As of this writing, there are two extensions that have been created for VS Code which support CUPL:
-* https://marketplace.visualstudio.com/items?itemName=tlgkccampbell.code-cupl
-  * This handles just syntax highlighting
-* https://marketplace.visualstudio.com/items?itemName=VaynerSystems.VS-Cupl
-  * This is an entire workflow
+## Command line approach: CUPL & Your favorite text editor or IDE.
+Since WinCUPL simply is a front-end / IDE on top of CUPL and related programs, one can write a CUPL .PLD file in their favorite editor and have CUPL compile it into a .JED file for a PLD.
+Assisted Technology released CUPL (Compiler for Universal Programmable Logic) in September 1983.
 
 The secret to getting CUPL.EXE to turn a .PLD into a .JED is the following:
 <code>
@@ -47,6 +42,25 @@ Additionally, if you are targeting a CPLD (ATF150x) for which CUPL.EXE does not 
 wine c:/Wincupl/WinCupl/Fitters/fit1502.exe -i your-code.tt2 -dev P1502T44 -DEBUG on -Verilog_sim VERILOG -Out_Edif ON
 </code>
 The above example is for an ATF1502 in a TQFP-44 package. You will need to use the appropriate fitter and device type for your particular CPLD.
+
+Recently, two different extensions for VS Code for CUPL have been written:
+* https://marketplace.visualstudio.com/items?itemName=tlgkccampbell.code-cupl
+  * This one handles just syntax highlighting for CUPL .PLD files
+* https://marketplace.visualstudio.com/items?itemName=VaynerSystems.VS-Cupl
+  * This is an entire workflow, including syntax highlighting.
+
+## Absurd approach: Fusemaps by hand
+While not the most sensible approach, just as one can write G-Code in notepad or Assembly code in a hex editor, it is technically possible. Thus, with the datasheet of an old PLD, one could write a JEDEC file with the desired functionality. This would be non-trivial and error-prone, but it demonstrates that such a thing could be done, at least with the older PLDs (16V8, 22V10), and even with the ATF750 (some datasheets actually had the fusemap for this part).
+
+It is worth noting that the fusemap for the ATF150x parts has been recently documented in <a href="https://github.com/whitequark/prjbureau">prjbureau</a>. Given the complexity of these devices over PLDs, writing a fusemap by hand for these parts would probably be a bad idea.
+
+## Other languages: ABEL, PALASM
+Since we're mostly covering modern approaches to these devices here, these will only be covered very briefly:
+* ABEL: "Advanced Boolean Expression Language" was created in 1983 by Data I/O Corporation.
+* PALASM: Introduced by Monolithic Memories, Inc. (MMI) in the 1980's
+
+## Atmel Prochip
+Atmel Prochip is not free, however, you may be able to get a trial license from Microchip. It is nonetheless worth installing regardless because there are newer fitters for the ATF150x devices that can be extracted from this package. These can be used with other workflows and so having these is pretty useful. The newer versions of the fitters should be 1918 (3-21-07).
 
 ## Quartus via POF2JED
 * It turns out that the Altera (Now Intel) <a href="https://www.intel.com/content/www/us/en/software-kit/711791/intel-quartus-ii-web-edition-design-software-version-13-0sp1-for-windows.html?">Quartus 13.0sp1</a> can be used to produce a .POF file targeting various EPM series CPLDs from Altera.
