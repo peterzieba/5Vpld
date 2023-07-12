@@ -1,26 +1,38 @@
 # Overview
 This repository centers around modern workflows for Atmel (Now Microchip) 5V GAL PLD and CPLD parts.
 
-These parts are still active and highly worth considering wherever prototyping and 5V logic are a requirement. They can easily replace large numbers of TTL/CMOS logic chips and can be reprogrammed many times.
+These parts are still active and highly worth considering wherever prototyping and 5V logic are a requirement. They can easily replace large numbers of TTL/CMOS logic gates and can be reprogrammed many times.
 
 This repository aims to make it easier to work with the following parts:
 * ATF1502, ATF1504, ATF1508 (programmable via JTAG)
 * ATF16V8, ATF22V10 (Require an EPROM Programmer)
 
 # Terminology
-CPLD - Complex Programmable Logic Device<br />
-GAL - Generic Array Logic ()<br />
+CPLD - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">Complex Programmable Logic Device</a><br />
+GAL - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">Generic Array Logic</a><br />
 WinCUPL - A Windows front-end to the CUPL compiler and related programs<br />
 CUPL - Compiler for Universal Programmable Logic (A old programming language for logic. Modern examples would be Verilog/VHDL)<br />
-FITTER - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the CPLD devices.<br />
+FITTER - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the CPLD devices. If my understanding is correct, this is basically place & route.<br />
 .JED/JEDEC File - A fuse map intended to be "burned/programmed" into a logic device.<br />
 .SVF File - Serial Vector Format. This file can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.<br />
 Wine - Wine is not an emulator. Allows running Windows programs under Linux.<br />
 
 
 # Writing logic for these parts: Possible Workflows
+Each of these subsections represents a potential workflow.
 ## CUPL / WinCUPL
-While logic for these parts can be written via WinCUPL, the experience may be fraught with difficulty as it is somewhat unreliable and runs in Windows. While it does run under Linux via Wine, it is nonetheless a difficult experience.
+While logic for these parts can be written via WinCUPL, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows. While it does run under Linux via Wine, it is nonetheless not worth the trouble to use it for serious work considering the number of other options for setting up a workflow. It is worth installing simply to use its help files / documentation / examples, however. To get it working within Wine, you'll need winetricks so you can install mfc40 and mfc42. On Ubuntu, this would look something like:
+<code>
+sudo apt-get install wine winetricks playonlinux
+winetricks mfc40 mfc42
+</code>
+
+## Atmel Prochip
+Atmel Prochip is not free, however, you may be able to get a trial license from Microchip. It is nonetheless worth installing regardless because there are newer fitters for the ATF150x devices that can be extracted from this package. These can be used with other workflows and so having these is pretty useful. The newer versions of the fitters should be from 
+<details open>
+<summary>MD5 sums for the newer version of fitters</summary>
+
+</details>
 
 ## CUPL via VS Code (or just a text editor)
 
@@ -38,7 +50,7 @@ Additionally, if you are targeting a CPLD (ATF150x) for which CUPL.EXE does not 
 <code>
 wine c:/Wincupl/WinCupl/Fitters/fit1502.exe -i your-code.tt2 -dev P1502T44 -DEBUG on -Verilog_sim VERILOG -Out_Edif ON
 </code>
-
+The above example is for an ATF1502 in a TQFP-44 package. You will need to use the appropriate fitter and device type for your particular CPLD.
 
 ## Quartus via POF2JED
 * It turns out that the Altera (Now Intel) <a href="https://www.intel.com/content/www/us/en/software-kit/711791/intel-quartus-ii-web-edition-design-software-version-13-0sp1-for-windows.html?">Quartus 13.0sp1</a> can be used to produce a .POF file targeting various EPM series CPLDs from Altera.
