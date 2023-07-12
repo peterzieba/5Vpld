@@ -28,11 +28,7 @@ winetricks mfc40 mfc42
 </code>
 
 ## Atmel Prochip
-Atmel Prochip is not free, however, you may be able to get a trial license from Microchip. It is nonetheless worth installing regardless because there are newer fitters for the ATF150x devices that can be extracted from this package. These can be used with other workflows and so having these is pretty useful. The newer versions of the fitters should be from 
-<details open>
-<summary>MD5 sums for the newer version of fitters</summary>
-
-</details>
+Atmel Prochip is not free, however, you may be able to get a trial license from Microchip. It is nonetheless worth installing regardless because there are newer fitters for the ATF150x devices that can be extracted from this package. These can be used with other workflows and so having these is pretty useful. The newer versions of the fitters should be 1918 (3-21-07).
 
 ## CUPL via VS Code (or just a text editor)
 
