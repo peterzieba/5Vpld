@@ -38,26 +38,22 @@ Assisted Technology released CUPL (Compiler for Universal Programmable Logic) in
 
 * <a href="https://www.qsl.net/bh1phl/CUPL_USERS_GUIDE.pdf">A detailed User's Guide to CUPL in PDF</a>
 
-<code>
-Run CUPL using the following command line format:
+<code>Run CUPL using the following command line format:
 cupl [-flags] [library] [device] source
 </code>
 
 Examples run under Wine would look this this:
-<code>
-wine c:/Wincupl/Shared/cupl.exe -m1lxfjnabep -u c:/Wincupl/Shared/cupl.dl your-code.PLD
+<code>wine c:/Wincupl/Shared/cupl.exe -m1lxfjnabep -u c:/Wincupl/Shared/cupl.dl your-code.PLD
 </code>
 Additionally, if you are targeting a CPLD (ATF150x) for which CUPL.EXE does not have direct support, you will need to run:
-<code>
-wine c:/Wincupl/WinCupl/Fitters/fit1502.exe -i your-code.tt2 -dev P1502T44 -DEBUG on -Verilog_sim VERILOG -Out_Edif ON
+<code>wine c:/Wincupl/WinCupl/Fitters/fit1502.exe -i your-code.tt2 -dev P1502T44 -DEBUG on -Verilog_sim VERILOG -Out_Edif ON
 </code>
 The above example is for an ATF1502 in a TQFP-44 package. You will need to use the appropriate fitter and device type for your particular CPLD.
 
 <details>
 <summary>Expand here for details of the command line flags for CUPL.EXE</summary>
-<code>
 Run CUPL using the following command line format:
-cupl [-flags] [library] [device] source
+<code>cupl [-flags] [library] [device] source
 where
 -flags is the following set of compiler options:
 -j JEDEC download format
@@ -100,7 +96,9 @@ Recently, two different extensions for VS Code for CUPL have been written:
   * This is an entire workflow, including syntax highlighting.
 
 ## Absurd approach: Fusemaps by hand
-* See this <a href="https://blog.frankdecaire.com/2017/01/22/generic-array-logic-devices/">blog post</a> by Frank DeCaire.<br />
+* See this <a href="https://blog.frankdecaire.com/2017/01/22/generic-array-logic-devices/">blog post</a> by Frank DeCaire.
+
+
 While not the easiest approach, just as one can write G-Code in notepad or Assembly code in a hex editor, manualy creating a fusemap is technically possible. This assumes that you have a datasheet for your device which has a description of the fusemap and the details of how the macrocells work. With this in hand, one could write a JEDEC file with the desired functionality and a text editor. This would be non-trivial and error-prone, but it demonstrates that such a thing could be done, at least with the older PLDs (16V8, 22V10), and even with the ATF750 (some datasheets actually had the fusemap for this part).
 
 
