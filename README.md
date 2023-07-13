@@ -9,6 +9,7 @@ This repository aims to make it easier to work with the following parts:
 
 # Terminology
 CPLD - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">Complex Programmable Logic Device</a><br />
+PLD - Programmable Logic Device<br />
 GAL - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">Generic Array Logic</a><br />
 WinCUPL - A Windows front-end to the CUPL compiler and related programs<br />
 CUPL - Compiler for Universal Programmable Logic (A old programming language for logic. Modern examples would be Verilog/VHDL)<br />
@@ -22,10 +23,12 @@ Wine - Wine is not an emulator. Allows running Windows programs under Linux.<br 
 Each of these subsections represents a potential workflow to design logic equations for these parts. The majority of the focus will be on modern methods.
 ## Old Approach: WinCUPL
 While logic for these parts can be written via WinCUPL, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows. While it does run under Linux via Wine, it is nonetheless not worth the trouble to use it for serious work considering the number of other options for setting up a workflow, however, it has value in the help files / documentation / examples. To get it working within Wine, you'll need winetricks so you can install mfc40 and mfc42. On Ubuntu, this would look something like:
+
 <code>
 sudo apt-get install wine winetricks playonlinux
 winetricks mfc40 mfc42
 </code>
+
 This diagram is from the help files built into WinCUPL:
 ![WinCUPL Data Flow Diagram](images/WinCUPL-data-flow-diagram.png)
 
@@ -50,7 +53,8 @@ Recently, two different extensions for VS Code for CUPL have been written:
   * This is an entire workflow, including syntax highlighting.
 
 ## Absurd approach: Fusemaps by hand
-While not the most sensible approach, just as one can write G-Code in notepad or Assembly code in a hex editor, it is technically possible. Thus, with the datasheet of an old PLD, one could write a JEDEC file with the desired functionality. This would be non-trivial and error-prone, but it demonstrates that such a thing could be done, at least with the older PLDs (16V8, 22V10), and even with the ATF750 (some datasheets actually had the fusemap for this part).
+See this <a href="https://blog.frankdecaire.com/2017/01/22/generic-array-logic-devices/">blog post by Frank DeCaire 'Generic Array Logic Devices'</a>
+While not the easiest approach, just as one can write G-Code in notepad or Assembly code in a hex editor, manualy creating a fusemap is technically possible. Provided the datasheet for your device has a description of the fusemap and the details of how the macrocells work, one could write a JEDEC file with the desired functionality and a text editor. This would be non-trivial and error-prone, but it demonstrates that such a thing could be done, at least with the older PLDs (16V8, 22V10), and even with the ATF750 (some datasheets actually had the fusemap for this part).
 
 It is worth noting that the fusemap for the ATF150x parts has been recently documented in <a href="https://github.com/whitequark/prjbureau">prjbureau</a>. Given the complexity of these devices over PLDs, writing a fusemap by hand for these parts would probably be a bad idea.
 
@@ -58,6 +62,7 @@ It is worth noting that the fusemap for the ATF150x parts has been recently docu
 Since we're mostly covering modern approaches to these devices here, these will only be covered very briefly:
 * ABEL: "Advanced Boolean Expression Language" was created in 1983 by Data I/O Corporation.
 * PALASM: Introduced by Monolithic Memories, Inc. (MMI) in the 1980's
+  * A modern version of this called <a href="https://github.com/daveho/GALasm">GALASM</a>
 
 ## Atmel Prochip
 Atmel Prochip is not free, however, you may be able to get a trial license from Microchip. It is nonetheless worth installing regardless because there are newer fitters for the ATF150x devices that can be extracted from this package. These can be used with other workflows and so having these is pretty useful. The newer versions of the fitters should be 1918 (3-21-07).
