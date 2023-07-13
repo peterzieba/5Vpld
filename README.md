@@ -8,11 +8,11 @@ This repository aims to make it easier to work with the following parts:
 * ATF16V8, ATF22V10 (Require an EPROM Programmer)
 
 # Terminology
-CPLD - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">Complex Programmable Logic Device</a><br />
-PLD - Programmable Logic Device<br />
-GAL - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">Generic Array Logic</a><br />
-<a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end to the CUPL compiler and related programs<br />
-CUPL - Compiler for Universal Programmable Logic. (A old programming language for logic. Modern examples would be Verilog/VHDL). WinCUPL ultimately uses this to compile .PLD files into a .JED file.<br />
+PLD - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">Programmable Logic Device</a><br />
+GAL - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#GALs">Generic Array Logic</a><br />
+CPLD - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">Complex Programmable Logic Device</a><br />
+<a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end/IDE to the CUPL compiler and related programs<br />
+CUPL - Compiler for Universal Programmable Logic. (A old programming language for logic. Modern examples would be Verilog/VHDL). WinCUPL ultimately uses CUPL.EXE to compile .PLD files into a .JED file. Assisted Technology released CUPL in September 1983.<br />
 FITTER - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the ATF150x CPLD devices. If my understanding is correct, this is basically place & route.<br />
 .JED/JEDEC File - A fuse map intended to be "burned/programmed" into a logic device.<br />
 .SVF File - Serial Vector Format. This file can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.<br />
@@ -34,7 +34,6 @@ This diagram is from the help files built into WinCUPL:
 
 ## Command line approach: CUPL & Your favorite text editor or IDE.
 Since WinCUPL simply is a front-end / IDE on top of CUPL and related programs, one can write a CUPL .PLD file in their favorite editor and have CUPL compile it into a .JED file for a PLD.
-Assisted Technology released CUPL (Compiler for Universal Programmable Logic) in September 1983.
 
 * <a href="https://www.qsl.net/bh1phl/CUPL_USERS_GUIDE.pdf">A detailed User's Guide to CUPL in PDF</a>
 
@@ -42,12 +41,12 @@ Assisted Technology released CUPL (Compiler for Universal Programmable Logic) in
 cupl [-flags] [library] [device] source
 </code>
 
-Examples run under Wine would look this this:
-<code>wine c:/Wincupl/Shared/cupl.exe -m1lxfjnabep -u c:/Wincupl/Shared/cupl.dl your-code.PLD
-</code>
+Examples run under Wine would look like this:
+
+<code>wine c:/Wincupl/Shared/cupl.exe -m1lxfjnabep -u c:/Wincupl/Shared/cupl.dl your-code.PLD</code>
 Additionally, if you are targeting a CPLD (ATF150x) for which CUPL.EXE does not have direct support, you will need to run:
-<code>wine c:/Wincupl/WinCupl/Fitters/fit1502.exe -i your-code.tt2 -dev P1502T44 -DEBUG on -Verilog_sim VERILOG -Out_Edif ON
-</code>
+
+<code>wine c:/Wincupl/WinCupl/Fitters/fit1502.exe -i your-code.tt2 -dev P1502T44 -DEBUG on -Verilog_sim VERILOG -Out_Edif ON</code>
 The above example is for an ATF1502 in a TQFP-44 package. You will need to use the appropriate fitter and device type for your particular CPLD.
 
 <details>
@@ -104,25 +103,25 @@ While not the easiest approach, just as one can write G-Code in notepad or Assem
 
 It is worth noting that the fusemap for the ATF150x parts has been recently documented in <a href="https://github.com/whitequark/prjbureau">prjbureau</a>. Given the complexity of these devices over PLDs, writing a fusemap by hand for these parts would probably be a bad idea.
 
-## Other languages: ABEL, PALASM
+## Other languages: ABEL, PALASM (ancient)
 Since we're mostly covering modern approaches to these devices here, these will only be covered very briefly:
 * ABEL: "Advanced Boolean Expression Language" was created in 1983 by Data I/O Corporation.
 * PALASM: Introduced by Monolithic Memories, Inc. (MMI) in the 1980's
   * A modern version of this called <a href="https://github.com/daveho/GALasm">GALASM</a>
 
-## Atmel Prochip
+## Atmel Prochip (not free)
 Atmel Prochip is not free, however, you may be able to get a trial license from Microchip. It is nonetheless worth installing regardless because there are newer fitters for the ATF150x devices that can be extracted from this installation. These can be used with other workflows and so having these is pretty useful. The newer versions of the fitters should mention version 1918 (3-21-07) when invoked from a command line.
 
-## Quartus via POF2JED
+## Quartus (free) via POF2JED
 * It turns out that the Altera (Now Intel) <a href="https://www.intel.com/content/www/us/en/software-kit/711791/intel-quartus-ii-web-edition-design-software-version-13-0sp1-for-windows.html?">Quartus 13.0sp1</a> can be used to produce a .POF file targeting various EPM series CPLDs from Altera.
 * The resulting .POF file can be converted using a utility called <a href="http://ww1.microchip.com/downloads/archive/pof2jed.zip">POF2JED</a> from Atmel (Now Microchip). This is further detailed in <a href="http://ww1.microchip.com/downloads/en/AppNotes/DOC0916.PDF">this application note.
 * Important!: Newer versions will not work. v13.0sp1 last version that had support for the MAX EPM3K/EPM7K chips. Support for these chips has been removed from newer versions. You MUST use the old version.
 
-## Digital
+## Digital (Use schematics instead of logic equations / programming)
 "Digital is an easy-to-use digital logic designer and circuit simulator designed for educational purposes." This is an interesting option as one can create a schematic and have a .JED file generated for a GAL16V8 or GAL22V10. If one provides the fitters to Digital, it can produce .JED files for the ATF150x series as well.
 https://github.com/hneemann/Digital
 
-## Yosys
+## Yosys (Open Source, mostly)
 One can use Yosys Open SYnthesis Suite (Yosys) with the help of the Atmel Fitters a specific CPLD and a techmap to produce .JED files. This allows an almost entirely open-source workflow using Verilog. A good place to start would be using the <a href="https://github.com/YosysHQ/oss-cad-suite-build">OSS CAD Suite</a> to get the big parts of the suite set up. There are two approaches to making this work:
 * https://github.com/whitequark/prjbureau
 * https://github.com/hoglet67/atf15xx_yosys/
