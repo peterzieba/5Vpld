@@ -4,15 +4,17 @@ This repository centers around modern workflows for Atmel (Now Microchip) 5V GAL
 These parts are still active and highly worth considering wherever prototyping and 5V logic are a requirement. They can easily replace large numbers of TTL/CMOS logic gates and can be reprogrammed many times.
 
 This repository aims to make it easier to work with the following parts:
-* ATF1502, ATF1504, ATF1508 (programmable via JTAG)
-* ATF16V8, ATF22V10 (Require an EPROM Programmer)
+* GAL Devices: ATF16V8, ATF22V10 (Require an EPROM Programmer)
+* CPLD Devies: ATF1502, ATF1504, ATF1508 (programmable via JTAG)
 
-# Terminology
+# Terminology / Background
 PLD - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">Programmable Logic Device</a><br />
 GAL - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#GALs">Generic Array Logic</a><br />
 CPLD - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">Complex Programmable Logic Device</a><br />
 <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end/IDE to the CUPL compiler and related programs<br />
 CUPL - Compiler for Universal Programmable Logic. (A old programming language for logic. Modern examples would be Verilog/VHDL). WinCUPL ultimately uses CUPL.EXE to compile .PLD files into a .JED file. Assisted Technology released CUPL in September 1983.<br />
+.TT2 - The Berkeley PLA netlist format which CUPL.EXE can generate that can be used by the Atmel fitters.<br />
+EDIF - Another type of netlist format which also is usable by the Atmel fitters. Yosys is capable of generating this format.<br />
 FITTER - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the ATF150x CPLD devices. If my understanding is correct, this is basically place & route.<br />
 .JED/JEDEC File - A fuse map intended to be "burned/programmed" into a logic device.<br />
 .SVF File - Serial Vector Format. This file can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.<br />
@@ -30,6 +32,7 @@ winetricks mfc40 mfc42
 
 
 This diagram is from the help files built into WinCUPL:
+
 ![WinCUPL Data Flow Diagram](images/WinCUPL-data-flow-diagram.png)
 
 ## Command line approach: CUPL & Your favorite text editor or IDE.
@@ -121,17 +124,17 @@ Atmel Prochip is not free, however, you may be able to get a trial license from 
 * The resulting .POF file can be converted using a utility called <a href="http://ww1.microchip.com/downloads/archive/pof2jed.zip">POF2JED</a> from Atmel (Now Microchip). This is further detailed in <a href="http://ww1.microchip.com/downloads/en/AppNotes/DOC0916.PDF">this application note.
 * Important!: Newer versions will not work. v13.0sp1 last version that had support for the MAX EPM3K/EPM7K chips. Support for these chips has been removed from newer versions of Quartus. You MUST use the old version.
 
-## Digital (Use schematics instead of logic equations / programming)
+## Digital (free, use schematics instead of logic equations / programming)
 "Digital is an easy-to-use digital logic designer and circuit simulator designed for educational purposes." This is an interesting option as one can create a schematic and have a .JED file generated for a GAL16V8 or GAL22V10. If one provides the fitters to Digital, it can produce .JED files for the ATF150x series as well.
 https://github.com/hneemann/Digital
 
-## Yosys (Open Source, mostly)
+## Yosys (Open Sourc + Atmel Fitters)
 One can use Yosys Open SYnthesis Suite (Yosys) with the help of the Atmel Fitters a specific CPLD and a techmap to produce .JED files. This allows an almost entirely open-source workflow using Verilog. A good place to start would be using the <a href="https://github.com/YosysHQ/oss-cad-suite-build">OSS CAD Suite</a> to get the big parts of the suite set up. There are two approaches to making this work:
 * https://github.com/whitequark/prjbureau
 * https://github.com/hoglet67/atf15xx_yosys/
 
 # Programming / Burning
-There are a few choices on how the part can actually be programmed depending on whether it support JTAG.
+There are a few choices on how the part can actually be programmed depending on whether it supports JTAG.
 
 ## PLD Devices (ATF16V8, ATF22V10)
 These parts require an EPROM programmer. <span style="color: red;">Additionally, an important gotcha' is that there are many manufacturers of these parts as well as variants within a manufacturer. While the fusemap may be compatible across variants (GAL16V8 from Lattice vs. the ATF16V8 from Atmel/Microchip), THE PROGRAMMING ALGORITHMS ARE NOT! You will need an EPROM programmer with support for the EXACT manufacturer and EXACT part number of the device you have.</span>
@@ -146,11 +149,12 @@ These parts can be programmed via JTAG, so there are a few options.
 * To generate a .JED file for these devices, you will need the fitters. While WinCUPL has fitters within it, a much more updated version of the fitters is available inside of Atmel Prochip from <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Microchip's website</a>
 
 ## Other CPLD Parts (ATF750, ATF1500)
-* These parts do not support JTAG and are a bit more expensive, so they haven't been tried.
+* These parts do not support JTAG and are a bit more expensive, so they haven't been tried. You'll need an EPROM programmer that supports these.
 * In theory the ATF1500 fitter should work fine under Wine and so if fed with a netlist it should work. This means either CUPL.EXE or in theory Yosys with the right techmap could work.
 * I believe CUPL should be able to generate a .JED directly for the ATF750 without a fitter.
 
 # Reversing a JED file back into logic equations
-* By hand
+Finally, if one is able to read a .JED out of a device, this can be reversed back into equations. These devices all have security fuses, however, which can disable any ability to read out the device. Given a .JED file, the following approaches can be taken to arrive at the equations:
+* By hand, comparing the .JED file to the fusemap / macrocells in the datasheet.
 * JED2EQN.EXE
 * MAME can be compiled with a utility called jedutil
