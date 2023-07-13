@@ -36,8 +36,9 @@ This diagram is from the help files built into WinCUPL:
 Since WinCUPL simply is a front-end / IDE on top of CUPL and related programs, one can write a CUPL .PLD file in their favorite editor and have CUPL compile it into a .JED file for a PLD.
 
 * <a href="https://www.qsl.net/bh1phl/CUPL_USERS_GUIDE.pdf">A detailed User's Guide to CUPL in PDF</a>
+Run CUPL using the following command line format:
 
-<code>Run CUPL using the following command line format:
+<code>
 cupl [-flags] [library] [device] source
 </code>
 
@@ -145,3 +146,8 @@ These parts can be programmed via JTAG, so there are a few options.
 * These parts do not support JTAG and are a bit more expensive, so they haven't been tried.
 * In theory the ATF1500 fitter should work fine under Wine and so if fed with a netlist it should work. This means either CUPL.EXE or in theory Yosys with the right techmap could work.
 * I believe CUPL should be able to generate a .JED directly for the ATF750 without a fitter.
+
+# Reversing a JED file back into logic equations
+* By hand
+* JED2EQN.EXE
+* MAME can be compiled with a utility called jedutil
