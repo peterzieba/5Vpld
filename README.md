@@ -11,9 +11,9 @@ This repository aims to make it easier to work with the following parts:
 CPLD - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">Complex Programmable Logic Device</a><br />
 PLD - Programmable Logic Device<br />
 GAL - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">Generic Array Logic</a><br />
-WinCUPL - A Windows front-end to the CUPL compiler and related programs<br />
-CUPL - Compiler for Universal Programmable Logic (A old programming language for logic. Modern examples would be Verilog/VHDL)<br />
-FITTER - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the CPLD devices. If my understanding is correct, this is basically place & route.<br />
+<a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end to the CUPL compiler and related programs<br />
+CUPL - Compiler for Universal Programmable Logic. (A old programming language for logic. Modern examples would be Verilog/VHDL). WinCUPL ultimately uses this to compile .PLD files into a .JED file.<br />
+FITTER - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the ATF150x CPLD devices. If my understanding is correct, this is basically place & route.<br />
 .JED/JEDEC File - A fuse map intended to be "burned/programmed" into a logic device.<br />
 .SVF File - Serial Vector Format. This file can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.<br />
 Wine - Wine is not an emulator. Allows running Windows programs under Linux.<br />
@@ -24,10 +24,10 @@ Each of these subsections represents a potential workflow to design logic equati
 ## Old Approach: WinCUPL
 While logic for these parts can be written via WinCUPL, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows. While it does run under Linux via Wine, it is nonetheless not worth the trouble to use it for serious work considering the number of other options for setting up a workflow, however, it has value in the help files / documentation / examples. To get it working within Wine, you'll need winetricks so you can install mfc40 and mfc42. On Ubuntu, this would look something like:
 
-<code>
-sudo apt-get install wine winetricks playonlinux
+<code>sudo apt-get install wine winetricks playonlinux
 winetricks mfc40 mfc42
 </code>
+
 
 This diagram is from the help files built into WinCUPL:
 ![WinCUPL Data Flow Diagram](images/WinCUPL-data-flow-diagram.png)
@@ -46,6 +46,44 @@ wine c:/Wincupl/WinCupl/Fitters/fit1502.exe -i your-code.tt2 -dev P1502T44 -DEBU
 </code>
 The above example is for an ATF1502 in a TQFP-44 package. You will need to use the appropriate fitter and device type for your particular CPLD.
 
+<details>
+<summary>Details of the command line options for CUPL.EXE</summary>
+Run CUPL using the following command line format:
+cupl [-flags] [library] [device] source
+where
+-flags is the following set of compiler options:
+-j JEDEC download format
+-h ASCII-HEX download format
+-i HL download format
+-n use input filename for output file
+-a create absolute file
+-l create listing file
+-e create expanded macro definition file
+-x create expanded product-terms in documentation file
+-f create fuse plot/chip diagram in documentation file
+-p create PDIF database interchange format file
+-b create Berkeley PLA format file
+-c create PALASM format file
+-d deactivate unused OR terms
+-r disable product term merging
+-g program security fuse
+-o treat all state machines as “one-hot”
+-u use specified library for compilation
+-s perform logic simulation after compilation
+-w perform simulation with waveform output (MS-DOS only)
+-m0 no minimization
+-m1 quick minimization (default)
+-m2 Quine McCluskey
+-m3 Presto
+-m4 Expresso
+-q MIcrosoft format for error messages
+-zq QuickLogic’s QDIF file
+-kb Optimize product term usage for pin or pinnode variables. This overrides the DEMORGAN statement if it appears in the source file
+-kd DeMorganize all pin and pinnode variables. This overrides the DEMORGAN statement if it appears in the source file
+-ks Force product term sharing during minimization. This is also referred to as group reduction
+-kx Do not expand XOR to AND-OR equations. This is used for device independent designs or designs targeted for fitter-supported devices where the fitter supports XOR gates
+</details>
+
 Recently, two different extensions for VS Code for CUPL have been written:
 * https://marketplace.visualstudio.com/items?itemName=tlgkccampbell.code-cupl
   * This one handles just syntax highlighting for CUPL .PLD files
@@ -53,8 +91,9 @@ Recently, two different extensions for VS Code for CUPL have been written:
   * This is an entire workflow, including syntax highlighting.
 
 ## Absurd approach: Fusemaps by hand
-See this <a href="https://blog.frankdecaire.com/2017/01/22/generic-array-logic-devices/">blog post by Frank DeCaire 'Generic Array Logic Devices'</a>
-While not the easiest approach, just as one can write G-Code in notepad or Assembly code in a hex editor, manualy creating a fusemap is technically possible. Provided the datasheet for your device has a description of the fusemap and the details of how the macrocells work, one could write a JEDEC file with the desired functionality and a text editor. This would be non-trivial and error-prone, but it demonstrates that such a thing could be done, at least with the older PLDs (16V8, 22V10), and even with the ATF750 (some datasheets actually had the fusemap for this part).
+* See this <a href="https://blog.frankdecaire.com/2017/01/22/generic-array-logic-devices/">blog post</a> by Frank DeCaire.<br />
+While not the easiest approach, just as one can write G-Code in notepad or Assembly code in a hex editor, manualy creating a fusemap is technically possible. This assumes that you have a datasheet for your device which has a description of the fusemap and the details of how the macrocells work. With this in hand, one could write a JEDEC file with the desired functionality and a text editor. This would be non-trivial and error-prone, but it demonstrates that such a thing could be done, at least with the older PLDs (16V8, 22V10), and even with the ATF750 (some datasheets actually had the fusemap for this part).
+
 
 It is worth noting that the fusemap for the ATF150x parts has been recently documented in <a href="https://github.com/whitequark/prjbureau">prjbureau</a>. Given the complexity of these devices over PLDs, writing a fusemap by hand for these parts would probably be a bad idea.
 
@@ -65,7 +104,7 @@ Since we're mostly covering modern approaches to these devices here, these will 
   * A modern version of this called <a href="https://github.com/daveho/GALasm">GALASM</a>
 
 ## Atmel Prochip
-Atmel Prochip is not free, however, you may be able to get a trial license from Microchip. It is nonetheless worth installing regardless because there are newer fitters for the ATF150x devices that can be extracted from this package. These can be used with other workflows and so having these is pretty useful. The newer versions of the fitters should be 1918 (3-21-07).
+Atmel Prochip is not free, however, you may be able to get a trial license from Microchip. It is nonetheless worth installing regardless because there are newer fitters for the ATF150x devices that can be extracted from this installation. These can be used with other workflows and so having these is pretty useful. The newer versions of the fitters should mention version 1918 (3-21-07) when invoked from a command line.
 
 ## Quartus via POF2JED
 * It turns out that the Altera (Now Intel) <a href="https://www.intel.com/content/www/us/en/software-kit/711791/intel-quartus-ii-web-edition-design-software-version-13-0sp1-for-windows.html?">Quartus 13.0sp1</a> can be used to produce a .POF file targeting various EPM series CPLDs from Altera.
