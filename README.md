@@ -238,6 +238,8 @@ Copyright 1999,2000 Atmel Corporation
    -has (advanced help option for AS)
    -hbe (advanced help option for BE)
 </code>
+
+Advanced help options:
 <code>Atmel ATF1502 Fitter Version 1918 (3-21-07)
 Copyright 1999,2000 Atmel Corporation
    -strategy c [command file name]
@@ -304,13 +306,13 @@ Atmel Prochip is not free, however, you may be able to get a trial license from 
 ## Quartus (free) via POF2JED
 * It turns out that the Altera (Now Intel) <a href="https://www.intel.com/content/www/us/en/software-kit/711791/intel-quartus-ii-web-edition-design-software-version-13-0sp1-for-windows.html?">Quartus 13.0sp1</a> can be used to produce a .POF file targeting various CPLD chips made by Altera in the MAX EPM3K/EPM7K series.
 * The resulting .POF file can be converted using a utility called <a href="http://ww1.microchip.com/downloads/archive/pof2jed.zip">POF2JED</a> from Atmel (Now Microchip). This is further detailed in <a href="http://ww1.microchip.com/downloads/en/AppNotes/DOC0916.PDF">this application note.
-* Important!: Newer versions will not work. v13.0sp1 last version that had support for the MAX EPM3K/EPM7K chips. Support for these chips has been removed from newer versions of Quartus. You MUST use the old version.
+* Important!: Newer versions of Quartus will not work. v13.0sp1 last version that had support for the MAX EPM3K/EPM7K chips. Support for these chips has been removed from newer versions of Quartus. You MUST use the old version.
 
 ## Digital (free, use schematics instead of logic equations / programming)
 "Digital is an easy-to-use digital logic designer and circuit simulator designed for educational purposes." This is an interesting option as one can create a schematic and have a .JED file generated for a GAL16V8 or GAL22V10. If one provides the fitters to Digital, it can produce .JED files for the ATF150x series as well.
 https://github.com/hneemann/Digital
 
-## Yosys (Open Source + Atmel Fitters, experimental)
+## Yosys (Open Source with Atmel Fitters, experimental)
 In theory, one can use Yosys Open SYnthesis Suite (Yosys) with the help of the Atmel Fitters a specific CPLD and a techmap to produce .JED files. This is a bit more experimental, but some have managed to make this work. This allows an almost entirely open-source workflow using Verilog, and probably <a href="https://icestudio.io/">Icestudio</a> if one prefers schematic capture as well. A good place to start would be using the <a href="https://github.com/YosysHQ/oss-cad-suite-build">OSS CAD Suite</a> to get the big parts of the suite set up. After that, there are two approaches to making this work:
 * https://github.com/whitequark/prjbureau
 ** prjbureau demonstrates going from RTLIL to a .JED file
