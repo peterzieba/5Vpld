@@ -36,7 +36,14 @@ This diagram is from the help files built into WinCUPL:
 Since WinCUPL simply is a front-end / IDE on top of CUPL and related programs, one can write a CUPL .PLD file in their favorite editor and have CUPL compile it into a .JED file for a PLD.
 Assisted Technology released CUPL (Compiler for Universal Programmable Logic) in September 1983.
 
-The secret to getting CUPL.EXE to turn a .PLD into a .JED is the following:
+* <a href="https://www.qsl.net/bh1phl/CUPL_USERS_GUIDE.pdf">A detailed User's Guide to CUPL in PDF</a>
+
+<code>
+Run CUPL using the following command line format:
+cupl [-flags] [library] [device] source
+</code>
+
+Examples run under Wine would look this this:
 <code>
 wine c:/Wincupl/Shared/cupl.exe -m1lxfjnabep -u c:/Wincupl/Shared/cupl.dl your-code.PLD
 </code>
@@ -47,7 +54,8 @@ wine c:/Wincupl/WinCupl/Fitters/fit1502.exe -i your-code.tt2 -dev P1502T44 -DEBU
 The above example is for an ATF1502 in a TQFP-44 package. You will need to use the appropriate fitter and device type for your particular CPLD.
 
 <details>
-<summary>Details of the command line options for CUPL.EXE</summary>
+<summary>Expand here for details of the command line flags for CUPL.EXE</summary>
+<code>
 Run CUPL using the following command line format:
 cupl [-flags] [library] [device] source
 where
@@ -82,6 +90,7 @@ where
 -kd DeMorganize all pin and pinnode variables. This overrides the DEMORGAN statement if it appears in the source file
 -ks Force product term sharing during minimization. This is also referred to as group reduction
 -kx Do not expand XOR to AND-OR equations. This is used for device independent designs or designs targeted for fitter-supported devices where the fitter supports XOR gates
+</code>
 </details>
 
 Recently, two different extensions for VS Code for CUPL have been written:
