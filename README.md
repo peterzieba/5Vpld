@@ -20,7 +20,7 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 * FPGAs typically expect to have their bitstream uploaded on powerup, requiring an external EEPROM. PLDs are typically non-volatile.
 * FPGAs usually support standard JTAG for programming, whereas many PLDs required specialized device programmers.
 * There are likely exceptions to all of the above in some parts. There are not hard rules.
-</summary>
+</details>
 
 # Terminology / Background
 PLD - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">Programmable Logic Device</a><br />
@@ -215,7 +215,7 @@ g22v10lcc      02    28    5892    132
 g22v10cplcc    01    28    5893    132
 p22v10lcc      17    28    5828    132
 </code>
-</detail>
+</details>
 
 
 If one is trying to utilize the ATF150X devices, using the appropriate fitter is required.
