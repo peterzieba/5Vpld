@@ -134,7 +134,7 @@ One can use Yosys Open SYnthesis Suite (Yosys) with the help of the Atmel Fitter
 There are a few choices on how the part can actually be programmed depending on whether it support JTAG.
 
 ## PLD Devices (ATF16V8, ATF22V10)
-These parts require an EPROM programmer. <span style="color: red;">Additionally, an important gotcha' is that there are many variants and manufacturers of these parts. While the fusemap may be compatible across variants (GAL16V8 from Lattice vs. the ATF16V8 from Atmel/Microchip), THE PROGRAMMING ALGORITHMS ARE NOT! You will need an EPROM programmer with support for the EXACT manufacturer and part number of the device you have.</span>
+These parts require an EPROM programmer. <span style="color: red;">Additionally, an important gotcha' is that there are many manufacturers of these parts as well as variants within a manufacturer. While the fusemap may be compatible across variants (GAL16V8 from Lattice vs. the ATF16V8 from Atmel/Microchip), THE PROGRAMMING ALGORITHMS ARE NOT! You will need an EPROM programmer with support for the EXACT manufacturer and EXACT part number of the device you have.</span>
 
 ## CPLD Devices (ATF1502, ATF1504, ATF1508)
 These parts can be programmed via JTAG, so there are a few options.
