@@ -1,7 +1,7 @@
 # Overview
 This repository centers around modern workflows for Atmel (Now Microchip) 5V GAL PLD and CPLD parts.
 
-These parts are still active and highly worth considering wherever prototyping and 5V logic are a requirement. They can easily replace large numbers of TTL/CMOS logic gates and can be reprogrammed many times. Finally, the DIP parts are easy to solder, and the PQFP parts can be placed into a through-hole socket.
+These parts are still active and highly worth considering wherever prototyping and 5V logic are a requirement. They can easily replace large numbers of TTL/CMOS logic gates and can be reprogrammed many times. Finally, the DIP parts are easy to solder, and the PLCC parts can be placed into a through-hole socket.
 
 Ignored or briefly mentioned are parts which are NRND or inactive.
 
@@ -19,7 +19,7 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 * FPGAs are typically constructed from a large number of LUTs (Lookup tables). CPLDs use a sum-of-products structure.
 * FPGAs typically expect to have their bitstream uploaded on powerup, requiring an external EEPROM. PLDs are typically non-volatile.
 * FPGAs usually support standard JTAG for programming, whereas many PLDs required specialized device programmers.
-* There are likely exceptions to all of the above in some parts. There are not hard rules.
+* There are likely exceptions to all of the above in some parts. These are not hard rules.
 </details>
 
 # Terminology / Background
@@ -53,7 +53,7 @@ This diagram is from the help files built into WinCUPL:
 ## Command line approach: CUPL & Your favorite text editor or IDE.
 Since WinCUPL simply is a front-end / IDE on top of CUPL and related programs, one can write a CUPL .PLD file in their favorite editor and have CUPL compile it into a .JED file for a PLD. CPLD parts will require the additional step of using a fitter for the specific device.
 
-* <a href="https://www.qsl.net/bh1phl/CUPL_USERS_GUIDE.pdf">A detailed User's Guide to CUPL in PDF</a>
+![A detailed User's Guide to CUPL in PDF](vendor-docs/CUPL_USERS_GUIDE.pdf)
 
 
 Run CUPL using the following command line format:
