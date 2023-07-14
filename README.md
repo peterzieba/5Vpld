@@ -1,16 +1,16 @@
 # Overview
-This repository centers around modern workflows for Atmel (Now Microchip) 5V GAL PLD and CPLD parts.
+This repository centers around modern/Linux workflows for Atmel (Now Microchip) 5V GAL PLD and CPLD parts.
 
 These parts are still active and highly worth considering wherever prototyping and 5V logic are a requirement. They can easily replace large numbers of TTL/CMOS logic gates and can be reprogrammed many times. Finally, the DIP parts are easy to solder, and the PLCC parts can be placed into a through-hole socket.
 
-Ignored or briefly mentioned are parts which are NRND or inactive.
+Ignored or briefly mentioned are parts which are NRND, inactive, or related parts which are 3.3V devices. For these situations, there are likely better choices.
 
 This repository aims to make it easier to work with the following parts:
 * GAL Devices: ATF16V8, ATF22V10 (Require an EPROM Programmer)
   * Part number convention seems to be: "number of inputs" V "number of outputs/macrocells".
 * CPLD Devices (JTAG Programmable): ATF1502AS (32 macrocell), ATF1504AS (64 macrocell), ATF1508AS (128 macrocells)
-  * The devices ending in AS are commonly available.
-  * The BE devices not covered here as they seem to be difficult to obtain and somewhat different.
+  * The devices ending in AS and ASL are considered here. Both are active, however, ASL parts seem to be difficult to obtain.
+  * The BE and ASV devices not covered here as they seem to be difficult to obtain and are not 5V devices. If you need 3.3V or lower, there are probably other parts suited to your needs.
   * Available in TQFP, PLCC, PQFP variants. PLCCs can be placed in through-hole sockets.
 <details>
 <summary>Expand here for details on how all of these compare to FPGAs</summary>
@@ -23,18 +23,18 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 </details>
 
 # Terminology / Background
-PLD - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">Programmable Logic Device</a><br />
-GAL - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#GALs">Generic Array Logic</a><br />
-CPLD - <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">Complex Programmable Logic Device</a><br />
+<a href="https://en.wikipedia.org/wiki/Programmable_logic_device">PLD - </a>Programmable Logic Device<br />
+<a href="https://en.wikipedia.org/wiki/Programmable_logic_device#GALs">GAL - </a>Generic Array Logic<br />
+<a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">CPLD - </a>Complex Programmable Logic Device<br />
 <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end/IDE to the CUPL compiler and related programs<br />
 <a href="https://en.wikipedia.org/wiki/Macrocell_array">Macrocell</a> - A block of logic gates that is used multiple times within a PLD. Typically, there is one macrocell for each output, however, more complex devices can have more macrocells than outputs, allowing "buried" or "internal" logic.
-CUPL - Compiler for Universal Programmable Logic. (A old programming language for logic. Modern examples would be Verilog/VHDL). WinCUPL ultimately uses CUPL.EXE to compile .PLD files into a .JED file. Assisted Technology released CUPL in September 1983.<br />
-.TT2 - The Berkeley PLA netlist format which CUPL.EXE can generate that can be used by the Atmel fitters.<br />
-EDIF - Another type of netlist format which also is usable by the Atmel fitters. Yosys is capable of generating this format, however, one will still need a techmap.<br />
-FITTER - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the ATF150x CPLD devices. If my understanding is correct, this is basically place & route.<br />
-.JED/JEDEC File - A fuse map intended to be "burned/programmed" into a logic device.<br />
+<a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">CUPL</a> - Compiler for Universal Programmable Logic. (A old programming language for logic. Modern examples would be Verilog/VHDL). WinCUPL includes a version of CUPL.EXE to compile .PLD files into a .JED file. Assisted Technology released CUPL in September 1983.<br />
+<a href="">.TT2</a> - The Berkeley PLA netlist format which CUPL.EXE can generate that can be used by the Atmel fitters.<br />
+<a href="https://en.wikipedia.org/wiki/EDIF">EDIF</a> - Another type of netlist format which also is usable by the Atmel fitters. Yosys is capable of generating this format, however, one will still need a techmap.<br />
+<a href="https://en.wikipedia.org/wiki/Place_and_route">Fitter</a> - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the ATF150x CPLD devices. In more modern parlance, this is basically place & route.<br />
+<a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device.<br />
 .SVF File - Serial Vector Format. This file can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.<br />
-Wine - Wine is not an emulator. Allows running Windows programs under Linux.<br />
+<a href="https://www.winehq.org/">Wine</a> - Wine is not an emulator. Allows running Windows programs under Linux.<br />
 
 # Writing logic for these parts: Possible Workflows
 Each of these subsections represents a potential workflow to design logic equations for these parts. The majority of the focus will be on modern methods.
@@ -51,6 +51,7 @@ This diagram is from the help files built into WinCUPL:
 ![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
 
 ## Command line approach: CUPL & Your favorite text editor or IDE.
+This is probably the most solid approach assuming you are OK with using CUPL as a language and can operate on both Linux and Windows without trouble.
 Since WinCUPL simply is a front-end / IDE on top of CUPL and related programs, one can write a CUPL .PLD file in their favorite editor and have CUPL compile it into a .JED file for a PLD. CPLD parts will require the additional step of using a fitter for the specific device.
 
 ![A detailed User's Guide to CUPL in PDF](vendor-docs/CUPL_USERS_GUIDE.pdf)
@@ -74,6 +75,7 @@ The above example is for an ATF1502 in a TQFP-44 package. You will need to use t
 <details>
 <summary>Expand here for details of the command line flags for CUPL.EXE</summary>
 Run CUPL using the following command line format:
+
 <code>cupl [-flags] [library] [device] source
 where
 -flags is the following set of compiler options:
@@ -222,7 +224,7 @@ If one is trying to utilize the ATF150X devices, using the appropriate fitter is
 * ![ATF15xx Family Device Fitter User's Manual](vendor-docs/fitter.pdf)
 
 <details>
-<summary>Expand for command line options for the newer ATF1502.EXE fitter.</summary>
+<summary>Expand for command line options for the latest known version of the ATF1502.EXE fitter.</summary>
 <code>Atmel ATF1502 Fitter Version 1918 (3-21-07)
 Copyright 1999,2000 Atmel Corporation
  Usage: FIT1502.EXE [-i] input_file[.tt2] {options}
@@ -298,13 +300,13 @@ It is worth noting that the fusemap for the ATF150x parts has been recently docu
 Since we're mostly covering modern approaches to these devices here, these will only be covered very briefly:
 * ABEL: "Advanced Boolean Expression Language" was created in 1983 by Data I/O Corporation.
 * PALASM: Introduced by Monolithic Memories, Inc. (MMI) in the 1980's
-  * A modern version of this called <a href="https://github.com/daveho/GALasm">GALASM</a>
+  * A modern version of this is called <a href="https://github.com/daveho/GALasm">GALASM</a> which is a continuation of something called GALer. This might be worth considering if you are happy with just PLDs.
 
-## Atmel Prochip (not free)
-Atmel Prochip is not free, however, you may be able to get a trial license from Microchip. It is nonetheless worth installing regardless because there are newer fitters for the ATF150x devices that can be extracted from this installation. These can be used with other workflows and so having these is pretty useful. The newer versions of the fitters should mention version 1918 (3-21-07) when invoked from a command line.
+## Atmel Prochip (Not Free, Verilog/VHDL support)
+<a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip">Atmel Prochip</a> is not free, however, you may be able to get a trial license from Microchip. It is nonetheless worth installing regardless because there are newer fitters for the ATF150x devices that can be extracted from this installation. These can be used with other workflows and so having these is pretty useful. The newer versions of the fitters should mention version 1918 (3-21-07) when invoked from a command line. It is also interesting because this workflow supports Verilog/VHDL, which is great is one wants to move away from CUPL entirely.
 
-## Quartus (free) via POF2JED
-* It turns out that the Altera (Now Intel) <a href="https://www.intel.com/content/www/us/en/software-kit/711791/intel-quartus-ii-web-edition-design-software-version-13-0sp1-for-windows.html?">Quartus 13.0sp1</a> can be used to produce a .POF file targeting various CPLD chips made by Altera in the MAX EPM3K/EPM7K series.
+## Quartus (Free, Verilog, VHDL, Schematic Capture). Indirect support for ATF150x.
+* It turns out that the Altera (Now Intel) <a href="https://www.intel.com/content/www/us/en/software-kit/711791/intel-quartus-ii-web-edition-design-software-version-13-0sp1-for-windows.html?">Quartus 13.0sp1</a> can be used to produce a .POF file targeting various CPLD chips made by Altera in the MAX EPM3K/EPM7K series, which can be converted to target an ATF150x device.
 * The resulting .POF file can be converted using a utility called <a href="http://ww1.microchip.com/downloads/archive/pof2jed.zip">POF2JED</a> from Atmel (Now Microchip). This is further detailed in <a href="http://ww1.microchip.com/downloads/en/AppNotes/DOC0916.PDF">this application note.
 * Important!: Newer versions of Quartus will not work. v13.0sp1 last version that had support for the MAX EPM3K/EPM7K chips. Support for these chips has been removed from newer versions of Quartus. You MUST use the old version.
 
@@ -319,14 +321,14 @@ In theory, one can use Yosys Open SYnthesis Suite (Yosys) with the help of the A
 * https://github.com/hoglet67/atf15xx_yosys/
 ** This example goes from plain old verilog into a .JED file by implementing a techmap.
 
-# Programming / Burning
+# Programming / Burning and Device Information
 There are a few choices on how the part can actually be programmed depending on whether it supports JTAG.
 
 A word on programming algorithms:
 Programming algorithms were seldom documented on datasheets for a part. Usually, these were behind NDA and only the companies producing Device Programmers had them (Data I/O, Logical Devices, Hi-Lo Systems, BP Microsystems, Wellon). Furthermore, some parts supporting JTAG (which in theory is much more open/universal), can nonetheless be programmed to repurpose the JTAG pins, at which point a dedicated device programmer or specialized knowledge of blanking the device is required.
 
 ## PLD Devices (ATF16V8, ATF22V10)
-These parts require an EPROM programmer. <span style="color: red;">Additionally, an important gotcha' is that there are many manufacturers of these parts as well as variants within a manufacturer. While the fusemap may be compatible across variants (GAL16V8 from Lattice vs. the ATF16V8 from Atmel/Microchip), THE PROGRAMMING ALGORITHMS ARE NOT! You will need an EPROM programmer with support for the EXACT manufacturer and EXACT part number of the device you have.</span>
+These parts require an EPROM programmer, and ideally one from the time period during which these parts were in vogue. <span style="color: red;">Additionally, an important gotcha' is that there are many manufacturers of these parts as well as variants within a manufacturer. While the fusemap may be compatible across variants (GAL16V8 from Lattice vs. the ATF16V8 from Atmel/Microchip), THE PROGRAMMING ALGORITHMS ARE NOT! You will need an EPROM programmer with support for the EXACT manufacturer and EXACT part number of the device you have.</span> Furthermore, many have reported issues with modern low-cost programmers in the past (Gecu / Autoelectric TL866 and similar). There is a good chance that the algorithms have been updated to address these problems.
 
 ## CPLD Devices (ATF1502, ATF1504, ATF1508)
 These parts can be programmed via JTAG, so there are a few options.
