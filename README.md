@@ -26,6 +26,7 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">PLD - </a>Programmable Logic Device<br />
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#GALs">GAL - </a>Generic Array Logic<br />
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">CPLD - </a>Complex Programmable Logic Device<br />
+CUPL - A early programming language used to define the behavior of digital logic gates. CUPL.EXE is the compiler which is used to compile .PLD files written in CUPL, ultimately to be burned into programmable logic devices.<br />
 <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end/IDE to the CUPL compiler and related programs<br />
 <a href="https://en.wikipedia.org/wiki/Macrocell_array">Macrocell</a> - A block of logic gates that is used multiple times within a PLD. Typically, there is one macrocell for each output, however, more complex devices can have more macrocells than outputs, allowing "buried" or "internal" logic.
 <a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">CUPL</a> - Compiler for Universal Programmable Logic. (A old programming language for logic. Modern examples would be Verilog/VHDL). WinCUPL includes a version of CUPL.EXE to compile .PLD files into a .JED file. Assisted Technology released CUPL in September 1983.<br />
