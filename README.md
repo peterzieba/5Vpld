@@ -10,7 +10,7 @@ This repository aims to make it easier to work with the following parts:
   * Part number convention seems to be: "number of inputs" V "number of outputs/macrocells".
 * CPLD Devices (JTAG Programmable): ATF1502AS (32 macrocell), ATF1504AS (64 macrocell), ATF1508AS (128 macrocells)
   * The devices ending in AS and ASL are considered here. Both are active, however, ASL parts seem to be difficult to obtain.
-  * The BE and ASV devices not covered here as they seem to be difficult to obtain and are not 5V devices. If you need 3.3V or lower, there are probably other parts suited to your needs.
+  * The BE and ASV devices not covered here as they seem to be difficult to obtain and are not 5V devices. If you need 3.3V or lower, there are probably better parts suited to your needs.
   * Available in TQFP, PLCC, PQFP variants. PLCCs can be placed in through-hole sockets.
 <details>
 <summary>Expand here for details on how all of these compare to FPGAs</summary>
@@ -35,6 +35,7 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 <a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device.<br />
 .SVF File - Serial Vector Format. This file can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.<br />
 <a href="https://www.winehq.org/">Wine</a> - Wine is not an emulator. Allows running Windows programs under Linux.<br />
+CSIM - A tool for simulating the behavior of logic. This takes a .SI and produces a .SO files.<br />
 
 # Writing logic for these parts: Possible Workflows
 Each of these subsections represents a potential workflow to design logic equations for these parts. The majority of the focus will be on modern methods.
@@ -52,7 +53,7 @@ This diagram is from the help files built into WinCUPL:
 
 ## Command line approach: CUPL & Your favorite text editor or IDE.
 This is probably the most solid approach assuming you are OK with using CUPL as a language and can operate on both Linux and Windows without trouble.
-Since WinCUPL simply is a front-end / IDE on top of CUPL and related programs, one can write a CUPL .PLD file in their favorite editor and have CUPL compile it into a .JED file for a PLD. CPLD parts will require the additional step of using a fitter for the specific device.
+Since WinCUPL simply is a front-end / IDE on top of the CUPL.EXE compiler and related programs, one can write the desired logic in CUPL, save it in a .PLD file using their favorite editor and have CUPL.EXE compile it into a .JED file for programming into a PLD. CPLD parts will require the additional step of using a fitter for the specific device to produce the .JED file.
 
 ![A detailed User's Guide to CUPL in PDF](vendor-docs/CUPL_USERS_GUIDE.pdf)
 
@@ -112,11 +113,13 @@ where
 </code>
 </details>
 
+<details><summary>Expand here if you are interested in using VS Code as an IDE</summary>
 Recently, two different extensions for VS Code for CUPL have been written:
 * https://marketplace.visualstudio.com/items?itemName=tlgkccampbell.code-cupl
   * This one handles just syntax highlighting for CUPL .PLD files
 * https://marketplace.visualstudio.com/items?itemName=VaynerSystems.VS-Cupl
-  * This is an entire workflow, including syntax highlighting.
+  * This is an entire workflow, which has a bit more functionality beyond just syntax highlighting.
+</details>
 
 <details>
 <summary>Expand here for a list of devices the version of CUPL provided with WinCUPL supports</summary>
