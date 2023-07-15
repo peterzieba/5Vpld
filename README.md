@@ -26,17 +26,22 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">PLD - </a>Programmable Logic Device<br />
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#GALs">GAL - </a>Generic Array Logic<br />
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">CPLD - </a>Complex Programmable Logic Device<br />
-CUPL - A early programming language used to define the behavior of digital logic gates. CUPL.EXE is the compiler which is used to compile .PLD files written in CUPL, ultimately to be burned into programmable logic devices.<br />
+<a href="https://en.wikipedia.org/wiki/Macrocell_array">Macrocell</a> - A block of logic gates that is used multiple times within a PLD. Typically, there is one macrocell for each output, however, more complex devices can have more macrocells than outputs, allowing "buried" or "internal" logic.<br />
+
+
+<a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">CUPL</a> - A early (1983) programming language used to define the behavior of digital logic gates. "Compiler for Universal Programmable Logic.", is essentially a predecessor to languages like Verilog/VHDL. CUPL.EXE is the compiler which is used to compile .PLD files written in CUPL, ultimately to be burned into programmable logic devices.<br />
 <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end/IDE to the CUPL compiler and related programs<br />
-<a href="https://en.wikipedia.org/wiki/Macrocell_array">Macrocell</a> - A block of logic gates that is used multiple times within a PLD. Typically, there is one macrocell for each output, however, more complex devices can have more macrocells than outputs, allowing "buried" or "internal" logic.
-<a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">CUPL</a> - Compiler for Universal Programmable Logic. (A old programming language for logic. Modern examples would be Verilog/VHDL). WinCUPL includes a version of CUPL.EXE to compile .PLD files into a .JED file. Assisted Technology released CUPL in September 1983.<br />
+
 <a href="">.TT2</a> - The Berkeley PLA netlist format which CUPL.EXE can generate that can be used by the Atmel fitters.<br />
 <a href="https://en.wikipedia.org/wiki/EDIF">EDIF</a> - Another type of netlist format which also is usable by the Atmel fitters. Yosys is capable of generating this format, however, one will still need a techmap.<br />
 <a href="https://en.wikipedia.org/wiki/Place_and_route">Fitter</a> - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the ATF150x CPLD devices. In more modern parlance, this is basically place & route.<br />
 <a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device.<br />
 .SVF File - Serial Vector Format. This file can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.<br />
+CSIM - A tool for simulating the behavior of logic. This takes an .SI file and produces an .SO file.
+
+
 <a href="https://www.winehq.org/">Wine</a> - Wine is not an emulator. Allows running Windows programs under Linux.<br />
-CSIM - A tool for simulating the behavior of logic. This takes a .SI and produces a .SO files.<br />
+
 
 # Writing logic for these parts: Possible Workflows
 Each of these subsections represents a potential workflow to design logic equations for these parts. The majority of the focus will be on modern methods.
@@ -53,7 +58,7 @@ This diagram is from the help files built into WinCUPL:
 ![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
 
 ## Command line approach: CUPL & Your favorite text editor or IDE.
-This is probably the most solid approach assuming you are OK with using CUPL as a language and can operate on both Linux and Windows without trouble.
+This is probably the most solid approach assuming you are OK with using CUPL as a language. This approach can operate on both Linux and Windows without trouble.
 Since WinCUPL simply is a front-end / IDE on top of the CUPL.EXE compiler and related programs, one can write the desired logic in CUPL, save it in a .PLD file using their favorite editor and have CUPL.EXE compile it into a .JED file for programming into a PLD. CPLD parts will require the additional step of using a fitter for the specific device to produce the .JED file.
 
 ![A detailed User's Guide to CUPL in PDF](vendor-docs/CUPL_USERS_GUIDE.pdf)
