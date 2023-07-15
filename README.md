@@ -113,7 +113,8 @@ where
 </code>
 </details>
 
-<details><summary>Expand here if you are interested in using VS Code as an IDE</summary>
+<details>
+<summary>Expand here if you are interested in using VS Code as an IDE</summary>
 Recently, two different extensions for VS Code for CUPL have been written:
 * https://marketplace.visualstudio.com/items?itemName=tlgkccampbell.code-cupl
   * This one handles just syntax highlighting for CUPL .PLD files
@@ -320,9 +321,9 @@ https://github.com/hneemann/Digital
 ## Yosys (Open Source with Atmel Fitters, experimental)
 In theory, one can use Yosys Open SYnthesis Suite (Yosys) with the help of the Atmel Fitters a specific CPLD and a techmap to produce .JED files. This is a bit more experimental, but some have managed to make this work. This allows an almost entirely open-source workflow using Verilog, and probably <a href="https://icestudio.io/">Icestudio</a> if one prefers schematic capture as well. A good place to start would be using the <a href="https://github.com/YosysHQ/oss-cad-suite-build">OSS CAD Suite</a> to get the big parts of the suite set up. After that, there are two approaches to making this work:
 * https://github.com/whitequark/prjbureau
-** prjbureau demonstrates going from RTLIL to a .JED file
+  * prjbureau demonstrates going from RTLIL to a .JED file
 * https://github.com/hoglet67/atf15xx_yosys/
-** This example goes from plain old verilog into a .JED file by implementing a techmap.
+  * This example goes from plain old verilog into a .JED file by implementing a techmap.
 
 # Programming / Burning and Device Information
 There are a few choices on how the part can actually be programmed depending on whether it supports JTAG.
