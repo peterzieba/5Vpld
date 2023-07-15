@@ -32,10 +32,13 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 <a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">CUPL</a> - A early (1983) programming language used to define the behavior of digital logic gates. "Compiler for Universal Programmable Logic.", is essentially a predecessor to languages like Verilog/VHDL. CUPL.EXE is the compiler which is used to compile .PLD files written in CUPL, ultimately to be burned into programmable logic devices.<br />
 <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end/IDE to the CUPL compiler and related programs<br />
 
-<a href="">.TT2</a> - The Berkeley PLA netlist format which CUPL.EXE can generate that can be used by the Atmel fitters.<br />
-<a href="https://en.wikipedia.org/wiki/EDIF">EDIF</a> - Another type of netlist format which also is usable by the Atmel fitters. Yosys is capable of generating this format, however, one will still need a techmap.<br />
+<a href="https://en.wikipedia.org/wiki/Netlist">Netlist</a> - A netlist is essentially an electrical schematic which defines connections. For the purposes here, it is an intermediary file format (Either EDIF or Berkeley PLA), which is used to describe the behavior of logic ultimately fed into the fitter.<br />
+<a href="">.TT2</a> - The Berkeley PLA file format. An intermediary file which CUPL.EXE can generate that can be used by the Atmel fitters.<br />
+<a href="https://en.wikipedia.org/wiki/EDIF">EDIF</a> - Another type of netlist format which is also usable by the Atmel fitters. Yosys is capable of generating this format, however, one will still need a techmap.<br />
 <a href="https://en.wikipedia.org/wiki/Place_and_route">Fitter</a> - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the ATF150x CPLD devices. In more modern parlance, this is basically place & route.<br />
-<a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device.<br />
+<a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device.
+
+
 .SVF File - Serial Vector Format. This file can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.<br />
 CSIM - A tool for simulating the behavior of logic. This takes an .SI file and produces an .SO file.
 
@@ -252,7 +255,8 @@ Copyright 1999,2000 Atmel Corporation
 </code>
 
 Advanced help options:
-<code>Atmel ATF1502 Fitter Version 1918 (3-21-07)
+<code>
+Atmel ATF1502 Fitter Version 1918 (3-21-07)
 Copyright 1999,2000 Atmel Corporation
    -strategy c [command file name]
    -strategy ifmt (input file format) [TT | edif]
