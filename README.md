@@ -411,3 +411,24 @@ Creating a .SI file:<br />
 * An .SI file should have the same header information as the original .PLD source file. If not, this will generate warnings.
 * Comments begin with a /* and end with a */
 * An .SI file can have the following keywords/statements: ORDER, BASE, and VECTORS
+  * The ORDER keyword is used to list the variable / inputs and outputs to be used in the simulation table, and to define how they are displayed. Typically, the variable names are the same as those in the corresponding CUPL logic description file.
+  * The BASE keyword specifies a number base
+  * The VECTORS keyboard specifies a list of test vectors (signals that are applied and expected outputs).
+
+<details>
+<summary>Expand for a list of valid Test Values used in a test vector</summary>
+<code>0 Drive input LO (0 volts) (negate active-HI input)
+1 Drive input HI (+5 volts) (assert active-HI input)
+C Drive (clock) input LO, HI, LO
+K Drive (clock) input HI, LO, HI
+L Test output LO (0 volts) (active-HI output negated)
+H Test output HI (+5 volts) (active-HI output asserted)
+Z Test output for high impedance
+X Input HI or LO, output HI or LO Note: Not all device programmers treat X on inputs the same; some put it to 0, some allow input to be pulled to 1, and some leave it at the previous value.
+N Output not tested
+P Preload internal registers (value is applied to !Q output)
+* Outputs only -simulator determines test value and substitutes in vector
+' ' Enclose input values to be expanded to a specified BASE (octal, decimal, or hex). Valid values are 0-F and X.
+“ ” Enclose output values to be expanded to a specified BASE (octal, decimal, or hex.) Valid values are 0-F, H, L, Z, and X.
+</code>
+</details>
