@@ -359,6 +359,8 @@ Programming algorithms were seldom documented on datasheets for a part. Usually,
 These parts require an EPROM programmer, and ideally one from the time period during which these parts were in vogue. <span style="color: red;">Additionally, an important gotcha' is that there are many manufacturers of these parts as well as variants within a manufacturer. While the fusemap may be compatible across variants (GAL16V8 from Lattice vs. the ATF16V8 from Atmel/Microchip), THE PROGRAMMING ALGORITHMS ARE NOT! You will need an EPROM programmer with support for the EXACT manufacturer and EXACT part number of the device you have.</span> Furthermore, many have reported issues with modern low-cost programmers in the past (Gecu / Autoelectric TL866 and similar). There is a good chance that the algorithms have been updated to address these problems.
 
 ## CPLD Devices (ATF1502, ATF1504, ATF1508)
+IMPORTANT: If you are relying on JTAG to program your parts, you probably want to use <code>"PROPERTY ATMEL {JTAG=ON};</code> in your .PLD file. If you are not using CUPL.EXE, you will need to pass <code>-strategy JTAG = ON</code> to the fitter. Otherwise, the resulting .JED file will disable the JTAG pins, and you will need a special device programmer to erase/reprogram the device.
+
 These parts can be programmed via JTAG, so there are a few options.
 * Official programmer: https://www.kanda.com/CPLD-Programmers.175.html
   * Software: https://www.microchip.com/en-us/development-tool/ATMISP
