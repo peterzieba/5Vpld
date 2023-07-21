@@ -311,6 +311,7 @@ Copyright 1999,2000 Atmel Corporation
 
 Other people's workflows:
 * https://github.com/willie68/WCPLD
+* https://github.com/Manawyrm/PAL-GAL-CI
 
 ## Absurd approach: Fusemaps by hand
 * See this <a href="https://blog.frankdecaire.com/2017/01/22/generic-array-logic-devices/">blog post</a> by Frank DeCaire.
