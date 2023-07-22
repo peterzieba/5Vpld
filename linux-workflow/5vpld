@@ -19,6 +19,8 @@ CUPL_SIMULATION_OPTIONS="sw" #These options are added only if a .SI file is foun
 # -s run simulation. Expects a .SI file to be present, generates an .SO file. If -j is specified, will append test vectors to the .JED file. Automatically implies -a generation of an .ABS file.
 # -w run simulation. Expects a .SI file to be present, genrates a .w file. Automatically inplies -a generation of an .ABS file.
 
+#Known issues:
+#we should probably insist that the find150x.exe files be replaced with the corresponding fit150x.exe files in the fitters directory. This might be preventing the fitters from being called automatically when working with CPLD parts that use a fitter.
 
 RED='\033[0;31m'
 NC='\033[0m' # No Color
@@ -115,5 +117,6 @@ fi
 echo "Running WinCUPL with the following command line: "
 echo "c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl $1"
 echo "\n"
-WINEDEBUG="fixme-hid,fixme-ntdll" wine c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl "$1"
+#We supress the most common wine debug warnings. There is still one "fixme:imm" that seems to be coming from a child process.
+WINEDEBUG="fixme-hid,fixme-ntdll,fixme-imm" wine c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl "$1"
 
