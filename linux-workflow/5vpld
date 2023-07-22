@@ -3,6 +3,7 @@
 CUPL_DEFAULT_OPTIONS="m1jn" #These are the options that will be passed to the CUPL.EXE compiled
 CUPL_SIMULATION_OPTIONS="sw" #These options are added only if a .SI file is found.
 
+
 #A summary of the most relevant/important options to CUPL is here. See documentation for a full list/explanation.
 #
 #-m1 quick minimization
@@ -26,6 +27,11 @@ if [ $# -ne 1 ] #Make sure we passed options to CUPL.EXE
   then
     echo "Please pass the name of a .PLD file to be compiled"
     echo "This script will attempt to compile it using CUPL.EXE"
+
+    echo "Additionally, this script assumes you have installed WinCUPL into the default directory of c:/Wincupl,"
+    echo "within the default wine prefix, and have replaced the fitters from the latest version from Atmel Prochip."
+    echo "A future version might simply try to make this work without WinCUPL installation as only the CUPL compiler and the fitters are required."
+    echo "For now this remains the recommended workflow and WinCUPL does come with decent examples and help files."
     exit 1
 fi
 
