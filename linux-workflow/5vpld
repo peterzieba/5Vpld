@@ -1,0 +1,84 @@
+#!/bin/sh
+
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+if [ $# -ne 1 ]
+  then
+    echo "Please pass the name of a .PLD file to be compiled"
+    echo "This script will attempt to compile it using CUPL.EXE"
+    exit 1
+fi
+
+#CUPLPATH=`winepath -u "c:/Wincupl/Shared/cupl.exe"`
+
+FILENAME=$1
+
+#Since CUPL.EXE accepts files without an extension, we try to do the same and append the extension if necessary.
+#We're actually going through this trouble to get a true filename length.
+if [ ! -f "$1" ]; then
+    if [ -f ${1}.pld ]; then
+	echo "Appending .pld to input filename."
+        FILENAME="$1.pld"
+        continue
+    fi
+    if [ -f ${1}.PLD ]; then
+	echo "Appending .PLD to input filename."
+        FILENAME="$1.PLD"
+        continue
+    fi
+fi
+
+if [ ! -f "${FILENAME}" ]; then
+    echo "Cannot find file: $FILENAME"
+    exit 1
+fi
+
+#Too long filenames is a horrible bug in CSIM.EXE that took forever to figure out.
+if [ ${#FILENAME} -gt 19 ]; then
+    printf "${RED}ERROR: Filenames longer than 19 characters cause problems with CSIM.EXE${NC}\n"
+    exit 1
+fi
+
+
+#We check to see what version of fitters are installed.
+FIT1502PATH=`WINEDEBUG="fixme-hid" winepath -u "c:/Wincupl//WinCupl/Fitters/fit1502.exe"`
+FIT1504PATH=`WINEDEBUG="fixme-hid" winepath -u "c:/Wincupl//WinCupl/Fitters/fit1504.exe"`
+FIT1508PATH=`WINEDEBUG="fixme-hid" winepath -u "c:/Wincupl//WinCupl/Fitters/fit1508.exe"`
+
+SUMFAIL=false
+
+if [ "fbcd61cd5348b05000ccad3d0e08cf8a8fb94538" != `sha1sum $FIT1502PATH | awk '{print $1}'` ]; then
+    echo "FIT1502.exe checksum failure."
+    SUMFAIL=true
+fi
+
+if [ "e99b14f68fa5de131aa388503535c51ecdf31295" != `sha1sum $FIT1504PATH | awk '{print $1}'` ]; then
+    echo "FIT1504.exe checksum failure."
+    SUMFAIL=true
+fi
+
+if [ "5f1ef6d220466dff8ac031acbce4e7a55dfed153" != `sha1sum $FIT1508PATH | awk '{print $1}'` ]; then
+    echo "FIT1508.exe checksum failure."
+    SUMFAIL=true
+fi
+
+if [ $SUMFAIL = "true" ]; then
+    echo "\nIt looks like you might be using the original fitters that came with WinCUPL.\nPlease extract and replace the fitters with the latest from:"
+    echo "https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip"
+    exit 4
+fi
+
+
+#m1 quick minimization
+#l  create listing file
+#x create expanded product-terms in documentation file
+#f create fuse plot/chip diagram in documentation file
+#j jedec file
+#n use name of input file for output file
+#a create absolute file
+#b create berkeley pla format
+#e create expanded macro definitions
+
+WINEDEBUG="fixme-hid,fixme-ntdll" WINEPREFIX=/home/owner/.wine wine c:/Wincupl/Shared/cupl.exe -m1jnsw -u c:/Wincupl/Shared/cupl.dl "$1"
+
