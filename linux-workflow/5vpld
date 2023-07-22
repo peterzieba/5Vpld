@@ -17,12 +17,12 @@ FILENAME=$1
 #Since CUPL.EXE accepts files without an extension, we try to do the same and append the extension if necessary.
 #We're actually going through this trouble to get a true filename length.
 if [ ! -f "$1" ]; then
-    if [ -f ${1}.pld ]; then
+    if [ -f "${1}.pld" ]; then
 	echo "Appending .pld to input filename."
         FILENAME="$1.pld"
         continue
     fi
-    if [ -f ${1}.PLD ]; then
+    if [ -f "${1}.PLD" ]; then
 	echo "Appending .PLD to input filename."
         FILENAME="$1.PLD"
         continue
@@ -70,15 +70,18 @@ if [ $SUMFAIL = "true" ]; then
 fi
 
 
-#m1 quick minimization
-#l  create listing file
-#x create expanded product-terms in documentation file
-#f create fuse plot/chip diagram in documentation file
-#j jedec file
-#n use name of input file for output file
-#a create absolute file
-#b create berkeley pla format
-#e create expanded macro definitions
+#-m1 quick minimization
+# -l  create listing file
+# -x create expanded product-terms in documentation file
+# -f create fuse plot/chip diagram in documentation file
+# -j create jedec file. If -s is specified, CSIM will append test vectors to the .JED file.
+# -n use name of input file for output file
+# -a create absolute file
+# -b create berkeley pla format
+# -e create expanded macro definitions
+#
+# -s run simulation. Expects a .SI file to be present, generates an .SO file. If -j is specified, will append test vectors to the .JED file. Automatically implies -a generation of an .ABS file.
+# -w run simulation. Expects a .SI file to be present, genrates a .w file. Automatically inplies -a generation of an .ABS file.
 
 WINEDEBUG="fixme-hid,fixme-ntdll" WINEPREFIX=/home/owner/.wine wine c:/Wincupl/Shared/cupl.exe -m1jnsw -u c:/Wincupl/Shared/cupl.dl "$1"
 
