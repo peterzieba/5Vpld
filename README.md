@@ -77,7 +77,7 @@ Examples run under Wine would look like this:
 
 <code>wine c:/Wincupl/Shared/cupl.exe -m1lxfjnabep -u c:/Wincupl/Shared/cupl.dl your-code.PLD</code>
 
-WARNING: Limit your the length of your filenames to 15 characters before the file extension (19 characters total). Otherwise, CSIM.EXE seems to run into weird errors.
+WARNING: Limit your the length of your filenames to 15 characters before the file extension (19 characters total). Otherwise, CSIM.EXE seems to throw an error in the .SO file along the lines of <code>[0001sa] could not open:  terrible-long-fn....H.jed</code>
 
 Additionally, if you are targeting a CPLD (ATF150x) for which CUPL.EXE does not have direct support, you will need to run:
 
