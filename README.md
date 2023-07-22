@@ -77,6 +77,8 @@ Examples run under Wine would look like this:
 
 <code>wine c:/Wincupl/Shared/cupl.exe -m1lxfjnabep -u c:/Wincupl/Shared/cupl.dl your-code.PLD</code>
 
+WARNING: Limit your the length of your filenames to 15 characters before the file extension (19 characters total). Otherwise, CSIM.EXE seems to run into weird errors.
+
 Additionally, if you are targeting a CPLD (ATF150x) for which CUPL.EXE does not have direct support, you will need to run:
 
 <code>wine c:/Wincupl/WinCupl/Fitters/fit1502.exe -i your-code.tt2 -dev P1502T44 -DEBUG on -Verilog_sim VERILOG -Out_Edif ON</code>
