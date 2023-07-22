@@ -25,20 +25,21 @@ NC='\033[0m' # No Color
 
 if [ $# -ne 1 ] #Make sure we passed options to CUPL.EXE
   then
-    echo "Please pass the name of a .PLD file to be compiled"
-    echo "This script will attempt to compile it using CUPL.EXE"
-
-    echo "Additionally, this script assumes you have installed WinCUPL into the default directory of c:/Wincupl,"
+    echo "5vpld CUPL Compiler Helper - A light wrapper on top of CUPL.EXE"
+    echo "USAGE: Please pass the name of a .PLD file to be compiled"
+    echo "This script will attempt to compile it using reasonable defaults passed to CUPL.EXE"
+    echo ""
+    echo "This script assumes you have installed WinCUPL into the default directory of c:/Wincupl,"
     echo "within the default wine prefix, and have replaced the fitters from the latest version from Atmel Prochip."
-    echo "A future version might simply try to make this work without WinCUPL installation as only the CUPL compiler and the fitters are required."
-    echo "For now this remains the recommended workflow and WinCUPL does come with decent examples and help files."
+    echo "A future release might simply try to make this work without WinCUPL installation as only the CUPL compiler and the fitters are required."
+    echo "For now this remains the recommended workflow as WinCUPL does come with decent examples and help files."
     exit 1
 fi
 
 FILENAME=$1
 
-#Since CUPL.EXE accepts files without an extension, we try to do the same and append the extension if necessary.
-#We're actually going through this trouble to get a true filename length.
+#Since CUPL.EXE accepts files with or without a file extension, we try to do the same and append the extension if necessary.
+#We'd simply pass $1 directly to CUPL.EXE but we really want to identify the actual filename as the length is important (too long or multiple periods and it breaks CSIM.EXE).
 if [ ! -f "$1" ]; then
     if [ -f "${1}.pld" ]; then
 	echo "Appending .pld to input filename."
@@ -106,7 +107,7 @@ fi
 if [ $SUMFAIL = "true" ]; then
     echo "\nIt looks like you might be using the original fitters that came with WinCUPL.\nPlease extract and replace the fitters with the latest from:"
     echo "https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip"
-    echo "They should identify as \"Version 1918 (3-21-07)\" run from the command line:"
+    echo "They should identify as \"Version 1918 (3-21-07)\" when run from the command line:"
     exit 4
 fi
 
@@ -114,5 +115,5 @@ fi
 echo "Running WinCUPL with the following command line: "
 echo "c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl $1"
 echo "\n"
-WINEDEBUG="fixme-hid,fixme-ntdll" WINEPREFIX=/home/owner/.wine wine c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl "$1"
+WINEDEBUG="fixme-hid,fixme-ntdll" wine c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl "$1"
 
