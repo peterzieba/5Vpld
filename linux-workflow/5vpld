@@ -1,16 +1,33 @@
 #!/bin/sh
 
+CUPL_DEFAULT_OPTIONS="m1jn" #These are the options that will be passed to the CUPL.EXE compiled
+CUPL_SIMULATION_OPTIONS="sw" #These options are added only if a .SI file is found.
+
+#A summary of the most relevant/important options to CUPL is here. See documentation for a full list/explanation.
+#
+#-m1 quick minimization
+# -l  create listing file
+# -x create expanded product-terms in documentation file
+# -f create fuse plot/chip diagram in documentation file
+# -j create jedec file. If -s is specified, CSIM will append test vectors to the .JED file.
+# -n use name of input file for output file
+# -a create absolute file
+# -b create berkeley pla format
+# -e create expanded macro definitions
+#
+# -s run simulation. Expects a .SI file to be present, generates an .SO file. If -j is specified, will append test vectors to the .JED file. Automatically implies -a generation of an .ABS file.
+# -w run simulation. Expects a .SI file to be present, genrates a .w file. Automatically inplies -a generation of an .ABS file.
+
+
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-if [ $# -ne 1 ]
+if [ $# -ne 1 ] #Make sure we passed options to CUPL.EXE
   then
     echo "Please pass the name of a .PLD file to be compiled"
     echo "This script will attempt to compile it using CUPL.EXE"
     exit 1
 fi
-
-#CUPLPATH=`winepath -u "c:/Wincupl/Shared/cupl.exe"`
 
 FILENAME=$1
 
@@ -36,12 +53,29 @@ fi
 
 #Too long filenames is a horrible bug in CSIM.EXE that took forever to figure out.
 if [ ${#FILENAME} -gt 19 ]; then
-    printf "${RED}ERROR: Filenames longer than 19 characters cause problems with CSIM.EXE${NC}\n"
+    printf "${RED}ERROR: Filenames longer than 19 total characters cause problems with CSIM.EXE\nUse 15 characters max for filename + 1 dot + 3 file extension.${NC}\n"
     exit 1
 fi
 
+#Multiple periods in the filename also cause CSIM.EXE to break.
+if [ `echo ${FILENAME} | grep -o "\." | wc -l` -gt 1 ]; then
+    printf "${RED}ERROR: Filenames containing more than one period cause problems with CSIM.EXE\nFilenames should only contain 1 period.${NC}\n"
+    exit 1
+fi
 
-#We check to see what version of fitters are installed.
+BASEFILENAME=${FILENAME%.*} #This strips off the file extension
+
+#If we detect a corresponding .SI file, then we pass the -s and -w options to CUPL.EXE so that simulation is performed.
+if [ -f "${BASEFILENAME}.SI" ]; then
+    SIMFILENAME="${BASEFILENAME}.SI"
+elif [ -f "${BASEFILENAME}.si" ]; then
+    SIMFILENAME="${BASEFILENAME}.si"
+else
+    echo "WARNING: Corresponding .SI input file not found. Simulation / Test vector generation will not be performed."
+    CUPL_SIMULATION_OPTIONS=""
+fi
+
+#We check to see if the latest known version of fitters are installed.
 FIT1502PATH=`WINEDEBUG="fixme-hid" winepath -u "c:/Wincupl//WinCupl/Fitters/fit1502.exe"`
 FIT1504PATH=`WINEDEBUG="fixme-hid" winepath -u "c:/Wincupl//WinCupl/Fitters/fit1504.exe"`
 FIT1508PATH=`WINEDEBUG="fixme-hid" winepath -u "c:/Wincupl//WinCupl/Fitters/fit1508.exe"`
@@ -66,22 +100,13 @@ fi
 if [ $SUMFAIL = "true" ]; then
     echo "\nIt looks like you might be using the original fitters that came with WinCUPL.\nPlease extract and replace the fitters with the latest from:"
     echo "https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip"
+    echo "They should identify as \"Version 1918 (3-21-07)\" run from the command line:"
     exit 4
 fi
 
-
-#-m1 quick minimization
-# -l  create listing file
-# -x create expanded product-terms in documentation file
-# -f create fuse plot/chip diagram in documentation file
-# -j create jedec file. If -s is specified, CSIM will append test vectors to the .JED file.
-# -n use name of input file for output file
-# -a create absolute file
-# -b create berkeley pla format
-# -e create expanded macro definitions
-#
-# -s run simulation. Expects a .SI file to be present, generates an .SO file. If -j is specified, will append test vectors to the .JED file. Automatically implies -a generation of an .ABS file.
-# -w run simulation. Expects a .SI file to be present, genrates a .w file. Automatically inplies -a generation of an .ABS file.
-
-WINEDEBUG="fixme-hid,fixme-ntdll" WINEPREFIX=/home/owner/.wine wine c:/Wincupl/Shared/cupl.exe -m1jnsw -u c:/Wincupl/Shared/cupl.dl "$1"
+#Time to run CUPL.EXE
+echo "Running WinCUPL with the following command line: "
+echo "c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl $1"
+echo "\n"
+WINEDEBUG="fixme-hid,fixme-ntdll" WINEPREFIX=/home/owner/.wine wine c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl "$1"
 
