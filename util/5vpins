@@ -61,13 +61,13 @@ def get_part_attributes(xml_root, part_name):
     #    print(part.attrib)
     #    print(part.attrib)
 
-def get_library_pin_pad_mapping(xml_root, lib_name="5vpld", dev_name="ATF1502AS*-TQFP", variant_name="AU44"):
-    # This part accepts details to search for a specific library entry in the schematic.
-    # It returns a dictionary whose key names are pins and values are a tuple with (pad,gate) inside.
+def get_library_pin_pad_mapping(xml_root, library, deviceset, device):
+    # This function accepts details to search for a specific library entry in the schematic.
+    # It returns a dictionary whose key names are pins. The corresponding values are tuples with (pad,gate) inside.
     pin_dict={}
 
     #Find the instance of the library for the part. Use this to create a mapping of pins to pads.
-    for lib in xml_root.findall("./drawing/schematic/libraries/library[@name='" + lib_name + "']/devicesets/deviceset[@name='" + dev_name + "']/devices/device[@name='" + variant_name + "']/connects"):
+    for lib in xml_root.findall("./drawing/schematic/libraries/library[@name='" + library + "']/devicesets/deviceset[@name='" + deviceset + "']/devices/device[@name='" + device + "']/connects"):
         #print(lib)
         #print(lib.attrib)
         connects=lib.findall('.//connect')
@@ -138,15 +138,15 @@ schematic_file = sys.argv[1]
 tree = ET.parse(schematic_file)
 root = tree.getroot()
 
-part_attributes=get_part_attributes(root, "IC4")
-pin_pad_map=get_library_pin_pad_mapping(root, part_attributes['library'])
-net_pin_map=get_nets_from_part(root, "IC4")
+part_attributes=get_part_attributes(root, part)
+pin_pad_map=get_library_pin_pad_mapping(root, part_attributes['library'], part_attributes['deviceset'], part_attributes['device'])
+net_pin_map=get_nets_from_part(root, part)
 
-#print(part_attributes)
-#print("\n")
-#print(pin_pad_map)
-#print("\n")
-#print(net_pin_map)
+print(part_attributes)
+print("\n")
+print(pin_pad_map)
+print("\n")
+print(net_pin_map)
 
 #List of pin names we exclude that should not be defined in CUPL (power, GND pins, etc.)
 pin_suppress_list = ("GND", "VCCIO", "VCCINT", "VCC")
