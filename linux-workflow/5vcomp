@@ -1,7 +1,7 @@
 #!/bin/sh
 
-CUPL_DEFAULT_OPTIONS="m1jn" #These are the options that will be passed to the CUPL.EXE compiled
-CUPL_SIMULATION_OPTIONS="sw" #These options are added only if a .SI file is found.
+CUPL_DEFAULT_OPTIONS="m1jn" #These are the options that will be passed to the CUPL.EXE compiler
+CUPL_SIMULATION_OPTIONS="sw" #These options are added only if an .SI file is found.
 
 
 #A summary of the most relevant/important options to CUPL is here. See documentation for a full list/explanation.
@@ -17,24 +17,80 @@ CUPL_SIMULATION_OPTIONS="sw" #These options are added only if a .SI file is foun
 # -e create expanded macro definitions
 #
 # -s run simulation. Expects a .SI file to be present, generates an .SO file. If -j is specified, will append test vectors to the .JED file. Automatically implies -a generation of an .ABS file.
-# -w run simulation. Expects a .SI file to be present, genrates a .w file. Automatically inplies -a generation of an .ABS file.
+# -w run simulation. Expects a .SI file to be present, genrates a .w file. Automatically implies -a generation of an .ABS file.
 
 #Known issues:
 #we should probably insist that the find150x.exe files be replaced with the corresponding fit150x.exe files in the fitters directory. This might be preventing the fitters from being called automatically when working with CPLD parts that use a fitter.
 
 RED='\033[0;31m'
+GRN='\033[1;32m'
+CYN='\033[1;36m'
+YEL='\033[1;33m'
 NC='\033[0m' # No Color
+
+printf "${CYN}5vpld CUPL Compiler Helper - A light wrapper on top of CUPL.EXE${NC}\n\n"
+
+#Standard error regarding prerequisites
+prerequisite_error()
+{
+    printf "\nThis script requires the following:\n"
+    printf "* Wine is installed, and assumes the default prefix is used.\n"
+    printf "* WinCUPL is installed into the default path of c:/Wincupl\n"
+    printf "* The fitters inside of c:/Wincupl//WinCupl/Fitters/\n"
+    printf "  have been replaced with the latest version (available inside Atmel Prochip)\n\n"
+    printf "A future release might simply try to make this work without WinCUPL installation as only the CUPL compiler and the fitters are required.\n"
+    printf "For now this remains the recommended workflow as WinCUPL does come with decent examples and help files.\n\n"
+    exit 3
+}
+
+#We check the version of Wine installed:
+WINE_VERSION=`wine --version`
+if [ $? -ne 0 ]; then
+    printf "${RED}ERROR: This script requires Wine to run. Could not determine version of wine installed.${NC}\n"
+    prerequisite_error
+fi
+
+#We check to see if the latest known version of fitters are installed.
+FIT1502PATH=`WINEDEBUG="fixme-hid" winepath -u "c:/Wincupl//WinCupl/Fitters/fit1502.exe"`
+FIT1504PATH=`WINEDEBUG="fixme-hid" winepath -u "c:/Wincupl//WinCupl/Fitters/fit1504.exe"`
+FIT1508PATH=`WINEDEBUG="fixme-hid" winepath -u "c:/Wincupl//WinCupl/Fitters/fit1508.exe"`
+
+if [ ! -f ${FIT1502PATH} ] || [ ! -f ${FIT1504PATH} ] || [ ! -f ${FIT1508PATH} ]; then
+    printf "${RED}ERROR: Could not find fitters inside of c:/Wincupl//WinCupl/Fitters/\nThis script assumes the following\n* You have installed WinCUPL into the default path c:/Wincupl${NC}\n"
+    prerequisite_error
+fi
+
+SUMFAIL=false
+
+if [ "fbcd61cd5348b05000ccad3d0e08cf8a8fb94538" != `sha1sum $FIT1502PATH | awk '{print $1}'` ]; then
+    echo "FIT1502.exe checksum failure."
+    SUMFAIL=true
+fi
+
+if [ "e99b14f68fa5de131aa388503535c51ecdf31295" != `sha1sum $FIT1504PATH | awk '{print $1}'` ]; then
+    echo "FIT1504.exe checksum failure."
+    SUMFAIL=true
+fi
+
+if [ "5f1ef6d220466dff8ac031acbce4e7a55dfed153" != `sha1sum $FIT1508PATH | awk '{print $1}'` ]; then
+    echo "FIT1508.exe checksum failure."
+    SUMFAIL=true
+fi
+
+if [ $SUMFAIL = "true" ]; then
+    printf "${RED}ERROR: Fitter version incorrect.${NC}\n"
+    echo "\nIt looks like you might be using the original fitters that came with WinCUPL.\nPlease extract and replace the fitters with the latest from:"
+    echo "https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip"
+    echo "They should identify as \"Version 1918 (3-21-07)\" when run from the command line:"
+    prerequisite_error
+fi
+
 
 if [ $# -ne 1 ] #Make sure we passed options to CUPL.EXE
   then
-    echo "5vpld CUPL Compiler Helper - A light wrapper on top of CUPL.EXE"
-    echo "USAGE: Please pass the name of a .PLD file to be compiled"
-    echo "This script will attempt to compile it using reasonable defaults passed to CUPL.EXE"
-    echo ""
-    echo "This script assumes you have installed WinCUPL into the default directory of c:/Wincupl,"
-    echo "within the default wine prefix, and have replaced the fitters from the latest version from Atmel Prochip."
-    echo "A future release might simply try to make this work without WinCUPL installation as only the CUPL compiler and the fitters are required."
-    echo "For now this remains the recommended workflow as WinCUPL does come with decent examples and help files."
+    printf "USAGE: Please pass the name of a .PLD file to be compiled. Ex:\n"
+    printf "${YEL}5vcomp COUNTER.PLD${NC}\n\n"
+    printf "This script will attempt to compile it using reasonable defaults passed to CUPL.EXE\n\n"
     exit 1
 fi
 
@@ -44,19 +100,19 @@ FILENAME=$1
 #We'd simply pass $1 directly to CUPL.EXE but we really want to identify the actual filename as the length is important (too long or multiple periods and it breaks CSIM.EXE).
 if [ ! -f "$1" ]; then
     if [ -f "${1}.pld" ]; then
-	echo "Appending .pld to input filename."
+	printf "${GRN}Appending .pld to input filename.${NC}\n"
         FILENAME="$1.pld"
         continue
     fi
     if [ -f "${1}.PLD" ]; then
-	echo "Appending .PLD to input filename."
+	printf "${GRN}Appending .PLD to input filename.${NC}\n"
         FILENAME="$1.PLD"
         continue
     fi
 fi
 
 if [ ! -f "${FILENAME}" ]; then
-    echo "Cannot find file: $FILENAME"
+    printf "${RED}ERROR: Cannot find file: ${FILENAME}${NC}\n"
     exit 1
 fi
 
@@ -84,39 +140,10 @@ else
     CUPL_SIMULATION_OPTIONS=""
 fi
 
-#We check to see if the latest known version of fitters are installed.
-FIT1502PATH=`WINEDEBUG="fixme-hid" winepath -u "c:/Wincupl//WinCupl/Fitters/fit1502.exe"`
-FIT1504PATH=`WINEDEBUG="fixme-hid" winepath -u "c:/Wincupl//WinCupl/Fitters/fit1504.exe"`
-FIT1508PATH=`WINEDEBUG="fixme-hid" winepath -u "c:/Wincupl//WinCupl/Fitters/fit1508.exe"`
-
-SUMFAIL=false
-
-if [ "fbcd61cd5348b05000ccad3d0e08cf8a8fb94538" != `sha1sum $FIT1502PATH | awk '{print $1}'` ]; then
-    echo "FIT1502.exe checksum failure."
-    SUMFAIL=true
-fi
-
-if [ "e99b14f68fa5de131aa388503535c51ecdf31295" != `sha1sum $FIT1504PATH | awk '{print $1}'` ]; then
-    echo "FIT1504.exe checksum failure."
-    SUMFAIL=true
-fi
-
-if [ "5f1ef6d220466dff8ac031acbce4e7a55dfed153" != `sha1sum $FIT1508PATH | awk '{print $1}'` ]; then
-    echo "FIT1508.exe checksum failure."
-    SUMFAIL=true
-fi
-
-if [ $SUMFAIL = "true" ]; then
-    echo "\nIt looks like you might be using the original fitters that came with WinCUPL.\nPlease extract and replace the fitters with the latest from:"
-    echo "https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip"
-    echo "They should identify as \"Version 1918 (3-21-07)\" when run from the command line:"
-    exit 4
-fi
-
 #Time to run CUPL.EXE
-echo "Running WinCUPL with the following command line: "
-echo "c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl $1"
+printf "${GRN}Running WinCUPL with the following command line: ${NC}\n"
+echo "${YEL}c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl ${1}${NC}"
 echo "\n"
-#We supress the most common wine debug warnings. There is still one "fixme:imm" that seems to be coming from a child process.
-WINEDEBUG="fixme-hid,fixme-ntdll,fixme-imm" wine c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl "$1"
+#We supress the most common wine debug warnings as none have been found to create issues with CUPL. There is still one "fixme:imm" that seems to be coming from a child process.
+WINEDEBUG="fixme-hid,fixme-ntdll,fixme-imm" wine c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl "${1}"
 

@@ -72,7 +72,6 @@ def parse_schematic_file(file_path, part_name):
 
 
 # Example usage
-#schematic_file = "/home/owner/Nextcloud/active/fadal-minicards/minicard-to-cpldmem.sch"  # Replace with the path to your EagleCAD schematic file
 #part = "IC1"  # Replace with the name of the part you want to search for
 part = sys.argv[1]
 schematic_file = sys.argv[2]
@@ -87,6 +86,3 @@ else:
     print(f"No nets or pins found for part '{part}'")
 
 
-# Example usage
-#schematic_file = "/home/owner/Nextcloud/active/fadal-minicards/minicard-to-cpldmem.sch"  # Replace with the path to your EagleCAD schematic file
-#part = "IC1"  # Replace with the name of the part you want to search for
