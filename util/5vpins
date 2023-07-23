@@ -1,11 +1,18 @@
 #!/usr/bin/python3
 
+#This is very much a work in progress....
+
 #This program takes an eaglecad .sch file and pulls out all of the net names and pin numbers for an IC.
 #The intent is to use this to generate pin-to-signalname mappings for FPGA/CPLD devices so that they can be used in verilog/CUPL/etc.
 
-#This is very much a work in progress....
+#Currently, this only supports Eaglecad schematic files and generates pin declarations intended for placement in a CUPL .PLD file.
 
-#It's also possible to run a script from eaglecad using system()
+#If you are using the ATF150x CPLD parts, you may want to consider placing the following in your .PLD file: PROPERTY ATMEL { preassign=keep };
+#The default for the Atmel Fitters is "try", which may reassign pins as necessary to make a design fit.
+#Only the "keep" option will prevent a .JED file from being generated should pin assignments be rearranged.
+#Check the output of the .FIT file to see what actually happened.
+
+#It's possible to run a script from eaglecad using system() in the command line. Maybe this is a direction for the future...
 
 #A word on PADs vs. PINs in Eaglecad:
 #A PAD belongs to the physical footprint of a chip, and so the number corresponds to this package. This is what we actually want.
