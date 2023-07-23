@@ -1,88 +1,153 @@
 #!/usr/bin/python3
 
 #This program takes an eaglecad .sch file and pulls out all of the net names and pin numbers for an IC.
-#The intent is to use this to generate pin-signal mappings for FPGA/CPLD devices in verilog.
+#The intent is to use this to generate pin-to-signalname mappings for FPGA/CPLD devices so that they can be used in verilog/CUPL/etc.
+
+#This is very much a work in progress....
 
 #It's also possible to run a script from eaglecad using system()
+
+#A word on PADs vs. PINs in Eaglecad:
+#A PAD belongs to the physical footprint of a chip, and so the number corresponds to this package. This is what we actually want.
+#A PIN belongs to the schematic symbol, and so it represents the logical function of the given IC's pin.
+#In the case of these PLD/CPLDs, the PAD and PIN are the same number, except in cases where the pins have unique or special functions.
+
+#General structure of an eaglecad schematic is:
+#<eagle>
+#  <drawing>
+#    <schematic>
+#      <libraries>                        #This has a mapping of the pins-pads from the library. We need to make sure we grab this for not just the right part, but the particular package, variant, subtype, etc. for the part.
+#      </libraries>
+#      <parts></parts>                    #This has a mapping of the instance of the part in the schematic (by its name) to the library (and package type) it uses.
+#      <sheets>
+#        <sheet>
+#          <instances></instances>
+#          <nets></nets>                  #This is where we get our net names from.
+#        </sheet>
+#      </sheets>    
+#    </schematic>
+#  </drawing>
+#</eagle>
+
 
 import xml.etree.ElementTree as ET
 import sys
 
-def parse_schematic_file(file_path, part_name):
-    # Parse the XML file
-    tree = ET.parse(file_path)
-    root = tree.getroot()
-
-    nets_and_pins = []
-    pin_suppress_list = ["GND", "VCCIO", "VCCINT"] #List of pin names we exclude (power, GND pins, etc.)
-
-    #First we find the mapping of the part to the library entry for it:
-    #Mapping of part name to library entry
-    # drawing/schematic/parts/
+def get_part_attributes(xml_root, part_name):
+    #This accepts the name of a part in the schematic (Something like IC4), and returns attributes for this part (things like the library it is from, the deviceset, the device, and the technology)
     #<part name="IC1" library="atmel-atf15xx" deviceset="ATF1502AS*-TQFP" device="AU44" technology="-7"/>
-    parts=root.findall("./drawing/schematic/parts/part[@name='" + part_name + "']")
+    #This ultimately lets us figure out what library entry to look in when we want to find a pin->pad mapping.
+    parts=xml_root.findall("./drawing/schematic/parts/part[@name='" + part_name + "']")
     if len(parts) == 1:
-        print("Library entry found for part: " + part_name)
-        #pass
-    elif len(parts) ==0:
+        #print("Library entry found for part: " + part_name)
+        pass
+    elif len(parts) == 0:
         print("Could not find library entry for part: " + part_name)
+        die()
     else:
         die("Multiple entries for part: " + part_name)
-    print(parts[0].attrib)
-    #for part in root.findall("./drawing/schematic/parts/part[@name='" + part_name + "']"):
+    #print("Printing all the attributes found for: " + part_name)
+    #print(parts[0].attrib) #These are things like the library it is from, the deviceset, the device, and the technology
+    #print("\n")
+    return(parts[0].attrib)
+    #for part in xml_root.findall("./drawing/schematic/parts/part[@name='" + part_name + "']"):
     #    print(part.attrib)
     #    print(part.attrib)
 
-    #Map pins to pads
-    for lib in root.findall("./drawing/schematic/libraries/library[@name='atmel-atf15xx']/devicesets/deviceset[@name='ATF1502AS*-TQFP']/devices/device[@name='AU44']/connects"):
+def get_library_pin_pad_mapping(xml_root, lib_name="5vpld", dev_name="ATF1502AS*-TQFP", variant_name="AU44"):
+    # This part accepts details to search for a specific library entry in the schematic.
+    # It returns a dictionary whose key names are pins and values are a tuple with (pad,gate) inside.
+    pin_dict={}
+
+    #Find the instance of the library for the part. Use this to create a mapping of pins to pads.
+    for lib in xml_root.findall("./drawing/schematic/libraries/library[@name='" + lib_name + "']/devicesets/deviceset[@name='" + dev_name + "']/devices/device[@name='" + variant_name + "']/connects"):
         #print(lib)
         #print(lib.attrib)
         connects=lib.findall('.//connect')
         for connect in connects:
-            print("B3", end='')
             try:
-                print(connect.attrib)
+                #print(connect.attrib)
+                pin_dict[connect.attrib['pin']]=(connect.attrib['pad'],connect.attrib['gate'])
             except:
-                pass
+                print("Error processing")
+                die()
         #print(connects)
+    return(pin_dict)
+
+def get_nets_from_part(xml_root, part_name):
+    #returns a dictionary with keys of all of the nets associated with part_name. Values are the pin numbers
+    #There are tons of nets in a schematic, but we only want nets that have segments interacting with the given part_name (IC4, or whatever)
+    #So, we have to dig into the <segment> sections of each net,
+    # and then inside of each <pinref> section that belongs to a segment.
+    #The relevant <pinref> section will have an attribute called "part", which will correspond to the name of the CPLD's instance in the schematic (Like IC4)
+    #The remaining attributes are "gate" and "pin"
+    #We return a bunch of net_names and pin_numbers, which we can later cross-reference to the pad_numbers via the library for the part.
+
+    #nets_and_pins = []
+    net_dict={} #keys will be the name of the net, values will be the pin on the symbol belonging to part_name
 
     #./drawing/schematic/sheets/sheet/nets/net/
     # Find all nets used by a specific tags in the schematic
-    for net in root.iter('net'):
-        print(net)
-        #if net in net_suppress_list:
-        #    print(net)
-        #    continue
+    for net in xml_root.iter('net'):
+        #print(net.attrib)
         # Get all segment tags within the net
         segments = net.findall('.//segment')
         for segment in segments:
             # Check if the segment has a pinref referencing the specified part
             pinrefs = segment.findall('.//pinref')
             for pinref in pinrefs:
-                if pinref.attrib['part'] == part_name:
+                if pinref.attrib['part'] == part_name: #We only want segments that belong to the given part_name
                     # Get the net name and pin number
                     net_name = net.attrib['name']
-                    if(net_name.startswith("!")): #Rename any negated signals to more verilog-ish names
-                        net_name = net_name[1:] + "_n"
+                    #if(net_name.startswith("!")): #Rename any negated signals to more verilog-ish names
+                    #    net_name = net_name[1:] + "_n"
                     pin_number = pinref.attrib['pin']
-                    nets_and_pins.append((net_name, pin_number))
+                    #nets_and_pins.append((net_name, pin_number))
+                    net_dict[net_name]=pin_number
+    return net_dict
 
-    return nets_and_pins
+def cupl_safe_rename(netname):
+    #There are a number of reserved keywords and special characters that cannot be used in the name of a PIN declaration in CUPL.
+    #A small effort is made to catch some of them before they cause problems.
+    cupl_reserved_keywords=("APPEND","ASSEMBLY","ASSY","COMPANY","CONDITION","DATE","DEFAULT","DESIGNER","DEVICE","ELSE","FIELD","FLD","TABLE","FORMAT","FUNCTION","FUSE","GROUP","IF","JUMP","LOC","LOCATION","MACRO","MIN","NAME","NODE","OUT","PARTNO","PIN","PINNNODE","PRESENT","REV","REVISION","SEQUENCE","SEQUENCED","SEQUENCEJK","SEQUENCERS","SEQUENCET")
+    cupl_reserved_characters=("&","*",":",";","=","36","#","+",".",",","@","()","[]","..","!","$","-","/","/* */","'","^")
+    if netname in cupl_reserved_keywords:
+        print("Net name: " + netname + " is a CUPL reserved keyword. Renaming to _" + netname)
+        netname="_" + netname
+    netname=netname.replace("-","_") #Dashes will be interpreted as two variables. Cannot have this.
+    netname=netname.replace("/!","_") #
+    return(netname)
 
+def verilog_safe_rename(netname):
+    netname=netname.replace("-","_") #Verilog hates dashes
+    return(netname)
 
 
 # Example usage
 #part = "IC1"  # Replace with the name of the part you want to search for
-part = sys.argv[1]
-schematic_file = sys.argv[2]
+part = sys.argv[2]
+schematic_file = sys.argv[1]
 
-nets_and_pins = parse_schematic_file(schematic_file, part)
+tree = ET.parse(schematic_file)
+root = tree.getroot()
 
-if nets_and_pins:
-    print(f"Net names and pins for part '{part}':")
-    for net_name, pin_number in nets_and_pins:
-        print(f"Net Name: {net_name}, Pin Number: {pin_number}")
-else:
-    print(f"No nets or pins found for part '{part}'")
+part_attributes=get_part_attributes(root, "IC4")
+pin_pad_map=get_library_pin_pad_mapping(root, part_attributes['library'])
+net_pin_map=get_nets_from_part(root, "IC4")
 
+#print(part_attributes)
+#print("\n")
+#print(pin_pad_map)
+#print("\n")
+#print(net_pin_map)
 
+#List of pin names we exclude that should not be defined in CUPL (power, GND pins, etc.)
+pin_suppress_list = ("GND", "VCCIO", "VCCINT", "VCC")
+
+#Print CUPL-style pin declarations
+for net,pin in net_pin_map.items():
+    if pin not in pin_suppress_list:
+        #print(net + " " + pin + " " + pin_pad_map[pin][0])
+        print("PIN" + " " + pin_pad_map[pin][0].rjust(3, " ") + " = " + cupl_safe_rename(net) + ";")
+    #else:
+    #    print("Suppressing pin: " + pin)
