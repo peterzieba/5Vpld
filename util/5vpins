@@ -1,0 +1,92 @@
+#!/usr/bin/python3
+
+#This program takes an eaglecad .sch file and pulls out all of the net names and pin numbers for an IC.
+#The intent is to use this to generate pin-signal mappings for FPGA/CPLD devices in verilog.
+
+#It's also possible to run a script from eaglecad using system()
+
+import xml.etree.ElementTree as ET
+import sys
+
+def parse_schematic_file(file_path, part_name):
+    # Parse the XML file
+    tree = ET.parse(file_path)
+    root = tree.getroot()
+
+    nets_and_pins = []
+    pin_suppress_list = ["GND", "VCCIO", "VCCINT"] #List of pin names we exclude (power, GND pins, etc.)
+
+    #First we find the mapping of the part to the library entry for it:
+    #Mapping of part name to library entry
+    # drawing/schematic/parts/
+    #<part name="IC1" library="atmel-atf15xx" deviceset="ATF1502AS*-TQFP" device="AU44" technology="-7"/>
+    parts=root.findall("./drawing/schematic/parts/part[@name='" + part_name + "']")
+    if len(parts) == 1:
+        print("Library entry found for part: " + part_name)
+        #pass
+    elif len(parts) ==0:
+        print("Could not find library entry for part: " + part_name)
+    else:
+        die("Multiple entries for part: " + part_name)
+    print(parts[0].attrib)
+    #for part in root.findall("./drawing/schematic/parts/part[@name='" + part_name + "']"):
+    #    print(part.attrib)
+    #    print(part.attrib)
+
+    #Map pins to pads
+    for lib in root.findall("./drawing/schematic/libraries/library[@name='atmel-atf15xx']/devicesets/deviceset[@name='ATF1502AS*-TQFP']/devices/device[@name='AU44']/connects"):
+        #print(lib)
+        #print(lib.attrib)
+        connects=lib.findall('.//connect')
+        for connect in connects:
+            print("B3", end='')
+            try:
+                print(connect.attrib)
+            except:
+                pass
+        #print(connects)
+
+    #./drawing/schematic/sheets/sheet/nets/net/
+    # Find all nets used by a specific tags in the schematic
+    for net in root.iter('net'):
+        print(net)
+        #if net in net_suppress_list:
+        #    print(net)
+        #    continue
+        # Get all segment tags within the net
+        segments = net.findall('.//segment')
+        for segment in segments:
+            # Check if the segment has a pinref referencing the specified part
+            pinrefs = segment.findall('.//pinref')
+            for pinref in pinrefs:
+                if pinref.attrib['part'] == part_name:
+                    # Get the net name and pin number
+                    net_name = net.attrib['name']
+                    if(net_name.startswith("!")): #Rename any negated signals to more verilog-ish names
+                        net_name = net_name[1:] + "_n"
+                    pin_number = pinref.attrib['pin']
+                    nets_and_pins.append((net_name, pin_number))
+
+    return nets_and_pins
+
+
+
+# Example usage
+#schematic_file = "/home/owner/Nextcloud/active/fadal-minicards/minicard-to-cpldmem.sch"  # Replace with the path to your EagleCAD schematic file
+#part = "IC1"  # Replace with the name of the part you want to search for
+part = sys.argv[1]
+schematic_file = sys.argv[2]
+
+nets_and_pins = parse_schematic_file(schematic_file, part)
+
+if nets_and_pins:
+    print(f"Net names and pins for part '{part}':")
+    for net_name, pin_number in nets_and_pins:
+        print(f"Net Name: {net_name}, Pin Number: {pin_number}")
+else:
+    print(f"No nets or pins found for part '{part}'")
+
+
+# Example usage
+#schematic_file = "/home/owner/Nextcloud/active/fadal-minicards/minicard-to-cpldmem.sch"  # Replace with the path to your EagleCAD schematic file
+#part = "IC1"  # Replace with the name of the part you want to search for
