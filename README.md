@@ -420,8 +420,9 @@ Creating a .SI file:<br />
 * Comments begin with a /* and end with a */
 * An .SI file can have the following keywords/statements: ORDER, BASE, and VECTORS
   * The ORDER keyword is used to list the variable / inputs and outputs to be used in the simulation table, and to define how they are displayed. Typically, the variable names are the same as those in the corresponding CUPL logic description file.
-  * The BASE keyword specifies a number base
+  * The BASE keyword specifies a number base. Hexadecimal is the default if unspecified.
   * The VECTORS keyboard specifies a list of test vectors (signals that are applied and expected outputs).
+* If you simply want to see what will happen on the outputs rather than setting a pre-determined expected value, set the outputs to *
 
 <details>
 <summary>Expand for a list of valid Test Values used in a test vector</summary>
