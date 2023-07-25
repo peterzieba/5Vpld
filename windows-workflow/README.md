@@ -1,11 +1,17 @@
-The 5vpld.bat batch file can be used to automate compiling of .PLD files with CUPL.EXE.
+Install WinCUPL with default options.
+
+The 5vcomp.bat batch file can be used to automate compiling of .PLD files with CUPL.EXE.
 This eliminates the need to use WinCUPL directly. Use your favorite IDE or text editor.
 
-Place 5vpld.bat somewhere in the system's path.
+Place 5vcomp.bat inside of C:\Wincupl\WinCupl\Fitters and it should end up in your path.
 
-WinCUPL has been tested to run inside of Windows 7 64-bit.
+Adding context-menu-pld-5vcomp.reg to the registry will add the "compile" right-click
+option to any .PLD files, which will simply call C:\Wincupl\WinCupl\Fitters\5vcomp.bat
+
+This batch file will perform some basic checks (fitter version, etc.) and will perform
+simulation only if the corresponding .SI file has been found.
+
+This workflow has been tested to run inside of Windows 7 64-bit.
 
 Todo:
-* Maybe add right-click context menu for .PLD files to be compiled with this batch file.
 * Test on different versions of Windows
-* Add checks for .SI file presence. Only add simulation options for CUPL.EXE if found.

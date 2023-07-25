@@ -1,0 +1,7 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.pld\shell\compile]
+@="Compile PLD..."
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.pld\shell\compile\command]
+@="\"C:\\Wincupl\\WinCupl\\Fitters\\5vcomp.bat\" \"%1\""

@@ -52,6 +52,8 @@ Each of these subsections represents a potential workflow to design logic equati
 ## Old Approach: WinCUPL
 While logic for these parts can be written via WinCUPL, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows. While it does run under Linux via Wine, it is nonetheless not worth the trouble to use it for serious work considering the number of other options for setting up a workflow. It does however have value in the help files / documentation / examples. To get it working within Wine, you'll need winetricks so you can install mfc40 and mfc42. On Ubuntu, this would look something like:
 
+You can <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
+
 <code>sudo apt-get install wine winetricks playonlinux
 winetricks mfc40 mfc42
 </code>
@@ -354,11 +356,31 @@ In theory, one can use Yosys Open SYnthesis Suite (Yosys) with the help of the A
 # Programming / Burning and Device Information
 There are a few choices on how the part can actually be programmed depending on whether it supports JTAG.
 
-A word on programming algorithms:
+A word on programming algorithms:<br>
 Programming algorithms were seldom documented on datasheets for a part. Usually, these were behind NDA and only the companies producing Device Programmers had them (Data I/O, Logical Devices, Hi-Lo Systems, BP Microsystems, Wellon). Furthermore, some parts supporting JTAG (which in theory is much more open/universal), can nonetheless be programmed to repurpose the JTAG pins, at which point a dedicated device programmer or specialized knowledge of blanking the device is required.
 
+Open Source programmers exist (if you really want to build one):<br>
+https://github.com/ole00/afterburner
+
 ## PLD Devices (ATF16V8, ATF22V10)
-These parts require an EPROM programmer, and ideally one from the time period during which these parts were in vogue. <span style="color: red;">Additionally, an important gotcha' is that there are many manufacturers of these parts as well as variants within a manufacturer. While the fusemap may be compatible across variants (GAL16V8 from Lattice vs. the ATF16V8 from Atmel/Microchip), THE PROGRAMMING ALGORITHMS ARE NOT! You will need an EPROM programmer with support for the EXACT manufacturer and EXACT part number of the device you have.</span> Furthermore, many have reported issues with modern low-cost programmers in the past (Gecu / Autoelectric TL866 and similar). There is a good chance that the algorithms have been updated to address these problems.
+These parts require an EPROM programmer, and ideally one from the time period during which these parts were in vogue. <span style="color: red;">Additionally, an important gotcha' is that there are many manufacturers of these parts as well as variants within a manufacturer. While the fusemap may be compatible across variants (GAL16V8 from Lattice vs. the ATF16V8 from Atmel/Microchip), THE PROGRAMMING ALGORITHMS ARE NOT! You will need an EPROM programmer with support for the EXACT manufacturer and EXACT part number of the device you have.</span>
+
+Choices for programmers include:<br>
+* Classic Programmers from their respective time period (Modular Circuit Technologies, Data I/O, Logical Devices, etc.)
+  * Advantages:
+    * Implement mature, Well QA'd programming algorithms direct from the manufacturers of the chips.
+  * Disadvantages:
+    * In many cases you'll be stuck running the supporting software on DOS or an old version of Windows.
+    * In some cases even a desktop that needs some proprietary ISA card or parallel port.
+    * Transferring files to and from such a computer can become a chore when iterating on a project. But, this might motivate one to use CSIM.EXE, which is probably not a bad thing.
+* Modern USB attached programmers (Autoelectric / XGecu TL866 and the like):
+  * Advantages:
+    * USB Attached. Works on more modern computers.
+  * Disadvantages:
+    * People have reported issues with the programming Algorithms used in some of these programmers in the past. These issues may be fixed in newer versions of the software. As one might imagine, these likely do not have the same level of QA as OEM support that classic programmers had.
+* Open-Source Programmers:
+  * There are very old versions based on the parallel port.
+  * Newer projects such as <a href="https://github.com/ole00/afterburner">Afterburner</a> use an Arduino UNO and USB.
 
 ## CPLD Devices (ATF1502, ATF1504, ATF1508)
 IMPORTANT: If you are relying on JTAG to program your parts, you probably want to use <code>"PROPERTY ATMEL {JTAG=ON};</code> in your .PLD file. If you are not using CUPL.EXE, you will need to pass <code>-strategy JTAG = ON</code> to the fitter. Otherwise, the resulting .JED file will disable the JTAG pins, and you will need a special device programmer to erase/reprogram the device.

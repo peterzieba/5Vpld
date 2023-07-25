@@ -151,6 +151,8 @@ net_pin_map=get_nets_from_part(root, part)
 #List of pin names we exclude that should not be defined in CUPL (power, GND pins, etc.)
 pin_suppress_list = ("GND", "VCCIO", "VCCINT", "VCC")
 
+print("PROPERTY Atmel {JTAG=ON};")
+print("PROPERTY ATMEL { preassign = keep }; /* Keep original pin assignments */")
 #Print CUPL-style pin declarations
 for net,pin in net_pin_map.items():
     if pin not in pin_suppress_list:

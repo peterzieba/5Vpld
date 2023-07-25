@@ -43,6 +43,8 @@ prerequisite_error()
     exit 3
 }
 
+#: <<'END'
+
 #We check the version of Wine installed:
 WINE_VERSION=`wine --version`
 if [ $? -ne 0 ]; then
@@ -94,6 +96,8 @@ if [ $# -ne 1 ] #Make sure we passed options to CUPL.EXE
     exit 1
 fi
 
+#END
+
 FILENAME=$1
 
 #Since CUPL.EXE accepts files with or without a file extension, we try to do the same and append the extension if necessary.
@@ -130,6 +134,7 @@ fi
 
 BASEFILENAME=${FILENAME%.*} #This strips off the file extension
 
+
 #If we detect a corresponding .SI file, then we pass the -s and -w options to CUPL.EXE so that simulation is performed.
 if [ -f "${BASEFILENAME}.SI" ]; then
     SIMFILENAME="${BASEFILENAME}.SI"
@@ -147,3 +152,27 @@ echo "\n"
 #We supress the most common wine debug warnings as none have been found to create issues with CUPL. There is still one "fixme:imm" that seems to be coming from a child process.
 WINEDEBUG="fixme-hid,fixme-ntdll,fixme-imm" wine c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl "${1}"
 
+if [ $? -eq 0 ]; then
+    printf "${GRN}SUCCESS: CUPL returned successfully.${NC}\n"
+    printf "${GRN}A .JED file should have been produced, which can be used to program the target device.${NC}\n"
+else
+    printf "${RED}ERROR: CUPL returns a non-zero exit code: ${?}${NC}\n"
+    if [ -n ${CUPL_SIMULATION_OPTIONS} ]; then
+        printf "${RED}\nBecause simulation was requested, the problem may be limited to just the last stage (simulation)${NC}\n\n"
+    fi
+    printf "${RED}Check above for clues to what may have gone wrong.${NC}\n"
+    printf "${RED}Please note that messages containing ':fixme:' are actually coming from Wine.\nThese ':fixme:' messages are almost certainly not the problem.${NC}\n"
+    printf "${RED}Additionally, you may find this key useful to understand the various stages / modules within CUPL:\n\n\
+CUPL  processor ck \n\
+CUPLX preprocessor cx \n\
+CUPLA source file parser ca \n\
+CUPLB equation fitter cb \n\
+CUPLM minimizer cm \n\
+CUPLC fusemap generator cc \n\
+CSIM  processor sk \n\
+CSIMA logic simulator sa \n \
+
+Finally, references to fit/find are from the Atmel fitters.${NC}
+
+"
+fi
