@@ -1,17 +1,33 @@
 # Overview
-This repository centers around modern/Linux workflows for Atmel (Now Microchip) 5V GAL PLD and CPLD parts.
+This repository centers around modern Linux and Windows workflows for Atmel (Now Microchip) 5V GAL PLD and CPLD parts.
 
 These parts are still active and highly worth considering wherever prototyping and 5V logic are a requirement. They can easily replace large numbers of TTL/CMOS logic gates and can be reprogrammed many times. Finally, the DIP parts are easy to solder, and the PLCC parts can be placed into a through-hole socket.
 
-Ignored or briefly mentioned are parts which are NRND, inactive, or related parts which are 3.3V devices. For these situations, there are likely better choices.
+This is mostly documentation, but some small scripts are here that help make things easier and provide examples on how to avoid WinCUPL while still utilizing these parts.
 
 This repository aims to make it easier to work with the following parts:
 * GAL Devices: ATF16V8, ATF22V10 (Require an EPROM Programmer)
   * Part number convention seems to be: "number of inputs" V "number of outputs/macrocells".
 * CPLD Devices (JTAG Programmable): ATF1502AS (32 macrocell), ATF1504AS (64 macrocell), ATF1508AS (128 macrocells)
   * The devices ending in AS and ASL are considered here. Both are active, however, ASL parts seem to be difficult to obtain.
-  * The BE and ASV devices not covered here as they seem to be difficult to obtain and are not 5V devices. If you need 3.3V or lower, there are probably better parts suited to your needs.
   * Available in TQFP, PLCC, PQFP variants. PLCCs can be placed in through-hole sockets.
+
+<details>
+<summary>Scope: Expand here for parts not covered and why</summary>
+* 3.3V parts are not considered: There are simply better choices that are well documented.
+* The Greekpak devices probably should be covered here, but, they're reasonably well documented with modern tools.
+* Any parts that are NRND or inactive. Because there are 5V parts that are still considered active, we only consider these.
+* For the ATF150x CPLD parts specifically:
+  * The BE and ASV devices not covered here as they seem to be difficult to obtain and are not 5V devices. If you need 3.3V or lower, there are probably better parts suited to your needs.
+</details>
+
+<details>
+<summary>Expand here for a description of how these parts compare to ladder logic on a PLC</summary>
+* Each rung's output in ladder-logic can be thought of as a single macrocell.
+* The inputs on a rung can be "normally open" or "normally closed" (active high or low), and can consist of any number of inputs (or even the state of another macrocell). There can be combined in ways that are logical AND, OR, and so on.
+</details>
+
+
 <details>
 <summary>Expand here for details on how all of these compare to FPGAs</summary>
 Such parts are the spiritual predecessors of more modern FPGAs. Key differences between FPGAs and PLDs:
