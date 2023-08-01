@@ -49,7 +49,7 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 Product Term - Each macrocell has a number of product terms associated with it (typically around 5). A product term is essentially a giant AND gate with inputs to each pin on the device. Burning away fuses allows selecting which inputs are fed into this AND gate, ultimately selecting the conditions required for a product term to be activated. Product terms belonging to the same output macrocell are then combined into an OR gate before being fed into the macrocell. This means that there can be several combination of inputs that allow a given macrocell to be triggered. This architecture is called a Sum-of-Products logic array.
 
 <a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">CUPL</a> - A early (1983) programming language used to define the behavior of digital logic gates. "Compiler for Universal Programmable Logic.", is essentially a predecessor to languages like Verilog/VHDL. CUPL.EXE is the compiler which is used to compile .PLD files written in CUPL, ultimately to be burned into programmable logic devices.<br />
-<a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end/IDE to the CUPL compiler and related programs<br />
+<a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end/IDE to the CUPL compiler and related programs. It is still part specifically that we are trying to avoid, while keeping everything else underneath/around it as it is buggy.<br />
 
 <a href="https://en.wikipedia.org/wiki/Netlist">Netlist</a> - A netlist is essentially an electrical schematic which defines connections. For the purposes here, it is an intermediary file format (Either EDIF or Berkeley PLA), which is used to describe the behavior of logic ultimately fed into the fitter.<br />
 <a href="">.TT2</a> - The Berkeley PLA file format. An intermediary file which CUPL.EXE can generate that can be used by the Atmel fitters.<br />
@@ -66,20 +66,25 @@ CSIM - A tool for simulating the behavior of logic. This takes an .SI file and p
 
 
 # Writing logic for these parts: Possible Workflows
-Each of these subsections represents a potential workflow to design logic equations for these parts. The majority of the focus will be on modern methods.
+Each of these subsections represents a potential workflow to design logic equations for these parts. The majority of the focus will be on methods that avoid WinCUPL.
+
+This diagram is from the help files built into WinCUPL which shows how one can go from CUPL into the JED files needed to program a device. 
+
+![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
+
+
+
 ## Old Approach: WinCUPL
-While logic for these parts can be written via WinCUPL, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows. While it does run under Linux via Wine, it is nonetheless not worth the trouble to use it for serious work considering the number of other options for setting up a workflow. It does however have value in the help files / documentation / examples. To get it working within Wine, you'll need winetricks so you can install mfc40 and mfc42. On Ubuntu, this would look something like:
+While logic for these parts can be written via WinCUPL, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows. While it does run under Linux via Wine, it is nonetheless not worth the trouble to use it for serious work considering the number of other options for setting up a workflow. It does however have value in the help files / documentation / examples. Furthermore, it should be noted that the CUPL compiler itself is actually pretty solid/stable.
 
 You can <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
 
+To get it working within Wine, you'll need winetricks so you can install mfc40 and mfc42. On Ubuntu Linux, this would look something like:
 <code>sudo apt-get install wine winetricks playonlinux
 winetricks mfc40 mfc42
 </code>
 
-
-This diagram is from the help files built into WinCUPL:
-
-![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
+Furthermore, if you are intending on working with the ATF150x parts, you should probably grab the newer fitters out of the Atmel Prochip package.
 
 ## Command line approach: CUPL & Your favorite text editor or IDE.
 This is probably the most solid approach assuming you are OK with using CUPL as a language. This approach can operate on both Linux and Windows without trouble.
