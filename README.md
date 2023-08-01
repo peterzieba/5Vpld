@@ -41,9 +41,9 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 </details>
 
 # Terminology / Background
-<a href="https://en.wikipedia.org/wiki/Programmable_logic_device">PLD - </a>Programmable Logic Device<br />
-<a href="https://en.wikipedia.org/wiki/Programmable_logic_device#GALs">GAL - </a>Generic Array Logic<br />
-<a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">CPLD - </a>Complex Programmable Logic Device<br />
+<a href="https://en.wikipedia.org/wiki/Programmable_logic_device">PLD - </a>Programmable Logic Device. Small, generally DIP-package 5V programmable Logic.<br />
+<a href="https://en.wikipedia.org/wiki/Programmable_logic_device#GALs">GAL - </a>Generic Array Logic. Same as above, but often reprogrammable / more features.<br />
+<a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">CPLD - </a>Complex Programmable Logic Device. Larger packages, many pins, much more complex.<br />
 
 <a href="https://en.wikipedia.org/wiki/Macrocell_array">Macrocell</a> - Each output has a macrocell associated with it. These can often be configured as active high, active low, flip-flops, etc.<br />
 Product Term - Each macrocell has a number of product terms associated with it (typically around 5). A product term is essentially a giant AND gate with inputs to each pin on the device. Burning away fuses allows selecting which inputs are fed into this AND gate, ultimately selecting the conditions required for a product term to be activated. Product terms belonging to the same output macrocell are then combined into an OR gate before being fed into the macrocell. This means that there can be several combination of inputs that allow a given macrocell to be triggered. This architecture is called a Sum-of-Products logic array.
@@ -58,8 +58,8 @@ Product Term - Each macrocell has a number of product terms associated with it (
 <a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device.
 
 
-.SVF File - Serial Vector Format. This file can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.<br />
-CSIM - A tool for simulating the behavior of logic. This takes an .SI file and produces an .SO file.
+.SVF File - Serial Vector Format. Generated from the .JED file, the .SVF can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.<br />
+CSIM - A tool for simulating the behavior of logic. This takes an .SI file and produces an .SO file. This is not concerned with timing, but simply logic states.
 
 
 <a href="https://www.winehq.org/">Wine</a> - Wine is not an emulator. Allows running Windows programs under Linux.<br />
@@ -68,9 +68,11 @@ CSIM - A tool for simulating the behavior of logic. This takes an .SI file and p
 # Writing logic for these parts: Possible Workflows
 Each of these subsections represents a potential workflow to design logic equations for these parts. The majority of the focus will be on methods that avoid WinCUPL (which is ultimately just an IDE/text-editor that calls CUPL.EXE).
 
-This diagram is from the help files built into WinCUPL which shows how one can go from CUPL into the JED files needed to program a device.
+This diagram is from the help files built into WinCUPL which shows how one can go from a CUPL .PLD into the .JED files needed to program a device.
 
 Some of the other approaches covered here avoid CUPL entirely and instead generate netlists provided directly to the device fitter.
+
+Finally, a word on preferred approach, given the options: The CUPL command line or Quartus is probably the best way, especially if you are interested in using Hi-Z states. Neither Yosys nor Digital seemed to have robust support for Hi-Z states (important for Bidirectional I/O). If that is important to you, you may want to stick with either Quartus or the CUPL command line methods.
 
 ![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
 
@@ -82,6 +84,7 @@ While logic for these parts can be written via WinCUPL, the experience may be fr
 You can <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
 
 To get it working within Wine, you'll need winetricks so you can install mfc40 and mfc42. On Ubuntu Linux, this would look something like:
+
 <code>sudo apt-get install wine winetricks playonlinux
 winetricks mfc40 mfc42
 </code>
@@ -89,7 +92,7 @@ winetricks mfc40 mfc42
 Furthermore, if you are intending on working with the ATF150x parts, you should probably grab the newer fitters out of the Atmel Prochip package.
 
 ## Command line approach: CUPL & Your favorite text editor or IDE.
-This is probably the most solid approach assuming you are OK with using CUPL as a language. This approach can operate on both Linux and Windows without trouble.
+This is probably the most solid approach assuming you are OK with using CUPL as a language. This approach can operate on both Linux and Windows without trouble. You should start with the WinCUPL approach as a prerequisite to getting the CUPL compiler and the examples/help files.
 Since WinCUPL simply is a front-end / IDE on top of the CUPL.EXE compiler and related programs, one can write the desired logic in CUPL, save it in a .PLD file using their favorite editor and have CUPL.EXE compile it into a .JED file for programming into a PLD. CPLD parts will require the additional step of using a fitter for the specific device to produce the .JED file.
 
 ![A detailed User's Guide to CUPL in PDF](vendor-docs/CUPL_USERS_GUIDE.pdf)
