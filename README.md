@@ -66,16 +66,18 @@ CSIM - A tool for simulating the behavior of logic. This takes an .SI file and p
 
 
 # Writing logic for these parts: Possible Workflows
-Each of these subsections represents a potential workflow to design logic equations for these parts. The majority of the focus will be on methods that avoid WinCUPL.
+Each of these subsections represents a potential workflow to design logic equations for these parts. The majority of the focus will be on methods that avoid WinCUPL (which is ultimately just an IDE/text-editor that calls CUPL.EXE).
 
-This diagram is from the help files built into WinCUPL which shows how one can go from CUPL into the JED files needed to program a device. 
+This diagram is from the help files built into WinCUPL which shows how one can go from CUPL into the JED files needed to program a device.
+
+Some of the other approaches covered here avoid CUPL entirely and instead generate netlists provided directly to the device fitter.
 
 ![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
 
 
 
 ## Old Approach: WinCUPL
-While logic for these parts can be written via WinCUPL, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows. While it does run under Linux via Wine, it is nonetheless not worth the trouble to use it for serious work considering the number of other options for setting up a workflow. It does however have value in the help files / documentation / examples. Furthermore, it should be noted that the CUPL compiler itself is actually pretty solid/stable.
+While logic for these parts can be written via WinCUPL, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows. It does however have value in the help files / documentation / examples. Furthermore, it should be noted that the CUPL compiler itself is actually pretty solid/stable. So, the recommended approach is to install and use it for documentation/examples and then simply avoid it for serious work by using the command line CUPL.EXE (perhaps through the helper scripts in this repository).
 
 You can <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
 
@@ -100,7 +102,7 @@ Run CUPL using the following command line format:
 
 Examples run under Wine would look like this:
 
-<code>wine c:/Wincupl/Shared/cupl.exe -m1lxfjnabep -u c:/Wincupl/Shared/cupl.dl your-code.PLD</code>
+<code>wine c:/Wincupl/Shared/cupl.exe -m1jn -u c:/Wincupl/Shared/cupl.dl your-code.PLD</code>
 
 WARNING: Limit your the length of your filenames to 15 characters before the file extension (19 characters total) and do not allow multiple periods in the filename. Otherwise, CSIM.EXE seems to throw an error in the .SO file along the lines of <code>[0001sa] could not open:  terrible-long-fn....H.jed</code>
 
