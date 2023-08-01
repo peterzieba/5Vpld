@@ -11,7 +11,9 @@ option to any .PLD files, which will simply call C:\Wincupl\WinCupl\Fitters\5vco
 This batch file will perform some basic checks (fitter version, etc.) and will perform
 simulation only if the corresponding .SI file has been found.
 
-This workflow has been tested to run inside of Windows 7 64-bit.
+This workflow has been tested to run properly on:
+ - Windows XP 32-bit
+ - Windows 7 64-bit
 
 Todo:
-* Test on different versions of Windows
+* Impose character length limit on filenames (CSIM.EXE issues)

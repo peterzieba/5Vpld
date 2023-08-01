@@ -28,7 +28,9 @@ CYN='\033[1;36m'
 YEL='\033[1;33m'
 NC='\033[0m' # No Color
 
-printf "${CYN}5vpld CUPL Compiler Helper - A light wrapper on top of CUPL.EXE${NC}\n\n"
+printf "\n${CYN}5vpld CUPL Compiler Helper - A light wrapper on top of CUPL.EXE${NC}\n\n"
+
+echo $1
 
 #Standard error regarding prerequisites
 prerequisite_error()
@@ -120,14 +122,16 @@ if [ ! -f "${FILENAME}" ]; then
     exit 1
 fi
 
+FILENAME_NOPATH=`basename ${FILENAME}`
+
 #Too long filenames is a horrible bug in CSIM.EXE that took forever to figure out.
-if [ ${#FILENAME} -gt 19 ]; then
+if [ ${#FILENAME_NOPATH} -gt 19 ]; then
     printf "${RED}ERROR: Filenames longer than 19 total characters cause problems with CSIM.EXE\nUse 15 characters max for filename + 1 dot + 3 file extension.${NC}\n"
     exit 1
 fi
 
 #Multiple periods in the filename also cause CSIM.EXE to break.
-if [ `echo ${FILENAME} | grep -o "\." | wc -l` -gt 1 ]; then
+if [ `echo ${FILENAME_NOPATH} | grep -o "\." | wc -l` -gt 1 ]; then
     printf "${RED}ERROR: Filenames containing more than one period cause problems with CSIM.EXE\nFilenames should only contain 1 period.${NC}\n"
     exit 1
 fi
@@ -145,12 +149,15 @@ else
     CUPL_SIMULATION_OPTIONS=""
 fi
 
+#If we are passed a path along with the filename, we need to turn it into something CUPL.EXE will recognize
+FILENAME_FULLPATH=`WINEDEBUG="fixme-hid" winepath -w "${1}"`
+
 #Time to run CUPL.EXE
 printf "${GRN}Running WinCUPL with the following command line: ${NC}\n"
-echo "${YEL}c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl ${1}${NC}"
+echo "${YEL}c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl ${FILENAME_FULLPATH}${NC}"
 echo "\n"
 #We supress the most common wine debug warnings as none have been found to create issues with CUPL. There is still one "fixme:imm" that seems to be coming from a child process.
-WINEDEBUG="fixme-hid,fixme-ntdll,fixme-imm" wine c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl "${1}"
+WINEDEBUG="fixme-hid,fixme-ntdll,fixme-imm" wine c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl "${FILENAME_FULLPATH}"
 
 if [ $? -eq 0 ]; then
     printf "${GRN}SUCCESS: CUPL returned successfully.${NC}\n"

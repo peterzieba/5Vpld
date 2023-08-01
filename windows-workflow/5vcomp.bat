@@ -2,6 +2,8 @@ echo off
 rem Drop this file into C:\Wincupl\WinCupl\Fitters and it should be executable from anywhere.
 
 set LIBCUPL=C:\Wincupl\Shared\cupl.dl
+set CUPL_DEFAULT_OPTIONS=m1jn
+set CUPL_SIMULATION_OPTIONS=sw
 
 rem This batch file compiles a .PLD file using CUPL.EXE, all in an effort to avoid using WinCUPL directly.
 rem It does some basic checks to make sure that the fitters exist and that they are the latest known version.
@@ -15,10 +17,10 @@ set PLD_FILE=%1
 if not exist %PLD_FILE% set PLD_FILE=%1.pld
 if not exist %PLD_FILE% goto :notexist
 
-set SIM_VAR=ws
-if not exist %~dpn1.si set SIM_VAR=
+set CUPL_SIMULATION_OPTIONS=ws
+if not exist %~dpn1.si set CUPL_SIMULATION_OPTIONS=
 
-if "%SIM_VAR%" == "" echo No .SI file found. Simulation will not be performed.
+if "%CUPL_SIMULATION_OPTIONS%" == "" echo No .SI file found. Simulation will not be performed.
 
 if not exist C:\Wincupl\WinCupl\Fitters\fit1502.exe goto :missingfitter
 if not exist C:\Wincupl\WinCupl\Fitters\fit1504.exe goto :missingfitter
@@ -103,7 +105,7 @@ rem -w perform simulation with waveform output (MS-DOS only)
 rem It seems the -a option to create an absolute file is implied when -s or -w are specified.
 
 rem cupl.exe -m1lxfjnabeps z:\tim_cnt\tim_cnt.pld
-echo Running cupl.exe -m1jn%SIM_VAR% %1
-C:\Wincupl\Shared\cupl.exe -m1jn%SIM_VAR% %1
+echo Running cupl.exe -%CUPL_DEFAULT_OPTIONS%%CUPL_SIMULATION_OPTIONS% %1
+C:\Wincupl\Shared\cupl.exe -%CUPL_DEFAULT_OPTIONS%%CUPL_SIMULATION_OPTIONS% %1
 
 pause
