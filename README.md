@@ -14,6 +14,7 @@ This repository aims to make it easier to work with the following parts:
 
 <details>
 <summary>Scope: Expand here for parts not covered and why</summary>
+
 * 3.3V parts are not considered: There are simply better choices that are well documented.
 * The Greekpak devices probably should be covered here, but, they're reasonably well documented with modern tools.
 * Any parts that are NRND or inactive. Because there are 5V parts that are still considered active, we only consider these.
@@ -23,6 +24,7 @@ This repository aims to make it easier to work with the following parts:
 
 <details>
 <summary>Expand here for a description of how these parts compare to ladder logic on a PLC</summary>
+
 * Each rung's output in ladder-logic can be thought of as a single macrocell.
 * The inputs on a rung can be "normally open" or "normally closed" (active high or low), and can consist of any number of inputs (or even the state of another macrocell). There can be combined in ways that are logical AND, OR, and so on.
 </details>
