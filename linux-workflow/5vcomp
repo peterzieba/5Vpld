@@ -3,6 +3,8 @@
 CUPL_DEFAULT_OPTIONS="m1jn" #These are the options that will be passed to the CUPL.EXE compiler
 CUPL_SIMULATION_OPTIONS="sw" #These options are added only if an .SI file is found.
 
+DEVICE_LIB="c:/Wincupl/Shared/cupl.dl" #This is the device library used. We're assuming you're using whatever comes with Atmel WinCUPL, however, if you have device libraries from other packages (like PLDmaster from Logical Devices, you may be able to target other devices).
+
 
 #A summary of the most relevant/important options to CUPL is here. See documentation for a full list/explanation.
 #
@@ -154,10 +156,10 @@ FILENAME_FULLPATH=`WINEDEBUG="fixme-hid" winepath -w "${1}"`
 
 #Time to run CUPL.EXE
 printf "${GRN}Running WinCUPL with the following command line: ${NC}\n"
-echo "${YEL}c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl ${FILENAME_FULLPATH}${NC}"
+echo "${YEL}c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u ${DEVICE_LIB} ${FILENAME_FULLPATH}${NC}"
 echo "\n"
 #We supress the most common wine debug warnings as none have been found to create issues with CUPL. There is still one "fixme:imm" that seems to be coming from a child process.
-WINEDEBUG="fixme-hid,fixme-ntdll,fixme-imm" wine c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u c:/Wincupl/Shared/cupl.dl "${FILENAME_FULLPATH}"
+WINEDEBUG="fixme-hid,fixme-ntdll,fixme-imm" wine c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u ${DEVICE_LIB} "${FILENAME_FULLPATH}"
 
 if [ $? -eq 0 ]; then
     printf "${GRN}SUCCESS: CUPL returned successfully.${NC}\n"
