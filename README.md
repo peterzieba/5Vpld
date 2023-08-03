@@ -26,7 +26,7 @@ This repository aims to make it easier to work with the following parts:
 <summary>Expand here for a description of how these parts compare to ladder logic on a PLC</summary>
 
 * Each rung's output in ladder-logic can be thought of as a single macrocell.
-* The inputs on a rung can be "normally open" or "normally closed" (active high or low), and can consist of any number of inputs (or even the state of another macrocell). There can be combined in ways that are logical AND, OR, and so on.
+* The inputs on a rung can be "normally open" or "normally closed" (active high or low), and can consist of any number of inputs (or even the state of another macrocell). The inputs defined on a single rung are basically equivalent to a single product-term belonging to a macrocell. There can be multiple product terms defined that activate a given macrocell.
 </details>
 
 
@@ -50,11 +50,16 @@ Product Term - Each macrocell has a number of product terms associated with it (
 
 <a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">CUPL</a> - A early (1983) programming language used to define the behavior of digital logic gates. "Compiler for Universal Programmable Logic.", is essentially a predecessor to languages like Verilog/VHDL. CUPL.EXE is the compiler which is used to compile .PLD files written in CUPL, ultimately to be burned into programmable logic devices.<br />
 <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end/IDE to the CUPL compiler and related programs. It is still part specifically that we are trying to avoid, while keeping everything else underneath/around it as it is buggy.<br />
+.dl File - Device Library File. This file determines what devices CUPL has the ability to compile for.
+.cat File - A text file corresponding to a .dl device library file with the same name and containing a list of supported devices by CUPL.
 
 <a href="https://en.wikipedia.org/wiki/Netlist">Netlist</a> - A netlist is essentially an electrical schematic in a text file which defines connections. For the purposes here, it is an intermediary file format (Either EDIF or Berkeley PLA), which is used to describe the behavior of logic ultimately fed into the fitter.<br />
 <a href="">.TT2</a> - The Berkeley PLA file format. An intermediary file which CUPL.EXE can generate that can be used by the Atmel fitters.<br />
 <a href="https://en.wikipedia.org/wiki/EDIF">EDIF</a> - Another type of netlist format which is also usable by the Atmel fitters. Yosys is capable of generating this format, however, one will still need a techmap.<br />
 <a href="https://en.wikipedia.org/wiki/Place_and_route">Fitter</a> - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the ATF150x CPLD devices. In more modern parlance, this is basically place & route.<br />
+.STD File - In the context of a fitter, the Family primitive/device library for PLA. This file is part of the Atmel ATF150x fitters.
+.LIB File - In the context of a fitter, the Family primitive/device library for EDIF. This file is part of the Atmel ATF150x fitters.
+
 <a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device.
 
 
