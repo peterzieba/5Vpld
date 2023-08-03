@@ -57,8 +57,8 @@ Product Term - Each macrocell has a number of product terms associated with it (
 <a href="">.TT2</a> - The Berkeley PLA file format. An intermediary file which CUPL.EXE can generate that can be used by the Atmel fitters.<br />
 <a href="https://en.wikipedia.org/wiki/EDIF">EDIF</a> - Another type of netlist format which is also usable by the Atmel fitters. Yosys is capable of generating this format, however, one will still need a techmap.<br />
 <a href="https://en.wikipedia.org/wiki/Place_and_route">Fitter</a> - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the ATF150x CPLD devices. In more modern parlance, this is basically place & route.<br />
-.STD File - In the context of a fitter, the Family primitive/device library for PLA. This file is part of the Atmel ATF150x fitters.
-.LIB File - In the context of a fitter, the Family primitive/device library for EDIF. This file is part of the Atmel ATF150x fitters.
+.STD File - In the context of a fitter, the primitive/device library for PLA. This file is part of the Atmel ATF150x fitters.<br />
+.LIB File - In the context of a fitter, the primitive/device library for EDIF. This file is part of the Atmel ATF150x fitters.
 
 <a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device.
 
