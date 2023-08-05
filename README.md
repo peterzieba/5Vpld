@@ -27,12 +27,21 @@ This is mostly a collection of documentation, but some small scripts are here th
 </details>
 
 <details>
+
+# Background on digital logic.
+
+This repository isn't intended to be an introduction to digital logic, but a brief review and compare/contrast to similar things is provided here.
+
+<details>
+<summary>Expand here for tutorials on Digital Logic</summary>
+Ben Eater does a series of <a href="https://www.youtube.com/watch?v=KM0DdEaY5sY&list=PLowKtXNTBypGqImE405J2565dvjafglHU&index=6">Videos on Digital Logic</a> that are a really excellent introduction to some of the concepts here.
+</details>
+
 <summary>Expand here for a description of how these parts compare to ladder logic on a PLC</summary>
 
 * Each rung's output in ladder-logic can be thought of as a single macrocell.
 * The inputs on a rung can be "normally open" or "normally closed" (active high or low), and can consist of any number of inputs (or even the state of another macrocell). The inputs defined on a single rung are basically equivalent to a single product-term belonging to a macrocell. There can be multiple product terms defined that activate a given macrocell.
 </details>
-
 
 <details>
 <summary>Expand here for details on how all of these compare to FPGAs</summary>
@@ -45,13 +54,14 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 </details>
 
 # Requirements
-* The actual PLD/CPLD chip you'd like to work with.
-* A software workflow covered here. Highly recommended is using the CUPL.EXE compiler on Linux or Windows with the 5vcomp script provided here.
-* An EPROM/Device programmer if you wish to use the ATF16V8 or ATF22V10 parts
+A high-level overview of what is required:
+* The actual PLD/CPLD chip you'd like to work with from the usual suppliers (Mouser, Digikey, Octopart)
+* A software workflow covered here. Highly recommended is using the CUPL.EXE compiler on Linux or Windows with the 5vcomp script provided in this repositroy.
+* An EPROM/Device programmer if you wish to use the ATF16V8 or ATF22V10 parts.
 * A JTAG programmer for the ATF150x parts
 ![See PROGRAMMING.md](PROGRAMMING.md) for details on what it takes to program these parts in detail.
 
-# Terminology / Background
+# Terminology & File Formats
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">PLD/GAL</a> - Programmable Logic Device. Small, generally DIP-package 5V programmable Logic.<br />
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">CPLD - </a>Complex Programmable Logic Device. Larger packages, many pins, much more complex.<br />
 
@@ -95,7 +105,9 @@ This diagram is from the help files built into WinCUPL which shows how one can g
 ![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
 
 ## Old Approach: WinCUPL
-While logic for these parts can be written using the WinCUPL IDE, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows. It does however have value in the help files / documentation / examples. Furthermore, it should be noted that the CUPL compiler itself is actually pretty solid/stable. So, the recommended approach is to install and use it for documentation/examples and then simply avoid it for serious work by using the command line CUPL.EXE (perhaps through the helper scripts in this repository).
+While logic for these parts can be written using the WinCUPL IDE, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows.
+It does however have value in the help files / documentation / examples. Furthermore, it should be noted that the CUPL compiler itself is actually pretty solid/stable.
+So, the recommended approach is to install and use it for documentation/examples and then simply avoid it for serious work by using the command line CUPL.EXE (perhaps through the helper scripts in this repository as in the next section).
 
 You can <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
 
@@ -110,6 +122,10 @@ Furthermore, if you are intending on working with the ATF150x parts, you should 
 ## Command line approach: CUPL & Your favorite text editor or IDE.
 This is probably the most solid approach assuming you are OK with using CUPL as a language. This approach can operate on both Linux and Windows without trouble. You should start with the WinCUPL approach as a prerequisite to getting the CUPL compiler and the examples/help files.
 Since WinCUPL simply is a front-end / IDE on top of the CUPL.EXE compiler and related programs, one can write the desired logic in CUPL, save it in a .PLD file using their favorite editor and have CUPL.EXE compile it into a .JED file for programming into a PLD. CPLD parts will require the additional step of using a fitter for the specific device to produce the .JED file.
+
+* ![Linux Workflow](linux-workflow/)
+* ![Windows Workflow](windows-workflow/)
+
 
 ![A detailed User's Guide to CUPL in PDF](vendor-docs/CUPL_USERS_GUIDE.pdf)
 
