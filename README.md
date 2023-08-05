@@ -8,13 +8,13 @@ This repository centers around documenting modern ways of developing logic for a
 
 These parts are still active and highly worth considering wherever:
 * 5V logic is a requirement / avoiding level shifting
-* Prototyping (reprogrammable) / Learning about Logic.
-* Through-hole / soldering-friendly is desired: All parts have DIP packages or can be placed in through-hole PLCC sockets.
-* Replacing large quantities of various TTL/CMOS
+* Prototyping / Iteration (reprogrammable)
+* Learning about logic: Through-hole / soldering-friendly is desired: All parts have DIP packages or can be placed in through-hole PLCC sockets.
+* Replacing large quantities of various TTL/CMOS Logic Gates
 
 This is mostly a collection of documentation, but some small scripts are here that help make things easier and provide examples on how to avoid WinCUPL while still utilizing these parts:
 * ![Linux Workflow (5vcomp command-line utility pointed at a .PLD file)](linux-workflow/)
-* ![Windows Workflow (right-click a .PLD file and get compiled/synthesized .JED files).](windows-workflow/)
+* ![Windows Workflow (Same 5vcomp utility run by right-clicking a .PLD file to get a compiled/synthesized .JED file).](windows-workflow/)
 
 <details>
 <summary>Scope: Expand here for why similar parts not covered</summary>
@@ -46,20 +46,20 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 
 # Requirements
 * The actual PLD/CPLD chip you'd like to work with.
-* A software workflow covered here. Highly recommended is using the CUPL.EXE compiler on Linux or Windows with the helper utilities covered here.
-![See PROGRAMMING.md](PROGRAMMING.md). TL;DR:
+* A software workflow covered here. Highly recommended is using the CUPL.EXE compiler on Linux or Windows with the 5vcomp script provided here.
 * An EPROM/Device programmer if you wish to use the ATF16V8 or ATF22V10 parts
 * A JTAG programmer for the ATF150x parts
+![See PROGRAMMING.md](PROGRAMMING.md) for details on what it takes to program these parts in detail.
 
 # Terminology / Background
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">PLD/GAL</a> - Programmable Logic Device. Small, generally DIP-package 5V programmable Logic.<br />
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">CPLD - </a>Complex Programmable Logic Device. Larger packages, many pins, much more complex.<br />
 
-Combinatorial Logic - Simple logic (AND, OR, NOT, gates, etc.) that does not use flip-flops / registers / clocks. Such logic could technically be implemented with an EPROM/Memory, where a series of inputs always maps to a known set of outputs.<br>
-Registered Logic - Logic that uses registers (flip-flops), and can thus hold state. On the GAL16V8 and GAL22V10, each macrocell can be configured as a D-Flip-Flop, and all flip-flops share the same clock pin. On the ATF150x, much more complex types of registered logic and clocking options are available.
+<a href="https://en.wikipedia.org/wiki/Combinational_logic">Combinatorial Logic</a> - Simple logic (AND, OR, NOT, gates, etc.) that does not use flip-flops / registers / clocks. Such logic could technically be implemented with an EPROM/Memory, where a series of inputs always maps to a known set of outputs.<br>
+<a href="https://en.wikipedia.org/wiki/Sequential_logic">Registered Logic</a> - Logic that uses registers (flip-flops), and can thus hold state. On the GAL16V8 and GAL22V10, each macrocell can be configured as a D-Flip-Flop, and all flip-flops share the same clock pin. On the ATF150x, much more complex types of registered logic and clocking options are available.
 
 <a href="https://en.wikipedia.org/wiki/Macrocell_array">Macrocell</a> - Each output has a macrocell associated with it. These can often be configured as active high, active low, flip-flops, etc.<br />
-Product Term - Each macrocell has a number of product terms associated with it (typically around 5). A product term is essentially a giant AND gate with inputs to each pin on the device. Burning away fuses allows selecting which inputs are fed into this AND gate, ultimately selecting the conditions required for a product term to be activated. Product terms belonging to the same output macrocell are then combined into an OR gate before being fed into the macrocell. This means that there can be several combination of inputs that allow a given macrocell to be triggered. This architecture is called a Sum-of-Products logic array.
+<a href="https://en.wikipedia.org/wiki/Programmable_logic_device#/media/File:Programmable_Logic_Device.svg">Product Term</a> - Each macrocell has a number of product terms associated with it (typically around 5). A product term is essentially a giant AND gate with inputs to each pin on the device. Burning away fuses allows selecting which inputs are fed into this AND gate, ultimately selecting the conditions required for a product term to be activated. Product terms belonging to the same output macrocell are then combined into an OR gate before being fed into the macrocell. This means that there can be several combination of inputs that allow a given macrocell to be triggered. This architecture is called a Sum-of-Products logic array.
 
 <a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">CUPL</a> - A early (1983) programming language used to define the behavior of digital logic gates. "Compiler for Universal Programmable Logic.", is essentially a predecessor to languages like Verilog/VHDL. CUPL.EXE is the compiler which is used to compile .PLD files written in CUPL, ultimately to be burned into programmable logic devices.<br />
 <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end/IDE to the CUPL compiler and related programs. It is still part specifically that we are trying to avoid, while keeping everything else underneath/around it as it is buggy.<br />
