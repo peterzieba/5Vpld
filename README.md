@@ -122,9 +122,10 @@ winetricks mfc40 mfc42
 Furthermore, if you are intending on working with the ATF150x parts, you should probably grab the newer fitters out of the Atmel Prochip package. The utilities in this repository will refuse to work without them.
 
 ## 5vcomp: The CUPL compiler & Your favorite text editor or IDE.
+Since WinCUPL simply is a front-end / IDE on top of the CUPL.EXE compiler and related programs, one can write the desired logic in CUPL, save it in a .PLD file using their favorite editor and have CUPL.EXE compile it into a .JED file for programming into a PLD.
+
 5vcomp is a simple wrapper around the CUPL compiler.
 This is probably the most solid approach assuming you are OK with using CUPL as a language. You should start with the WinCUPL approach as a prerequisite since it installs the CUPL compiler and has examples/help files.
-Since WinCUPL simply is a front-end / IDE on top of the CUPL.EXE compiler and related programs, one can write the desired logic in CUPL, save it in a .PLD file using their favorite editor and have CUPL.EXE compile it into a .JED file for programming into a PLD.
 The workflows here simply make this easier/conveinent by catching a lot of common issues and providing reasonable defaults to the compiler:
 
 * ![Linux Workflow (point 5vcomp at your .PLD file from a command line)](linux-workflow/)
