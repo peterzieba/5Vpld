@@ -1,9 +1,19 @@
 # Overview
-This repository centers around modern Linux and Windows workflows for Atmel (Now Microchip) 5V GAL PLD and CPLD parts.
+This repository centers around documenting Linux and Windows workflows for Atmel (Now Microchip) 5V GAL PLD and CPLD parts:
+* ATF16V8
+* ATF22V10
+* ATF1502
+* ATF1504
+* ATF1508
 
-These parts are still active and highly worth considering wherever prototyping and 5V logic are a requirement. They can easily replace large numbers of TTL/CMOS logic gates and can be reprogrammed many times. Finally, the DIP parts are easy to solder, and the PLCC parts can be placed into a through-hole socket.
+These parts are still active and highly worth considering wherever:
+* 5V logic is a requirement / avoiding level shifting
+* Prototyping / Learning about Logic. Through-hole (soldering friendly) variants exist for all parts, and all parts are reprogrammable.
+* Replacing large quantities of various TTL/CMOS
 
-This is mostly documentation, but some small scripts are here that help make things easier and provide examples on how to avoid WinCUPL while still utilizing these parts.
+This is mostly a collection of documentation, but some small scripts are here that help make things easier and provide examples on how to avoid WinCUPL while still utilizing these parts:
+* ![Linux Workflow (5vcomp command-line utility pointed at a .PLD file)](linux-workflow/README.md)
+* ![Windows Workflow (right-click a .PLD file and get compiled/synthesized .JED files.](windows-workflow/README.md)
 
 This repository aims to make it easier to work with the following parts:
 * GAL Devices: ATF16V8, ![ATF22V10](vendor-datasheets/doc0735.pdf) (Require an EPROM Programmer)
@@ -72,7 +82,7 @@ CSIM - A tool for simulating the behavior of logic. This takes an .SI file and p
 # Writing logic for these parts: Possible Workflows
 Each of the subsections here represents a potential workflow to design logic equations for these parts. The majority of the focus will be on methods that avoid WinCUPL (which is ultimately just an IDE/text-editor that calls CUPL.EXE).
 
-Some of the other approaches covered here avoid CUPL entirely and instead generate netlists provided directly to the device fitter.
+Some of the other approaches covered here also avoid the CUPL compiler as well and instead generate netlists provided directly to the device fitter.
 
 Finally, a word on preferred approach, given the options: The CUPL command line or Quartus is probably the best way, especially if you are interested in using Hi-Z states. Neither Yosys nor Digital seemed to have robust support for Hi-Z states (important for Bidirectional I/O). If that is important to you, you may want to stick with either Quartus or the CUPL command line methods.
 
