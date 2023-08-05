@@ -1,3 +1,4 @@
+# Overview
 5vcomp is a Linux Shell Script that is a light wrapper around the CUPL.EXE
 
 The CUPL.EXE compiler runs well under Linux using Wine and enables one to use a command-line/scripted approach to compilation.
@@ -13,6 +14,8 @@ This script isn't anything too sophisticated. It merely checks for a bunch of co
 
 Basic customizations (compiler flags, device library) are broken out into variables at the top of the script.
 
+# Installation
+
 To get Wine working on Ubuntu Linux, this would look something like:
 
 <code>sudo apt-get install wine winetricks playonlinux
@@ -22,3 +25,4 @@ winetricks mfc40 mfc42
 From there, you can install WinCUPL:
 * <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
 * <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip">Download Atmel Prochip from here</a>
+  * Overwrite the ATF150x.EXE fitters in C:\Wincupl\WinCupl\Fitters\ with those from Atmel Prochip.
