@@ -135,30 +135,7 @@ The workflows here simply make this easier/conveinent by catching a lot of commo
 ## Guide to CUPL itself
 Assuming you're using CUPL either through WinCUPL or 5vcomp, this section has a general reference to the language, device library details, etc.
 
-![A detailed User's Guide to CUPL in PDF](vendor-docs/CUPL_USERS_GUIDE.pdf)
-
-
-Run CUPL using the following command line format:
-
-<code>cupl [-flags] [library] [device] source</code>
-
-
-Examples run under Wine would look like this:
-
-<code>wine c:/Wincupl/Shared/cupl.exe -m1jn -u c:/Wincupl/Shared/cupl.dl your-code.PLD</code>
-
-WARNING: Limit your the length of your filenames to 15 characters before the file extension (19 characters total) and do not allow multiple periods in the filename. Otherwise, CSIM.EXE seems to throw an error in the .SO file along the lines of <code>[0001sa] could not open:  terrible-long-fn....H.jed</code>
-
-Additionally, if you are targeting a CPLD (ATF150x) for which CUPL.EXE does not have direct support, you will need to run:
-
-<code>wine c:/Wincupl/WinCupl/Fitters/fit1502.exe -i your-code.tt2 -dev P1502T44 -DEBUG on -Verilog_sim VERILOG -Out_Edif ON</code>
-
-The above example is for an ATF1502 in a TQFP-44 package. You will need to use the appropriate fitter and device type for your particular CPLD.
-
-Additionally, you may want to explore the following environment variables:<br />
-<code>FITTERDIR=C:\Wincupl\Wincupl\Fitters
-LIBCUPL=c:\Wincupl\Shared\atmel.dl
-</code>
+![A detailed User's Guide to the CUPL compiler and language reference in PDF](vendor-docs/CUPL_USERS_GUIDE.pdf)
 
 <details>
 <summary>Expand here for details of the command line flags for CUPL.EXE</summary>
@@ -824,11 +801,6 @@ pc224lcc       02    28    3204     72
 
 <code>
 wine ./cbld.exe -l -u totaldes.dl 
-0098:fixme:hid:handle_IRP_MN_QUERY_ID Unhandled type 00000005
-0098:fixme:hid:handle_IRP_MN_QUERY_ID Unhandled type 00000005
-0098:fixme:hid:handle_IRP_MN_QUERY_ID Unhandled type 00000005
-0098:fixme:hid:handle_IRP_MN_QUERY_ID Unhandled type 00000005
-0024:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
 CBLD(PM): CUPL Device Library Management Program
 Version 5.0a
 Copyright (c) 1983, 1998 Logical Devices, Inc.
