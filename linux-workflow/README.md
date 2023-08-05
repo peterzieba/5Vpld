@@ -7,7 +7,7 @@ This allows you to avoid the WinCUPL IDE and use your favorite IDE/Text editor i
 WinCUPL is nonetheless a requirement as it provides:
 * The CUPL.EXE compiler
 * The Atmel.dl device library (which CUPL.EXE uses)
-* The fitters for the ATF150x CPLD parts (though this utility will refuse to work with the ones provided by Atmel WinCUPL -- please use the newer ones from the Atmel Prochip package)
+* The fitters for the ATF150x CPLD parts (though this utility will refuse to work with the ones provided by Atmel WinCUPL -- please replace them with the newer ones from the Atmel Prochip package)
 
 This script isn't anything too sophisticated. It merely checks for a bunch of common but esoteric gotchas and provides a working example on how to go from a .PLD to a .JED
 
