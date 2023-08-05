@@ -65,6 +65,8 @@ A high-level overview of what is required:
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">PLD/GAL</a> - Programmable Logic Device. Small, generally DIP-package 5V programmable Logic.<br />
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">CPLD - </a>Complex Programmable Logic Device. Larger packages, many pins, much more complex.<br />
 
+5vcomp - A utility in this repository (batch file for Windows / shell script for linux) that is a wrapper around the CUPL.EXE compiler<br>
+
 <a href="https://en.wikipedia.org/wiki/Combinational_logic">Combinatorial Logic</a> - Simple logic (AND, OR, NOT, gates, etc.) that does not use flip-flops / registers / clocks. Such logic could technically be implemented with an EPROM/Memory, where a series of inputs always maps to a known set of outputs.<br>
 <a href="https://en.wikipedia.org/wiki/Sequential_logic">Registered Logic</a> - Logic that uses registers (flip-flops), and can thus hold state. On the GAL16V8 and GAL22V10, each macrocell can be configured as a D-Flip-Flop, and all flip-flops share the same clock pin. On the ATF150x, much more complex types of registered logic and clocking options are available.
 
@@ -98,7 +100,7 @@ Each of the subsections here represents a potential workflow to design logic equ
 
 Some of the other approaches covered here also avoid the CUPL compiler as well and instead generate netlists provided directly to the device fitter.
 
-Finally, a word on preferred approach, given the options: Using the CUPL.EXE compiler via command line or Quartus are probably the best ways, especially if you are interested in using Hi-Z states. Neither Yosys nor Digital seemed to have robust support for Hi-Z states (important for Bidirectional I/O). If that is important to you, you may want to stick with either Quartus or the CUPL command line methods.
+Finally, a word on preferred approach, given the options: Using the CUPL.EXE compiler via command line or Quartus are probably the best ways, especially if you are interested in using Hi-Z states. Neither Yosys nor Digital seemed to have robust support for Hi-Z states (important for Bidirectional I/O).
 
 This diagram is from the help files built into WinCUPL which shows how one can go from a CUPL .PLD into the .JED files needed to program a device.
 
@@ -119,13 +121,18 @@ winetricks mfc40 mfc42
 
 Furthermore, if you are intending on working with the ATF150x parts, you should probably grab the newer fitters out of the Atmel Prochip package. The utilities in this repository will refuse to work without them.
 
-## Command line approach: CUPL & Your favorite text editor or IDE.
-This is probably the most solid approach assuming you are OK with using CUPL as a language. This approach can operate on both Linux and Windows without trouble. You should start with the WinCUPL approach as a prerequisite to getting the CUPL compiler and the examples/help files.
-Since WinCUPL simply is a front-end / IDE on top of the CUPL.EXE compiler and related programs, one can write the desired logic in CUPL, save it in a .PLD file using their favorite editor and have CUPL.EXE compile it into a .JED file for programming into a PLD. CPLD parts will require the additional step of using a fitter for the specific device to produce the .JED file.
+## 5vcomp: The CUPL compiler & Your favorite text editor or IDE.
+5vcomp is a simple wrapper around the CUPL compiler.
+This is probably the most solid approach assuming you are OK with using CUPL as a language. You should start with the WinCUPL approach as a prerequisite since it installs the CUPL compiler and has examples/help files.
+Since WinCUPL simply is a front-end / IDE on top of the CUPL.EXE compiler and related programs, one can write the desired logic in CUPL, save it in a .PLD file using their favorite editor and have CUPL.EXE compile it into a .JED file for programming into a PLD.
+The workflows here simply make this easier/conveinent by catching a lot of common issues and providing reasonable defaults to the compiler:
 
-* ![Linux Workflow](linux-workflow/)
-* ![Windows Workflow](windows-workflow/)
+* ![Linux Workflow (point 5vcomp at your .PLD file from a command line)](linux-workflow/)
+* ![Windows Workflow (right-click on a .PLD to compile with 5vcomp)](windows-workflow/)
 
+
+## Guide to CUPL itself
+Assuming you're using CUPL either through WinCUPL or 5vcomp, this section has a general reference to the language, device library details, etc.
 
 ![A detailed User's Guide to CUPL in PDF](vendor-docs/CUPL_USERS_GUIDE.pdf)
 
