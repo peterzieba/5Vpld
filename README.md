@@ -12,8 +12,8 @@ These parts are still active and highly worth considering wherever:
 * Replacing large quantities of various TTL/CMOS
 
 This is mostly a collection of documentation, but some small scripts are here that help make things easier and provide examples on how to avoid WinCUPL while still utilizing these parts:
-* ![Linux Workflow (5vcomp command-line utility pointed at a .PLD file)](linux-workflow/README.md)
-* ![Windows Workflow (right-click a .PLD file and get compiled/synthesized .JED files.](windows-workflow/README.md)
+* ![Linux Workflow (5vcomp command-line utility pointed at a .PLD file)](linux-workflow/)
+* ![Windows Workflow (right-click a .PLD file and get compiled/synthesized .JED files.](windows-workflow/)
 
 This repository aims to make it easier to work with the following parts:
 * GAL Devices: ATF16V8, ![ATF22V10](vendor-datasheets/doc0735.pdf) (Require an EPROM Programmer)
