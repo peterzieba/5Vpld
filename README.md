@@ -53,7 +53,7 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">PLD/GAL</a> - Programmable Logic Device. Small, generally DIP-package 5V programmable Logic.<br />
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">CPLD - </a>Complex Programmable Logic Device. Larger packages, many pins, much more complex.<br />
 
-Combinatorial Logic - Simple logic (AND, OR, NOT, gates, etc.) that does not use flip-flops / registers / clocks. Such logic could technically be implemented with an EPROM/Memory, where a series of inputs always maps to a known set of outputs.
+Combinatorial Logic - Simple logic (AND, OR, NOT, gates, etc.) that does not use flip-flops / registers / clocks. Such logic could technically be implemented with an EPROM/Memory, where a series of inputs always maps to a known set of outputs.<br>
 Registered Logic - Logic that uses registers (flip-flops), and can thus hold state. On the GAL16V8 and GAL22V10, each macrocell can be configured as a D-Flip-Flop, and all flip-flops share the same clock pin. On the ATF150x, much more complex types of registered logic and clocking options are available.
 
 <a href="https://en.wikipedia.org/wiki/Macrocell_array">Macrocell</a> - Each output has a macrocell associated with it. These can often be configured as active high, active low, flip-flops, etc.<br />
@@ -283,75 +283,6 @@ g20v8cpmslcc   03    28    2707     64
 g22v10lcc      02    28    5892    132
 g22v10cplcc    01    28    5893    132
 p22v10lcc      17    28    5828    132
-</code>
-</details>
-
-
-If one is trying to utilize the ATF150X devices, using the appropriate fitter is required.
-* ![ATF15xx Family Device Fitter User's Manual](vendor-docs/fitter.pdf)
-
-<details>
-<summary>Expand for command line options for the latest known version of the ATF1502.EXE fitter.</summary>
-<code>Atmel ATF1502 Fitter Version 1918 (3-21-07)
-Copyright 1999,2000 Atmel Corporation
- Usage: FIT1502.EXE [-i] input_file[.tt2] {options}
- Options:
-   -help
-   -o output_file_name (for *.tt3 and *.jed)
-   -device package_type (PLCC44/TQFP44)
-   -tech tech_name (ATF1502AS/ATF1502ASV/ATF1502BE)
-   -module module_name
-   -preassign TRY|keep|ignore (pin preassignment options)
-   -silent (no message on screen)
-   -h2 (advanced help option)
-   -has (advanced help option for AS)
-   -hbe (advanced help option for BE)
-</code>
-
-Advanced help options:
-<code>
-Atmel ATF1502 Fitter Version 1918 (3-21-07)
-Copyright 1999,2000 Atmel Corporation
-   -strategy c [command file name]
-   -strategy ifmt (input file format) [TT | edif]
-   -strategy lib (library file name for edif input)
-   -strategy open_collector = [   OFF |   on  | = pin_name1 pin_name2...]
-   -strategy JTAG = [   off |   ON ]
-   -strategy pd1 [   OFF |   on ] (power down 1)
-   -strategy pd2 [   OFF |   on ] (power down 2)
-   -strategy TDI_pullup = [   OFF |   on ]
-   -strategy TMS_pullup = [   OFF |   on ]
-   -strategy DEBUG = [   on |   OFF ]
-   -strategy output_fast [on | OFF | = pin_name1 pin_name2...]
-   -strategy pin_keep [ off | = pin_name1 pin_name2...]
-   -strategy ues [value ] (2 ASCII characters)
-   -strategy security [ OFF | on ]
-   -strategy tPD = [ 5 | 7 ]
-   -strategy voltage_level_A [ 1.8 | 2.5 | 3.3]
-   -strategy voltage_level_B [ 1.8 | 2.5 | 3.3]
-   -strategy fast_inlatch [ OFF | on | = pin_name1 pin_name2...]
-   -strategy schmitt_trigger [ OFF | = pin_name1 pin_name2...]
-   -strategy pull_up [ OFF | = pin_name1 pin_name2...]
-   -strategy unused_To_PinKeeper [ off | ON ]
-   -strategy pull_up_unused [ OFF | on]
-   -strategy unused_To_Ground [ OFF | on]
-   -strategy pull_down [ OFF | = dedicated_pin1 dedicated_pin2...]
-   -strategy Latch_Synthesis [ON | off ]
-   -strategy Optimize [ON | off]
-   -strategy Cascade_Logic [ON | off |= pin_name1 ..pin_nameN]
-   -strategy Foldback_Logic [ON | off |= node_name1 ..node_nameN]
-   -strategy Soft_Buffer [on | OFF |= node_name1 ..node_nameN]
-   -strategy XOR_Synthesis [on | OFF |= pin_name1 ..pin_nameN]
-   -strategy Push_Gate [on | OFF]
-   -strategy Verilog_sim [sdf | Verilog | OFF]
-   -strategy Vhdl_sim [sdf | vhdl | OFF]
-   -strategy Out_Edif [on | OFF]
-   -strategy Global_Fold [node_name1 ..node_nameN]
-   -strategy Global_OE [node_name1 ..node_nameN]
-   -strategy OE_node [node_Number1..node_NumberN]
-   -strategy logic_doubling [on | OFF]
-   -strategy twoclock [clockname]
-   -strategy pinfile
 </code>
 </details>
 
@@ -861,6 +792,76 @@ p64r32pga      16    88   33316    256
 pc224lcc       02    28    3204     72
 </code>
 </details>
+
+
+If one is trying to utilize the ATF150X devices, using the appropriate fitter is required.
+* ![ATF15xx Family Device Fitter User's Manual](vendor-docs/fitter.pdf)
+
+<details>
+<summary>Expand for command line options for the latest known version of the ATF1502.EXE fitter.</summary>
+<code>Atmel ATF1502 Fitter Version 1918 (3-21-07)
+Copyright 1999,2000 Atmel Corporation
+ Usage: FIT1502.EXE [-i] input_file[.tt2] {options}
+ Options:
+   -help
+   -o output_file_name (for *.tt3 and *.jed)
+   -device package_type (PLCC44/TQFP44)
+   -tech tech_name (ATF1502AS/ATF1502ASV/ATF1502BE)
+   -module module_name
+   -preassign TRY|keep|ignore (pin preassignment options)
+   -silent (no message on screen)
+   -h2 (advanced help option)
+   -has (advanced help option for AS)
+   -hbe (advanced help option for BE)
+</code>
+
+Advanced help options:
+<code>
+Atmel ATF1502 Fitter Version 1918 (3-21-07)
+Copyright 1999,2000 Atmel Corporation
+   -strategy c [command file name]
+   -strategy ifmt (input file format) [TT | edif]
+   -strategy lib (library file name for edif input)
+   -strategy open_collector = [   OFF |   on  | = pin_name1 pin_name2...]
+   -strategy JTAG = [   off |   ON ]
+   -strategy pd1 [   OFF |   on ] (power down 1)
+   -strategy pd2 [   OFF |   on ] (power down 2)
+   -strategy TDI_pullup = [   OFF |   on ]
+   -strategy TMS_pullup = [   OFF |   on ]
+   -strategy DEBUG = [   on |   OFF ]
+   -strategy output_fast [on | OFF | = pin_name1 pin_name2...]
+   -strategy pin_keep [ off | = pin_name1 pin_name2...]
+   -strategy ues [value ] (2 ASCII characters)
+   -strategy security [ OFF | on ]
+   -strategy tPD = [ 5 | 7 ]
+   -strategy voltage_level_A [ 1.8 | 2.5 | 3.3]
+   -strategy voltage_level_B [ 1.8 | 2.5 | 3.3]
+   -strategy fast_inlatch [ OFF | on | = pin_name1 pin_name2...]
+   -strategy schmitt_trigger [ OFF | = pin_name1 pin_name2...]
+   -strategy pull_up [ OFF | = pin_name1 pin_name2...]
+   -strategy unused_To_PinKeeper [ off | ON ]
+   -strategy pull_up_unused [ OFF | on]
+   -strategy unused_To_Ground [ OFF | on]
+   -strategy pull_down [ OFF | = dedicated_pin1 dedicated_pin2...]
+   -strategy Latch_Synthesis [ON | off ]
+   -strategy Optimize [ON | off]
+   -strategy Cascade_Logic [ON | off |= pin_name1 ..pin_nameN]
+   -strategy Foldback_Logic [ON | off |= node_name1 ..node_nameN]
+   -strategy Soft_Buffer [on | OFF |= node_name1 ..node_nameN]
+   -strategy XOR_Synthesis [on | OFF |= pin_name1 ..pin_nameN]
+   -strategy Push_Gate [on | OFF]
+   -strategy Verilog_sim [sdf | Verilog | OFF]
+   -strategy Vhdl_sim [sdf | vhdl | OFF]
+   -strategy Out_Edif [on | OFF]
+   -strategy Global_Fold [node_name1 ..node_nameN]
+   -strategy Global_OE [node_name1 ..node_nameN]
+   -strategy OE_node [node_Number1..node_NumberN]
+   -strategy logic_doubling [on | OFF]
+   -strategy twoclock [clockname]
+   -strategy pinfile
+</code>
+</details>
+
 
 Other people's workflows:
 * https://github.com/willie68/WCPLD
