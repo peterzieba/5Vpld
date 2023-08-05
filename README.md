@@ -1,5 +1,5 @@
 # Overview
-This repository centers around documenting Linux and Windows workflows for Atmel (Now Microchip) 5V GAL PLD and CPLD parts:
+This repository centers around documenting modern ways of developing logic for and programming Atmel (Now Microchip) 5V GAL PLD and CPLD parts under recent Linux and Windows versions.
 * ATF16V8 (Modern/active equivalent of the PAL16V8 and GAL16V8 parts)
 * ![ATF22V10](vendor-datasheets/doc0735.pdf) (Modern/active equivalent of the PAL22V10 and GAL22V10 parts)
 * ATF1502
@@ -19,9 +19,9 @@ This is mostly a collection of documentation, but some small scripts are here th
 <details>
 <summary>Scope: Expand here for why similar parts not covered</summary>
 
-* 3.3V parts are not considered: There are simply better choices that are well documented. Also, the CPLD parts have VccIO inputs, so you can technically use them in 3.3V designs just as well.
+* We only consider true 5V parts (not merely 5V tolerant parts). 3.3V parts are not considered: There are simply better choices that are well documented. Also, the CPLD parts have VccIO inputs, so you can technically use them in 3.3V designs just as well.
 * The Greekpak devices probably should be covered here, but, they're reasonably well documented with modern tools.
-* Any parts that are NRND or inactive. Because there are 5V parts that are still considered active, we only consider these.
+* Any parts that are NRND or inactive. Since all of the parts considered here are still in full production (as of 2023), they can be used in production designs.
 * For the ATF150x CPLD parts specifically:
   * The BE and ASV devices not covered here as they seem to be difficult to obtain and are not 5V devices. If you need 3.3V or lower, there are probably better parts suited to your needs.
 </details>
@@ -45,6 +45,8 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 </details>
 
 # Requirements
+* The actual PLD/CPLD chip you'd like to work with.
+* A software workflow covered here. Highly recommended is using the CUPL.EXE compiler on Linux or Windows with the helper utilities covered here.
 ![See PROGRAMMING.md](PROGRAMMING.md). TL;DR:
 * An EPROM/Device programmer if you wish to use the ATF16V8 or ATF22V10 parts
 * A JTAG programmer for the ATF150x parts
