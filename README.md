@@ -793,6 +793,7 @@ pc224lcc       02    28    3204     72
 </code>
 </details>
 
+<details>
 <summary>Expand here for a list of devices the version of CUPL provided by Total Designer of Logical Devices, Inc. supports</summary>
 
 <code>
