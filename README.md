@@ -1,31 +1,25 @@
 # Overview
 This repository centers around documenting Linux and Windows workflows for Atmel (Now Microchip) 5V GAL PLD and CPLD parts:
-* ATF16V8
-* ATF22V10
+* ATF16V8 (Modern/active equivalent of the PAL16V8 and GAL16V8 parts)
+* ![ATF22V10](vendor-datasheets/doc0735.pdf) (Modern/active equivalent of the PAL22V10 and GAL22V10 parts)
 * ATF1502
 * ATF1504
 * ATF1508
 
 These parts are still active and highly worth considering wherever:
 * 5V logic is a requirement / avoiding level shifting
-* Prototyping / Learning about Logic. Through-hole (soldering friendly) variants exist for all parts, and all parts are reprogrammable.
+* Prototyping (reprogrammable) / Learning about Logic.
+* Through-hole / soldering-friendly is desired: All parts have DIP packages or can be placed in through-hole PLCC sockets.
 * Replacing large quantities of various TTL/CMOS
 
 This is mostly a collection of documentation, but some small scripts are here that help make things easier and provide examples on how to avoid WinCUPL while still utilizing these parts:
 * ![Linux Workflow (5vcomp command-line utility pointed at a .PLD file)](linux-workflow/)
 * ![Windows Workflow (right-click a .PLD file and get compiled/synthesized .JED files.](windows-workflow/)
 
-This repository aims to make it easier to work with the following parts:
-* GAL Devices: ATF16V8, ![ATF22V10](vendor-datasheets/doc0735.pdf) (Require an EPROM Programmer)
-  * Part number convention seems to be: "number of inputs" V "number of outputs/macrocells".
-* CPLD Devices (JTAG Programmable): ATF1502AS (32 macrocell), ATF1504AS (64 macrocell), ATF1508AS (128 macrocells)
-  * The devices ending in AS and ASL are considered here. Both are active, however, ASL parts seem to be difficult to obtain.
-  * Available in TQFP, PLCC, PQFP variants. PLCCs can be placed in through-hole sockets.
-
 <details>
-<summary>Scope: Expand here for parts not covered and why</summary>
+<summary>Scope: Expand here for why similar parts not covered</summary>
 
-* 3.3V parts are not considered: There are simply better choices that are well documented.
+* 3.3V parts are not considered: There are simply better choices that are well documented. Also, the CPLD parts have VccIO inputs, so you can technically use them in 3.3V designs just as well.
 * The Greekpak devices probably should be covered here, but, they're reasonably well documented with modern tools.
 * Any parts that are NRND or inactive. Because there are 5V parts that are still considered active, we only consider these.
 * For the ATF150x CPLD parts specifically:
@@ -49,6 +43,11 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 * FPGAs usually support standard JTAG for programming, whereas many PLDs required specialized device programmers.
 * There are likely exceptions to all of the above in some parts. These are not hard rules.
 </details>
+
+# Requirements
+![See PROGRAMMING.md](PROGRAMMING.md). TL;DR:
+* An EPROM/Device programmer if you wish to use the ATF16V8 or ATF22V10 parts
+* A JTAG programmer for the ATF150x parts
 
 # Terminology / Background
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">PLD/GAL</a> - Programmable Logic Device. Small, generally DIP-package 5V programmable Logic.<br />
@@ -84,14 +83,14 @@ Each of the subsections here represents a potential workflow to design logic equ
 
 Some of the other approaches covered here also avoid the CUPL compiler as well and instead generate netlists provided directly to the device fitter.
 
-Finally, a word on preferred approach, given the options: The CUPL command line or Quartus is probably the best way, especially if you are interested in using Hi-Z states. Neither Yosys nor Digital seemed to have robust support for Hi-Z states (important for Bidirectional I/O). If that is important to you, you may want to stick with either Quartus or the CUPL command line methods.
+Finally, a word on preferred approach, given the options: Using the CUPL.EXE compiler via command line or Quartus are probably the best ways, especially if you are interested in using Hi-Z states. Neither Yosys nor Digital seemed to have robust support for Hi-Z states (important for Bidirectional I/O). If that is important to you, you may want to stick with either Quartus or the CUPL command line methods.
 
 This diagram is from the help files built into WinCUPL which shows how one can go from a CUPL .PLD into the .JED files needed to program a device.
 
 ![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
 
 ## Old Approach: WinCUPL
-While logic for these parts can be written via WinCUPL, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows. It does however have value in the help files / documentation / examples. Furthermore, it should be noted that the CUPL compiler itself is actually pretty solid/stable. So, the recommended approach is to install and use it for documentation/examples and then simply avoid it for serious work by using the command line CUPL.EXE (perhaps through the helper scripts in this repository).
+While logic for these parts can be written using the WinCUPL IDE, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows. It does however have value in the help files / documentation / examples. Furthermore, it should be noted that the CUPL compiler itself is actually pretty solid/stable. So, the recommended approach is to install and use it for documentation/examples and then simply avoid it for serious work by using the command line CUPL.EXE (perhaps through the helper scripts in this repository).
 
 You can <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
 
@@ -101,7 +100,7 @@ To get it working under Linux with Wine, you'll need winetricks so you can insta
 winetricks mfc40 mfc42
 </code>
 
-Furthermore, if you are intending on working with the ATF150x parts, you should probably grab the newer fitters out of the Atmel Prochip package.
+Furthermore, if you are intending on working with the ATF150x parts, you should probably grab the newer fitters out of the Atmel Prochip package. The utilities in this repository will refuse to work without them.
 
 ## Command line approach: CUPL & Your favorite text editor or IDE.
 This is probably the most solid approach assuming you are OK with using CUPL as a language. This approach can operate on both Linux and Windows without trouble. You should start with the WinCUPL approach as a prerequisite to getting the CUPL compiler and the examples/help files.

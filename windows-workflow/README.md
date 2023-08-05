@@ -17,3 +17,4 @@ This workflow has been tested to run properly on:
 
 Todo:
 * Impose character length limit on filenames (CSIM.EXE issues)
+* Probably check to make sure find150x.exe files have been replaced with their corresponding fit150x.exe files
