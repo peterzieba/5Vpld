@@ -14,7 +14,7 @@ These parts are still active and highly worth considering wherever:
 
 This is mostly a collection of documentation, but some small scripts are here that help make things easier and provide examples on how to avoid WinCUPL while still utilizing these parts:
 * ![Linux Workflow (5vcomp command-line utility pointed at a .PLD file)](linux-workflow/)
-* ![Windows Workflow (right-click a .PLD file and get compiled/synthesized .JED files.](windows-workflow/)
+* ![Windows Workflow (right-click a .PLD file and get compiled/synthesized .JED files).](windows-workflow/)
 
 <details>
 <summary>Scope: Expand here for why similar parts not covered</summary>

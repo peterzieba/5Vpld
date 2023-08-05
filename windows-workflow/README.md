@@ -1,4 +1,5 @@
 Install WinCUPL with default options.
+* <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
 
 The 5vcomp.bat batch file can be used to automate compiling of .PLD files with CUPL.EXE.
 This eliminates the need to use WinCUPL directly. Use your favorite IDE or text editor.
@@ -10,6 +11,9 @@ option to any .PLD files, which will simply call C:\Wincupl\WinCupl\Fitters\5vco
 
 This batch file will perform some basic checks (fitter version, etc.) and will perform
 simulation only if the corresponding .SI file has been found.
+
+This batch file will also refuse to run until you replace the installed fitters with those from Atmel Prochip
+* <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip">Download Atmel Prochip from here</a>
 
 This workflow has been tested to run properly on:
  - Windows XP 32-bit
