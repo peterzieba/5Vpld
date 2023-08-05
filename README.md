@@ -14,7 +14,7 @@ These parts are still active and highly worth considering wherever:
 
 This is mostly a collection of documentation, but some small scripts are here that help make things easier and provide examples on how to avoid WinCUPL while still utilizing these parts:
 * ![Linux Workflow (5vcomp command-line utility pointed at a .PLD file)](linux-workflow/)
-* ![Windows Workflow (Same 5vcomp utility run by right-clicking a .PLD file to get a compiled/synthesized .JED file).](windows-workflow/)
+* ![Windows Workflow (5vcomp.bat utility called by right-clicking a .PLD file to get a compiled/synthesized .JED file).](windows-workflow/)
 
 <details>
 <summary>Scope: Expand here for why similar parts not covered</summary>
@@ -129,7 +129,7 @@ This is probably the most solid approach assuming you are OK with using CUPL as 
 The workflows here simply make this easier/conveinent by catching a lot of common issues and providing reasonable defaults to the compiler:
 
 * ![Linux Workflow (point 5vcomp at your .PLD file from a command line)](linux-workflow/)
-* ![Windows Workflow (right-click on a .PLD to compile with 5vcomp)](windows-workflow/)
+* ![Windows Workflow (right-click on a .PLD to compile with 5vcomp.bat)](windows-workflow/)
 
 
 ## Guide to CUPL itself
@@ -1549,16 +1549,15 @@ Other people's workflows:
 * https://github.com/Manawyrm/PAL-GAL-CI
 
 ## Absurd approach: Fusemaps by hand
-* See this <a href="https://blog.frankdecaire.com/2017/01/22/generic-array-logic-devices/">blog post</a> by Frank DeCaire.
-
+One can literally create a fusemap by hand for a PLD.
+* See this <a href="https://blog.frankdecaire.com/2017/01/22/generic-array-logic-devices/">blog post</a> by Frank DeCaire, where he documents his journey of doing so.
 
 While not the easiest approach, just as one can write G-Code in notepad or Assembly code in a hex editor, manually creating a fusemap is technically possible. This assumes that you have a datasheet for your device which has a description of the fusemap and the details of how the macrocells work. With this in hand, one could write a JEDEC file with the desired functionality and a text editor. This would be non-trivial and error-prone, but it demonstrates that such a thing could be done, at least with the older PLDs (16V8, 22V10), and even with the ATF750 (some datasheets actually had the fusemap for this part).
 
-
 It is worth noting that the fusemap for the ATF150x parts has been recently documented in <a href="https://github.com/whitequark/prjbureau">prjbureau</a>. Given the complexity of these devices over PLDs, writing a fusemap by hand for these parts would probably be a bad idea.
 
-## Other languages: ABEL, PALASM (ancient)
-Since we're mostly covering modern approaches to these devices here, these will only be covered very briefly:
+## Other languages: ABEL, PALASM
+These will only be covered very briefly:
 * ABEL: "Advanced Boolean Expression Language" was created in 1983 by Data I/O Corporation.
 * PALASM: Introduced by Monolithic Memories, Inc. (MMI) in the 1980's
   * A modern version of this is called <a href="https://github.com/daveho/GALasm">GALASM</a> which is a continuation of something called GALer. This might be worth considering if you are happy with just PLDs.
