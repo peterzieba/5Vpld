@@ -1,7 +1,11 @@
 echo off
 rem Drop this file into C:\Wincupl\WinCupl\Fitters and it should be executable from anywhere.
 
-set LIBCUPL=C:\Wincupl\Shared\cupl.dl
+set LIBCUPL=C:\Wincupl\Shared\Atmel.dl
+rem set LIBCUPL=C:\Wincupl\Shared\totaldes.dl
+rem set LIBCUPL=C:\Wincupl\Shared\pldmstr.dl
+rem set LIBCUPL=C:\Wincupl\Shared\palxprt.dl
+
 set CUPL_DEFAULT_OPTIONS=m1jn
 set CUPL_SIMULATION_OPTIONS=sw
 
@@ -17,7 +21,6 @@ set PLD_FILE=%1
 if not exist %PLD_FILE% set PLD_FILE=%1.pld
 if not exist %PLD_FILE% goto :notexist
 
-set CUPL_SIMULATION_OPTIONS=ws
 if not exist %~dpn1.si set CUPL_SIMULATION_OPTIONS=
 
 if "%CUPL_SIMULATION_OPTIONS%" == "" echo No .SI file found. Simulation will not be performed.

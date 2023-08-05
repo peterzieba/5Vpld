@@ -6,7 +6,7 @@ These parts are still active and highly worth considering wherever prototyping a
 This is mostly documentation, but some small scripts are here that help make things easier and provide examples on how to avoid WinCUPL while still utilizing these parts.
 
 This repository aims to make it easier to work with the following parts:
-* GAL Devices: ATF16V8, ATF22V10 (Require an EPROM Programmer)
+* GAL Devices: ATF16V8, ![ATF22V10](vendor-datasheets/doc0735.pdf) (Require an EPROM Programmer)
   * Part number convention seems to be: "number of inputs" V "number of outputs/macrocells".
 * CPLD Devices (JTAG Programmable): ATF1502AS (32 macrocell), ATF1504AS (64 macrocell), ATF1508AS (128 macrocells)
   * The devices ending in AS and ASL are considered here. Both are active, however, ASL parts seem to be difficult to obtain.
@@ -71,17 +71,15 @@ CSIM - A tool for simulating the behavior of logic. This takes an .SI file and p
 
 
 # Writing logic for these parts: Possible Workflows
-Each of these subsections represents a potential workflow to design logic equations for these parts. The majority of the focus will be on methods that avoid WinCUPL (which is ultimately just an IDE/text-editor that calls CUPL.EXE).
-
-This diagram is from the help files built into WinCUPL which shows how one can go from a CUPL .PLD into the .JED files needed to program a device.
+Each of the subsections here represents a potential workflow to design logic equations for these parts. The majority of the focus will be on methods that avoid WinCUPL (which is ultimately just an IDE/text-editor that calls CUPL.EXE).
 
 Some of the other approaches covered here avoid CUPL entirely and instead generate netlists provided directly to the device fitter.
 
 Finally, a word on preferred approach, given the options: The CUPL command line or Quartus is probably the best way, especially if you are interested in using Hi-Z states. Neither Yosys nor Digital seemed to have robust support for Hi-Z states (important for Bidirectional I/O). If that is important to you, you may want to stick with either Quartus or the CUPL command line methods.
 
+This diagram is from the help files built into WinCUPL which shows how one can go from a CUPL .PLD into the .JED files needed to program a device.
+
 ![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
-
-
 
 ## Old Approach: WinCUPL
 While logic for these parts can be written via WinCUPL, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows. It does however have value in the help files / documentation / examples. Furthermore, it should be noted that the CUPL compiler itself is actually pretty solid/stable. So, the recommended approach is to install and use it for documentation/examples and then simply avoid it for serious work by using the command line CUPL.EXE (perhaps through the helper scripts in this repository).
