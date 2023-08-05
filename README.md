@@ -41,8 +41,7 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 </details>
 
 # Terminology / Background
-<a href="https://en.wikipedia.org/wiki/Programmable_logic_device">PLD - </a>Programmable Logic Device. Small, generally DIP-package 5V programmable Logic.<br />
-<a href="https://en.wikipedia.org/wiki/Programmable_logic_device#GALs">GAL - </a>Generic Array Logic. Same as above, but often reprogrammable / more features.<br />
+<a href="https://en.wikipedia.org/wiki/Programmable_logic_device">PLD/GAL</a> - Programmable Logic Device. Small, generally DIP-package 5V programmable Logic.<br />
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">CPLD - </a>Complex Programmable Logic Device. Larger packages, many pins, much more complex.<br />
 
 <a href="https://en.wikipedia.org/wiki/Macrocell_array">Macrocell</a> - Each output has a macrocell associated with it. These can often be configured as active high, active low, flip-flops, etc.<br />
@@ -50,7 +49,7 @@ Product Term - Each macrocell has a number of product terms associated with it (
 
 <a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">CUPL</a> - A early (1983) programming language used to define the behavior of digital logic gates. "Compiler for Universal Programmable Logic.", is essentially a predecessor to languages like Verilog/VHDL. CUPL.EXE is the compiler which is used to compile .PLD files written in CUPL, ultimately to be burned into programmable logic devices.<br />
 <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end/IDE to the CUPL compiler and related programs. It is still part specifically that we are trying to avoid, while keeping everything else underneath/around it as it is buggy.<br />
-.dl File - Device Library File. This file determines what devices CUPL has the ability to compile for.
+.dl File - Device Library File. This file determines what devices CUPL has the ability to compile for.<br>
 .cat File - A text file corresponding to a .dl device library file with the same name and containing a list of supported devices by CUPL.
 
 <a href="https://en.wikipedia.org/wiki/Netlist">Netlist</a> - A netlist is essentially an electrical schematic in a text file which defines connections. For the purposes here, it is an intermediary file format (Either EDIF or Berkeley PLA), which is used to describe the behavior of logic ultimately fed into the fitter.<br />
