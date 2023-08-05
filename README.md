@@ -53,6 +53,9 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">PLD/GAL</a> - Programmable Logic Device. Small, generally DIP-package 5V programmable Logic.<br />
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">CPLD - </a>Complex Programmable Logic Device. Larger packages, many pins, much more complex.<br />
 
+Combinatorial Logic - Simple logic (AND, OR, NOT, gates, etc.) that does not use flip-flops / registers / clocks. Such logic could technically be implemented with an EPROM/Memory, where a series of inputs always maps to a known set of outputs.
+Registered Logic - Logic that uses registers (flip-flops), and can thus hold state. On the GAL16V8 and GAL22V10, each macrocell can be configured as a D-Flip-Flop, and all flip-flops share the same clock pin. On the ATF150x, much more complex types of registered logic and clocking options are available.
+
 <a href="https://en.wikipedia.org/wiki/Macrocell_array">Macrocell</a> - Each output has a macrocell associated with it. These can often be configured as active high, active low, flip-flops, etc.<br />
 Product Term - Each macrocell has a number of product terms associated with it (typically around 5). A product term is essentially a giant AND gate with inputs to each pin on the device. Burning away fuses allows selecting which inputs are fed into this AND gate, ultimately selecting the conditions required for a product term to be activated. Product terms belonging to the same output macrocell are then combined into an OR gate before being fed into the macrocell. This means that there can be several combination of inputs that allow a given macrocell to be triggered. This architecture is called a Sum-of-Products logic array.
 

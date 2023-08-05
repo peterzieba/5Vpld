@@ -26,3 +26,10 @@ From there, you can install WinCUPL:
 * <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
 * <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip">Download Atmel Prochip from here</a>
   * Overwrite the ATF150x.EXE fitters in C:\Wincupl\WinCupl\Fitters\ with those from Atmel Prochip.
+* Once you have everything installed, you can download 5vcomp and place it into your path.
+
+# Usage
+<code>
+5vcomp your-project.PLD</code>
+
+This should generate a bunch of files and most crucially, a .JED file if everything works properly.

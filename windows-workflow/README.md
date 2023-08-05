@@ -26,6 +26,11 @@ This batch file will refuse to run until you replace the installed fitters with 
 * Overwrite the ATF150x.EXE fitters in C:\Wincupl\WinCupl\Fitters\ with those that have been installed from Atmel Prochip.
 * It's simply not worth using the old fitters -- too many variables of things that can go wrong.
 
+# Usage
+Simply right-click on your .PLD file and select "Compile PLD"
+
+This should generate a bunch of files and most crucially, a .JED file if everything works properly.
+
 # Notes
 
 This workflow has been tested to run properly on:
