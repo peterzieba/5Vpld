@@ -12,6 +12,14 @@ These parts are still active and highly worth considering wherever:
 * Learning about logic: Through-hole / soldering-friendly is desired: All parts have DIP packages or can be placed in through-hole PLCC sockets.
 * Replacing large quantities of various TTL/CMOS Logic Gates
 
+This is a "Choose your own adventure novel". Covered here are many approaches:
+* Using WinCUPL
+* Using just the CUPL.EXE compiler with some wrapper scripts here (5vpld)
+* Using Quartus (only for the CPLD parts)
+* Making your own fusemap / .JED file with nothing more than a datasheet.
+* Experimental approaches with Yosys
+* Several Approaches to reverse-engineering a .JED file back into logic equations
+
 This is mostly a collection of documentation, but some small scripts are here that help make things easier and provide examples on how to avoid WinCUPL while still utilizing these parts:
 * ![Linux Workflow (5vcomp command-line utility pointed at a .PLD file)](linux-workflow/)
 * ![Windows Workflow (5vcomp.bat utility called by right-clicking a .PLD file to get a compiled/synthesized .JED file).](windows-workflow/)
