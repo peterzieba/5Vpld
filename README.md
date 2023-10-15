@@ -114,7 +114,7 @@ This diagram is from the help files built into WinCUPL which shows how one can g
 
 ![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
 
-## Old Approach: WinCUPL
+## Old Approach: WinCUPL (16V8, 22V10, and ATF150x)
 While logic for these parts can be written using the WinCUPL IDE, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows.
 It does however have value in the help files / documentation / examples. Furthermore, it should be noted that the CUPL compiler itself is actually pretty solid/stable.
 So, the recommended approach is to install and use it for documentation/examples and then simply avoid it for serious work by using the command line CUPL.EXE (perhaps through the helper scripts in this repository as in the next section).
