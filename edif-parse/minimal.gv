@@ -1,0 +1,19 @@
+digraph top {
+	graph [rankdir=LR]
+	node [shape=record]
+	subgraph cluster_top {
+		label="top|Widget"
+		top_i [label="IN|<A> A|<B> B|<C> C|<D> D"]
+		instance1 [label="instance1|AND2|{{<A> A|<B> B}|{<Q> Q}}"]
+		instance2 [label="instance2|AND2|{{<A> A|<B> B}|{<Q> Q}}"]
+		instance3 [label="instance3|OR2|{{<A> A|<B> B}|{<Q> Q}}"]
+		top_o [label="OUT|<O> O"]
+		top_i:A -> instance1:A
+		top_i:B -> instance1:B
+		top_i:C -> instance2:A
+		top_i:D -> instance2:B
+		instance1:Q -> instance3:A
+		instance2:Q -> instance3:B
+		instance3:Q -> top_o:O
+	}
+}
