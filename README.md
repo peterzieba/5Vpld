@@ -129,7 +129,7 @@ winetricks mfc40 mfc42
 
 Furthermore, if you are intending on working with the ATF150x parts, you should probably grab the newer fitters out of the Atmel Prochip package. The utilities in this repository will refuse to work without them.
 
-## 5vcomp: The CUPL compiler & Your favorite text editor or IDE.
+## 5vcomp: The CUPL compiler & Your favorite text editor or IDE (16V8, 22V10, and ATF150x)
 Since WinCUPL simply is a front-end / IDE on top of the CUPL.EXE compiler and related programs, one can write the desired logic in CUPL, save it in a .PLD file using their favorite editor and have CUPL.EXE compile it into a .JED file for programming into a PLD.
 
 5vcomp is a simple wrapper around the CUPL compiler.
@@ -1556,7 +1556,7 @@ Other people's workflows:
 * https://github.com/willie68/WCPLD
 * https://github.com/Manawyrm/PAL-GAL-CI
 
-## Absurd approach: Fusemaps by hand
+## Absurd approach: Fusemaps by hand (16V8 / 22V10)
 One can literally create a fusemap by hand for a PLD.
 * See this <a href="https://blog.frankdecaire.com/2017/01/22/generic-array-logic-devices/">blog post</a> by Frank DeCaire, where he documents his journey of doing so.
 
@@ -1570,11 +1570,12 @@ These will only be covered very briefly:
 * PALASM: Introduced by Monolithic Memories, Inc. (MMI) in the 1980's
   * A modern version of this is called <a href="https://github.com/daveho/GALasm">GALASM</a> which is a continuation of something called GALer. This might be worth considering if you are happy with just PLDs.
 
-## Atmel Prochip (Not Free, Verilog/VHDL support)
+## Atmel Prochip (Not Free, Verilog/VHDL support for ATF150x)
 ![PDF: Example Verilog Design flows with using ProChip 5.0.1](vendor-docs/CPLD_Mentor_Verilog_tutorial[1].pdf)<br />
 Atmel Prochip is not free, however, you can <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip">download it from here</a>, and may be able to <a href="https://www.microchip.com/prochiplicensing/#/">request a trial license from Microchip</a>. This workflow supports Verilog/VHDL, which is great if one wants to move away from CUPL entirely and can afford to purchase a license.
 
-This packages is worth downloading regardless because there are newer fitters for the ATF150x devices that can be extracted from this installation, and these fitters are required in every other approach mentioned here. The newer versions of the fitters should mention version 1918 (3-21-07) when invoked from a command line. (The fitters that come with WinCUPL are old and should be replaced with the ones from this package.
+Prochip should be downloaded regardless because there are newer fitters for the ATF150x devices that can be extracted from this installation, and these fitters are required in every other approach mentioned here. The newer versions of the fitters should mention version 1918 (3-21-07) when invoked from a command line. (The fitters that come with WinCUPL are old and should be replaced with the ones from this package).
+
 ## Quartus (Free, Verilog, VHDL, Schematic Capture). Indirect support for ATF150x.
 * It turns out that the Altera (Now Intel) <a href="https://www.intel.com/content/www/us/en/software-kit/711791/intel-quartus-ii-web-edition-design-software-version-13-0sp1-for-windows.html?">Quartus 13.0sp1</a> can be used to produce a .POF file targeting various CPLD chips made by Altera in the MAX EPM3K/EPM7K series, which can be converted to target an ATF150x device.
 * The resulting .POF file can be converted using a utility called <a href="http://ww1.microchip.com/downloads/archive/pof2jed.zip">POF2JED</a> from Atmel (Now Microchip). This is further detailed in <a href="http://ww1.microchip.com/downloads/en/AppNotes/DOC0916.PDF">this application note.
@@ -1584,7 +1585,7 @@ This packages is worth downloading regardless because there are newer fitters fo
 "Digital is an easy-to-use digital logic designer and circuit simulator designed for educational purposes." This is an interesting option as one can create a schematic and have a .JED file generated for a GAL16V8 or GAL22V10. If one provides the fitters to Digital, it can produce .JED files for the ATF150x series as well.
 https://github.com/hneemann/Digital
 
-## Yosys (Open Source with Atmel Fitters, experimental)
+## Yosys (Open Source with Atmel Fitters for ATF150x, experimental)
 In theory, one can use Yosys Open SYnthesis Suite (Yosys) with the help of the Atmel Fitters a specific CPLD and a techmap to produce .JED files. This is a bit more experimental, but some have managed to make this work. This allows an almost entirely open-source workflow using Verilog, and probably <a href="https://icestudio.io/">Icestudio</a> if one prefers schematic capture as well. A good place to start would be using the <a href="https://github.com/YosysHQ/oss-cad-suite-build">OSS CAD Suite</a> to get the big parts of the suite set up. After that, there are two approaches to making this work:
 * https://github.com/whitequark/prjbureau
   * prjbureau demonstrates going from RTLIL to a .JED file

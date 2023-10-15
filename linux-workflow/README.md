@@ -33,3 +33,8 @@ From there, you can install WinCUPL:
 5vcomp your-project.PLD</code>
 
 This should generate a bunch of files and most crucially, a .JED file if everything works properly.
+
+# Misc
+These files make it easier to handle file associations and their usual actions when using a GUI filemanager:
+* <code>5vpld.xml</code> provides Mime Types for the most common files (.JED, .PLD, etc.). This should at the least make them easier to work with.
+* <code>5vcomp.desktop</code> provides a .desktop shortcut to make lanunching 5vcomp easier.

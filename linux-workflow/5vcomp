@@ -49,7 +49,14 @@ prerequisite_error()
     printf "  have been replaced with the latest version (available inside Atmel Prochip)\n\n"
     printf "A future release might simply try to make this work without WinCUPL installation as only the CUPL compiler and the fitters are required.\n"
     printf "For now this remains the recommended workflow as WinCUPL does come with decent examples and help files.\n\n"
+    pause_before_exit
     exit 3
+}
+
+pause_before_exit()
+{
+    echo "Press enter to exit"
+    read a
 }
 
 #: <<'END'
@@ -102,6 +109,7 @@ if [ $# -ne 1 ] #Make sure we passed options to CUPL.EXE
     printf "USAGE: Please pass the name of a .PLD file to be compiled. Ex:\n"
     printf "${YEL}5vcomp COUNTER.PLD${NC}\n\n"
     printf "This script will attempt to compile it using reasonable defaults passed to CUPL.EXE\n\n"
+    pause_before_exit
     exit 1
 fi
 
@@ -126,6 +134,7 @@ fi
 
 if [ ! -f "${FILENAME}" ]; then
     printf "${RED}ERROR: Cannot find file: ${FILENAME}${NC}\n"
+    pause_before_exit
     exit 1
 fi
 
@@ -134,12 +143,14 @@ FILENAME_NOPATH=`basename ${FILENAME}`
 #Too long filenames is a horrible bug in CSIM.EXE that took forever to figure out.
 if [ ${#FILENAME_NOPATH} -gt 19 ]; then
     printf "${RED}ERROR: Filenames longer than 19 total characters cause problems with CSIM.EXE\nUse 15 characters max for filename + 1 dot + 3 file extension.${NC}\n"
+    pause_before_exit
     exit 1
 fi
 
 #Multiple periods in the filename also cause CSIM.EXE to break.
 if [ `echo ${FILENAME_NOPATH} | grep -o "\." | wc -l` -gt 1 ]; then
     printf "${RED}ERROR: Filenames containing more than one period cause problems with CSIM.EXE\nFilenames should only contain 1 period.${NC}\n"
+    pause_before_exit
     exit 1
 fi
 
@@ -160,15 +171,16 @@ fi
 FILENAME_FULLPATH=`WINEDEBUG="fixme-hid" winepath -w "${1}"`
 
 #Time to run CUPL.EXE
-printf "${GRN}Running WinCUPL with the following command line: ${NC}\n"
+printf "${GRN}Running CUPL.EXE with the following command line: ${NC}\n"
 echo "${YEL}c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u ${DEVICE_LIB} ${FILENAME_FULLPATH}${NC}"
 echo "\n"
 #We supress the most common wine debug warnings as none have been found to create issues with CUPL. There is still one "fixme:imm" that seems to be coming from a child process.
-WINEDEBUG="fixme-hid,fixme-ntdll,fixme-imm" wine c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u ${DEVICE_LIB} "${FILENAME_FULLPATH}"
+WINEDEBUG="fixme-hid,fixme-ntdll,fixme-imm" wine c:/Wincupl/Shared/cupl.exe -${CUPL_DEFAULT_OPTIONS}${CUPL_SIMULATION_OPTIONS} -u ${DEVICE_LIB} ${FILENAME_FULLPATH}
 
 if [ $? -eq 0 ]; then
     printf "${GRN}SUCCESS: CUPL returned successfully.${NC}\n"
     printf "${GRN}A .JED file should have been produced, which can be used to program the target device.${NC}\n"
+    sleep 3
 else
     printf "${RED}ERROR: CUPL returns a non-zero exit code: ${?}${NC}\n"
     if [ -n ${CUPL_SIMULATION_OPTIONS} ]; then
@@ -189,4 +201,5 @@ CSIMA logic simulator sa \n \
 Finally, references to fit/find are from the Atmel fitters.${NC}
 
 "
+    pause_before_exit
 fi

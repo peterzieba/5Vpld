@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="text/x-cupl">
+    <sub-class-of type="text/plain"/>
+    <generic-icon name="application-vnd.oasis.opendocument.formula"/>
+    <comment>CUPL Program</comment>
+    <glob pattern="*.pld"/>
+    <magic priority="70">
+      <match value="Name" type="string" offset="0"/>
+    </magic>
+  </mime-type>
+  <mime-type type="text/x-jedec-fusemap">
+    <sub-class-of type="text/plain"/>
+    <generic-icon name="org.gnome.Firmware"/>
+    <comment>JEDEC Fusemap</comment>
+    <glob pattern="*.jed"/>
+    <magic priority="70">
+      <match value="\x02" type="string" offset="0:0"/>
+    </magic>
+  </mime-type>
+  <mime-type type="text/x-jtag-svf">
+    <sub-class-of type="text/plain"/>
+    <generic-icon name="network-transmit-receive"/>
+    <comment>JTAG Serial Vector Format</comment>
+    <glob pattern="*.svf"/>
+    <!--
+    <magic priority="70">
+      <match value="Name" type="string" offset="0"/>
+    </magic>
+    -->
+  </mime-type>
+  <mime-type type="text/x-edif">
+    <sub-class-of type="text/plain"/>
+    <comment>EDIF Netlist</comment>
+    <glob pattern="*.edf"/>
+    <glob pattern="*.edn"/>
+    <magic priority="70">
+      <match value="(edif" type="string" offset="0"/>
+    </magic>
+  </mime-type>
+
+</mime-info>
+
+<!--
+Promising generic icons on ubuntu:
+application-octet-stream
+application-vnd.oasis.opendocument.formula
+application-x-firmware
+cpu-x
+drive-harddisk-solidstate
+frogr
+network-transmit-receive
+-->

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=5vcomp .PLD file compiler
+Exec=/usr/local/bin/5vcomp %f
+Path=/usr/local/bin/5vcomp
+#Path=/home/owner/.wine/drive_c
+Terminal=True
+Type=Application
+Categories=Application
