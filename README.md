@@ -12,13 +12,13 @@ These parts are still active and highly worth considering wherever:
 * Learning about logic: Through-hole / soldering-friendly is desired: All parts have DIP packages or can be placed in through-hole PLCC sockets.
 * Replacing large quantities of various TTL/CMOS Logic Gates
 
-This is a "Choose your own adventure novel". Covered here are many approaches:
-* Using WinCUPL
-* Using just the CUPL.EXE compiler with some wrapper scripts here (5vpld)
-* Using Quartus (only for the CPLD parts)
-* Making your own fusemap / .JED file with nothing more than a datasheet.
-* Experimental approaches with Yosys
-* Several Approaches to reverse-engineering a .JED file back into logic equations
+This is a "Choose your own adventure novel". Covered here are many approaches and tradeoffs:
+* Using WinCUPL (Erratic, unreliable)
+* Using just the CUPL.EXE compiler directly with some wrapper scripts here (5vcomp). Works in Windows/Linux. (recommended)
+* Using Quartus (only for the CPLD. Works by first targeting a similar Altera CPLD and then using the POF2JED utility to convert)
+* Making your own fusemap / .JED file with nothing more than a datasheet and text editor.
+* Experimental approaches with Yosys (Only for the CPLD parts. EDIF is fed into the Atmel fitter)
+* Several Approaches to reverse-engineering a .JED file back into logic equations.
 
 This is mostly a collection of documentation, but some small scripts are here that help make things easier and provide examples on how to avoid WinCUPL while still utilizing these parts:
 * ![Linux Workflow (5vcomp command-line utility pointed at a .PLD file)](linux-workflow/)
@@ -34,10 +34,7 @@ This is mostly a collection of documentation, but some small scripts are here th
   * The BE and ASV devices not covered here as they seem to be difficult to obtain and are not 5V devices. If you need 3.3V or lower, there are probably better parts suited to your needs.
 </details>
 
-<details>
-
 # Background on digital logic.
-
 This repository isn't intended to be an introduction to digital logic, but a brief review and compare/contrast to similar things is provided here.
 
 <details>
@@ -45,6 +42,7 @@ This repository isn't intended to be an introduction to digital logic, but a bri
 Ben Eater does a series of <a href="https://www.youtube.com/watch?v=KM0DdEaY5sY&list=PLowKtXNTBypGqImE405J2565dvjafglHU&index=6">Videos on Digital Logic</a> that are a really excellent introduction to some of the concepts here.
 </details>
 
+<details>
 <summary>Expand here for a description of how these parts compare to ladder logic on a PLC</summary>
 
 * Each rung's output in ladder-logic can be thought of as a single macrocell.
@@ -1656,3 +1654,10 @@ P Preload internal registers (value is applied to !Q output)
 “ ” Enclose output values to be expanded to a specified BASE (octal, decimal, or hex.) Valid values are 0-F, H, L, Z, and X.
 </code>
 </details>
+
+# Acknowledgements
+This repository is merely a bunch of tips, tricks, helper scripts and documentation. The real work comes from:
+* Whitequark for putting together <a href="https://github.com/whitequark/prjbureau">Prjbureau</a>, which documents the fusemap for these devices, provides an ability to go from a .JED file to an .SVF, documentation and more.
+* Yosys
+* hoglet67 for putting together <a href="atf15xx_yosys ">atf15xx_yosys</a>, which shows a workflow using yosys and provides a techmap.
+* Countless other tips, tools, contributions and from all over the web and plenty of trial-and-error working around the quirks of WinCUPL and the fitters themselves.
