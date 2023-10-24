@@ -26,6 +26,8 @@ From there, you can install WinCUPL:
 * <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
 * <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip">Download Atmel Prochip from here</a>
   * Overwrite the ATF150x.EXE fitters in C:\Wincupl\WinCupl\Fitters\ with those from Atmel Prochip.
+  * If you don't want to install Atmel Prochip, you can alternately extract the fitters from the installer using innoextract:
+    * <code>innoextract -I app/Prochip/pldfit/aprim.lib -I app/Prochip/pldfit/atmel.std -I app/Prochip/pldfit/fit1502.exe -I app/Prochip/pldfit/fit1504.exe -I app/Prochip/pldfit/fit1508.exe ProChip5_setup.exe</code>
 * Once you have everything installed, you can download 5vcomp and place it into your path.
 
 # Usage
