@@ -33,7 +33,10 @@ option to any `.PLD` files, which will simply call `C:\Wincupl\WinCupl\Fitters\5
 * You can use `5vinstall.bat` to replace these for you, or you can do the following manually:
 * Overwrite all three of the FIT150x.EXE fitters in C:\Wincupl\WinCupl\Fitters\ with those that have been installed from Atmel Prochip.
   * The prochip files are inside of C:\ATMEL_PLS_Tools\Prochip\pldfit\
-  * Also delete all three of the FIND150x.EXE files in C:\Wincupl\WinCupl\Fitters\ and copy each of the corresponding FIT150x.EXE in their place. (FIT1502.EXE is Copied to FIND1502.EXE, FIT1504.EXE is Copied to FIND1504.EXE, and FIT1508.EXE is Copied to FIND1508.EXE)
+  * Also delete all three of the FIND150x.EXE files in C:\Wincupl\WinCupl\Fitters\ and copy each of the corresponding FIT150x.EXE in their place.
+    * FIT1502.EXE is Copied to FIND1502.EXE
+    * FIT1504.EXE is Copied to FIND1504.EXE
+    * FIT1508.EXE is Copied to FIND1508.EXE
 * It's simply not worth using the old fitters -- too many variables of things that can go wrong.
 
 # Usage
