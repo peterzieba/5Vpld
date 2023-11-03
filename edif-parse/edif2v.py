@@ -5,7 +5,7 @@ import spydrnet as sdn
 from spydrnet.util.selection import Selection
 
 def main():
-    parser = argparse.ArgumentParser(description='Convert edif netlist into verilog')
+    parser = argparse.ArgumentParser(description='Convert an EDIF netlist into verilog')
     parser.add_argument('netlist', help='input netlist', type=str)
     args = parser.parse_args()
 
