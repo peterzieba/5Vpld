@@ -1,5 +1,5 @@
 # Overview
-The 5vcomp.bat batch file can be used to automate compiling of .PLD files with CUPL.EXE.
+The `5vcomp.bat` batch file can be used to automate compiling of `.PLD` files with `CUPL.EXE`.
 This eliminates the need to use WinCUPL directly. Use your favorite IDE or text editor.
 
 WinCUPL is nonetheless a requirement as it provides:
@@ -15,21 +15,22 @@ The Linux equivalent version of 5vcomp is probably a bit ahead of this and more 
 
 # Installation
 
-Install WinCUPL with default options and default installation path.
-<a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
+* Install WinCUPL with default options and default installation path.
+  * <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
+  * Serial Number is `60008009`
 
-* Install Atmel Prochip to the default instal path: C:\ATMEL_PLS_Tools
+* Install Atmel Prochip to the default instal path: `C:\ATMEL_PLS_Tools`
   * <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip">Download Atmel Prochip from here</a>
   * You only need to select the "ProChip Designer 5.0" option if you do not want the additional software.
 
 
-Place 5vcomp.bat inside of C:\Wincupl\WinCupl\Fitters and it should end up in your path so you can run it from anywhere.
+Place `5vcomp.bat` inside of `C:\Wincupl\WinCupl\Fitters` and it should end up in your path so you can run it from anywhere.
 
-Adding context-menu-pld-5vcomp.reg to the registry will add the "compile" right-click
-option to any .PLD files, which will simply call C:\Wincupl\WinCupl\Fitters\5vcomp.bat [your-cupl-project.PLD]
+Adding `context-menu-pld-5vcomp.reg` to the registry will add the "compile" right-click
+option to any `.PLD` files, which will simply call `C:\Wincupl\WinCupl\Fitters\5vcomp.bat` [your-cupl-project.PLD]
 
-5vcomp.bat will refuse to run until you replace the installed fitters with those from Atmel Prochip
-* You can use 5vinstall.bat to replace these for you, or you can do the following manually:
+`5vcomp.bat` will refuse to run until you replace the installed fitters with those from Atmel Prochip
+* You can use `5vinstall.bat` to replace these for you, or you can do the following manually:
 * Overwrite all three of the FIT150x.EXE fitters in C:\Wincupl\WinCupl\Fitters\ with those that have been installed from Atmel Prochip.
   * The prochip files are inside of C:\ATMEL_PLS_Tools\Prochip\pldfit\
   * Also delete all three of the FIND150x.EXE files in C:\Wincupl\WinCupl\Fitters\ and copy each of the corresponding FIT150x.EXE in their place. (FIT1502.EXE is Copied to FIND1502.EXE, FIT1504.EXE is Copied to FIND1504.EXE, and FIT1508.EXE is Copied to FIND1508.EXE)
