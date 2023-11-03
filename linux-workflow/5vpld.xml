@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+This file can be placed inside of ~/.local/share/mime/packages
+
+-->
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="text/x-cupl">
     <sub-class-of type="text/plain"/>

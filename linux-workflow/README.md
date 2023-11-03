@@ -24,8 +24,10 @@ winetricks mfc40 mfc42
 
 From there, you can install WinCUPL:
 * <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
+  * Serial Number is `60008009`
 * <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip">Download Atmel Prochip from here</a>
-  * Overwrite the ATF150x.EXE fitters in C:\Wincupl\WinCupl\Fitters\ with those from Atmel Prochip.
+  * Overwrite the ATF150x.EXE fitters in C:\Wincupl\WinCupl\Fitters\ with those from Atmel Prochip (C:\ATMEL_PLS_Tools\Prochip\pldfit\)
+  * Also delete all three of the FIND150x.EXE files in C:\Wincupl\WinCupl\Fitters\ and copy each of the corresponding FIT150x.EXE in their place. (FIT1502.EXE is Copied to FIND1502.EXE, FIT1504.EXE is Copied to FIND1504.EXE, and FIT1508.EXE is Copied to FIND1508.EXE)
   * If you don't want to install Atmel Prochip, you can alternately extract the fitters from the installer using innoextract:
     * <code>innoextract -I app/Prochip/pldfit/aprim.lib -I app/Prochip/pldfit/atmel.std -I app/Prochip/pldfit/fit1502.exe -I app/Prochip/pldfit/fit1504.exe -I app/Prochip/pldfit/fit1508.exe ProChip5_setup.exe</code>
 * Once you have everything installed, you can download 5vcomp and place it into your path.
@@ -38,5 +40,6 @@ This should generate a bunch of files and most crucially, a .JED file if everyth
 
 # Misc
 These files make it easier to handle file associations and their usual actions when using a GUI filemanager:
-* <code>5vpld.xml</code> provides Mime Types for the most common files (.JED, .PLD, etc.). This should at the least make them easier to work with.
-* <code>5vcomp.desktop</code> provides a .desktop shortcut to make lanunching 5vcomp easier.
+* <code>5vpld.xml</code> (work in progress) provides Mime Types for the most common files (.JED, .PLD, etc.).
+  * Can be placed inside of `~/.local/share/mime/packages`
+* <code>5vcomp.desktop</code> provides a .desktop shortcut to make launching 5vcomp easier.

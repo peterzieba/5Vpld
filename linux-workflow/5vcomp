@@ -39,7 +39,8 @@ CUPL_SIMULATION_OPTIONS="sw" #These options are added only if an .SI file is fou
 # -w run simulation; create a .W file.  Expects a .SI file to be present, Automatically implies -a generation of an .ABS file.
 
 #Known issues:
-#we should probably insist that the find150x.exe files be replaced with the corresponding fit150x.exe files in the fitters directory. This might be preventing the fitters from being called automatically when working with CPLD parts that use a fitter.
+#we should probably insist that the find150x.exe files be replaced with the corresponding fit150x.exe files in the fitters directory.
+#This might be preventing the fitters from being called automatically when working with the CPLD parts that require a fitter.
 
 RED='\033[0;31m'
 GRN='\033[1;32m'
@@ -191,7 +192,7 @@ if [ `echo ${FILENAME} | grep -o "\." | wc -l` -gt 1 ]; then
     exit 1
 fi
 
-#Filenames containing spaces will cause Atmel Fitter Generated EDIF files to have spaces in them, which is invalid EDIF.
+#Filenames containing spaces will cause Atmel Fitter Generated EDIF files to have spaces in them, which is invalid EDIF, but we allow it anyway.
 if [ `echo ${FILENAME} | grep -o " " | wc -l` -gt 0 ]; then
     printf "${RED}WARNING: Filenames containing spaces cause problems with any EDIF files that are generated. Continuing Anyway...${NC}\n"
 fi
@@ -227,10 +228,16 @@ if [ $? -eq 0 ]; then
     printf "${GRN} * A .JED file should have been produced, which can be used to program the target device.${NC}\n"
     if [ -f "${BASEFILENAME}.edn" ]; then
         printf "INFO: An EDIF file has been detected.\n * In the future, we may process this further using Spydrnet to either convert to a Graphviz visualization or to generate verilog.\n"
-        EDIF2V_LOC=`which edif2v.py`
+        ediftimestamp.sh ${BASEFILENAME}.edn
+        #EDIF2V_LOC=`which edif2v.py`
+        #if [ $? -eq 0 ]; then
+        #    printf " * Trying to create a verilog file..."
+        #    python3 ${EDIF2V_LOC} ${BASEFILENAME}.edn
+        #fi
+        EDIF2DOT_LOC=`which edif2dot.py`
         if [ $? -eq 0 ]; then
-            printf " * Trying to create a verilog file..."
-            python3 ${EDIF2V_LOC} ${BASEFILENAME}.edn
+            printf " * Trying to create Graphviz visualization files...\n"
+            python3 ${EDIF2DOT_LOC} ${BASEFILENAME}.edn
         fi
     fi
     sleep 2
