@@ -19,7 +19,7 @@ The Linux equivalent version of 5vcomp is probably a bit ahead of this and more 
   * <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
   * Serial Number is `60008009`
 
-* Install Atmel Prochip to the default instal path: `C:\ATMEL_PLS_Tools`
+* Install Atmel Prochip to the default install path: `C:\ATMEL_PLS_Tools`
   * <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip">Download Atmel Prochip from here</a>
   * You only need to select the "ProChip Designer 5.0" option if you do not want the additional software.
 
