@@ -1,0 +1,37 @@
+Name     buf_inv;
+PartNo   00 ;
+Date     10/27/23 ;
+Revision 00 ;
+Designer Engineer ;
+Company  Owner ;
+Assembly None ;
+Location  ;
+Device   f1502isptqfp44;
+
+//A simple example showing a buffer from one pin to another. A second pair of pins demonstrates an inverter.
+
+//The statements here are sent to the Atmel Fitter:
+PROPERTY ATMEL { jtag=on };
+PROPERTY ATMEL { TMS_pullup=on };
+PROPERTY ATMEL { TDI_pullup=on };
+PROPERTY ATMEL { Verilog_sim=on };
+PROPERTY ATMEL { out_edif=on };
+PROPERTY ATMEL { Preassign=keep };
+
+
+/* *************** INPUT PINS *********************/
+PIN  10 = YOURSIGNAL;
+PIN  12 = SECONDSIGNAL;
+
+
+/* *************** OUTPUT PINS ********************/
+PIN  11 = YOURSIGNAL_OUT;
+PIN  13 = SECONDSIGNAL_INV_OUT;
+
+//In CUPL pins are not explicitly defined as inputs or outputs. Their usage in the logic below actually determines how they will behave.
+
+
+YOURSIGNAL_OUT=YOURSIGNAL; //Example of a buffer from one pin to another
+
+SECONDSIGNAL_INV_OUT=!SECONDSIGNAL; //Example of a NOT operator
+

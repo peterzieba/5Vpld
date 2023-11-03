@@ -1,0 +1,34 @@
+Name     buffer;
+PartNo   00 ;
+Date     10/27/23 ;
+Revision 00 ;
+Designer Engineer ;
+Company  Owner ;
+Assembly None ;
+Location  ;
+Device   f1502isptqfp44; /* This sets the target to be a JTAG Programmed Atmel ATF1502 in TQFP-44 */
+
+//A simple example showing a buffer from one pin to another. A second pair of pins demonstrates an inverter.
+
+//The statements here are sent to the Atmel Fitter:
+PROPERTY ATMEL { jtag=on }; /* Forgetting to set this may make your device extremely difficult to reprogram if you are relying on pure JTAG to program it */
+PROPERTY ATMEL { TMS_pullup=on };
+PROPERTY ATMEL { TDI_pullup=on };
+PROPERTY ATMEL { Verilog_sim=on };
+PROPERTY ATMEL { out_edif=on };
+PROPERTY ATMEL { Preassign=keep };
+
+
+/* *************** INPUT PINS *********************/
+PIN  10 = YOURSIGNAL;
+
+
+/* *************** OUTPUT PINS ********************/
+PIN  11 = YOURSIGNAL_OUT;
+
+//In CUPL pins are not explicitly defined as inputs or outputs. Their usage in the logic below actually determines how they will behave.
+
+
+YOURSIGNAL_OUT=YOURSIGNAL; //Example of a buffer from one pin to another
+
+
