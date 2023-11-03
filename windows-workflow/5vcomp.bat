@@ -1,6 +1,11 @@
 echo off
 rem Drop this file into C:\Wincupl\WinCupl\Fitters and it should be executable from anywhere.
 
+
+rem This section is concerned with the device library CUPL will use. We're assuming you're using what comes with Atmel WinCUPL (Atmel.dl), however,
+rem if you have device libraries from other packages (like PLDmaster from Logical Devices, you may be able to target other / obsolete devices).
+rem We're not covering other devices outside of the Atmel Library simply because none seem to be active parts anymore, but, this is how you'd do it if you wanted to.
+
 set LIBCUPL=C:\Wincupl\Shared\Atmel.dl
 rem set LIBCUPL=C:\Wincupl\Shared\totaldes.dl
 rem set LIBCUPL=C:\Wincupl\Shared\pldmstr.dl
