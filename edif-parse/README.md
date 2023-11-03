@@ -41,4 +41,5 @@ edifsimplify.py buf_inv.edn
 edif2dot.py buf_inv_simplified.edf
 </code>
 
-
+# Further work
+It would be good to simplify more complex instances that also clutter things up (tristate outputs that are always enabled, two-input XOR instances where one input is always grounded).
