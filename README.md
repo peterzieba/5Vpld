@@ -1,5 +1,5 @@
 # Overview
-This repository centers around documenting modern ways of developing logic for and programming Atmel (Now Microchip) 5V GAL PLD and CPLD parts under recent Linux and Windows versions.
+This repository centers around documenting modern ways of developing logic for and programming Atmel (Now Microchip) 5V GAL PLD and CPLD parts under recent Linux (Ubuntu 22.04) and Windows 10 22H2 versions.
 * ATF16V8 (Modern/active equivalent of the PAL16V8 and GAL16V8 parts)
 * ![ATF22V10](vendor-datasheets/doc0735.pdf) (Modern/active equivalent of the PAL22V10 and GAL22V10 parts)
 * ATF1502
@@ -7,20 +7,20 @@ This repository centers around documenting modern ways of developing logic for a
 * ATF1508
 
 These parts are still active and highly worth considering wherever:
-* 5V logic is a requirement / avoiding level shifting
+* 5V logic is a requirement, avoiding level shifting, low latency (7ns), instant-on & non-volatile.
 * Prototyping / Iteration (reprogrammable)
 * Learning about logic: Through-hole / soldering-friendly is desired: All parts have DIP packages or can be placed in through-hole PLCC sockets.
 * Replacing large quantities of various TTL/CMOS Logic Gates
 
 This is a "Choose your own adventure novel". Covered here are many approaches and tradeoffs:
 * Using WinCUPL (Erratic, unreliable)
-* Using just the CUPL.EXE compiler directly with some wrapper scripts here (5vcomp). Works in Windows/Linux. (recommended)
-* Using Quartus (only for the CPLD. Works by first targeting a similar Altera CPLD and then using the POF2JED utility to convert)
-* Making your own fusemap / .JED file with nothing more than a datasheet and text editor.
+* Using just the CUPL.EXE compiler from WinCUPL directly with some wrapper scripts here (5vcomp). Works in Windows/Linux. (recommended)
+* Using Quartus (only for the CPLD. Works by first targeting a similar Altera CPLD and then using the POF2JED utility to convert.) Windows/Linux
+* Making your own fusemap / .JED file with nothing more than a datasheet and text editor. Maybe need some graph paper...
 * Experimental approaches with Yosys (Only for the CPLD parts. EDIF is fed into the Atmel fitter)
 * Several Approaches to reverse-engineering a .JED file back into logic equations.
 
-This is mostly a collection of documentation, but some small scripts are here that help make things easier and provide examples on how to avoid WinCUPL while still utilizing these parts:
+This is mostly a collection of documentation, but if you are interested in using CUPL.EXE directly, some small scripts (5vcomp) are here that help make things easier and provide examples on how to avoid WinCUPL while still utilizing these parts:
 * ![Linux Workflow (5vcomp command-line utility pointed at a .PLD file)](linux-workflow/)
 * ![Windows Workflow (5vcomp.bat utility called by right-clicking a .PLD file to get a compiled/synthesized .JED file).](windows-workflow/)
 
@@ -61,8 +61,9 @@ Such parts are the spiritual predecessors of more modern FPGAs. Key differences 
 
 # Requirements
 A high-level overview of what is required:
+* Basic understanding of digital logic.
 * The actual PLD/CPLD chip you'd like to work with from the usual suppliers (Mouser, Digikey, Octopart)
-* A software workflow covered here. Highly recommended is using the CUPL.EXE compiler on Linux or Windows with the 5vcomp script provided in this repositroy.
+* A software workflow covered here. Highly recommended is using the 5vcomp script from here to call the CUPL.EXE compiler. This works on Linux and even Windows 10 22H2 x64!
 * An EPROM/Device programmer if you wish to use the ATF16V8 or ATF22V10 parts.
 * A JTAG programmer for the ATF150x parts
 ![See PROGRAMMING.md](PROGRAMMING.md) for details on what it takes to program these parts in detail.
@@ -1558,7 +1559,7 @@ Other people's workflows:
 One can literally create a fusemap by hand for a PLD.
 * See this <a href="https://blog.frankdecaire.com/2017/01/22/generic-array-logic-devices/">blog post</a> by Frank DeCaire, where he documents his journey of doing so.
 
-While not the easiest approach, just as one can write G-Code in notepad or Assembly code in a hex editor, manually creating a fusemap is technically possible. This assumes that you have a datasheet for your device which has a description of the fusemap and the details of how the macrocells work. With this in hand, one could write a JEDEC file with the desired functionality and a text editor. This would be non-trivial and error-prone, but it demonstrates that such a thing could be done, at least with the older PLDs (16V8, 22V10), and even with the ATF750 (some datasheets actually had the fusemap for this part).
+While not the easiest approach, just as one can write G-Code in notepad or Assembly code in a hex editor, manually creating a fusemap is technically possible. This assumes that you have a datasheet for your device which has a description of the fusemap and the details of how the macrocells work. With this in hand, one could write a JEDEC file with the desired functionality and a text editor. This would be non-trivial and error-prone (if double-negatives confuse you, this is even more exciting), but it demonstrates that such a thing could be done, at least with the older PLDs (16V8, 22V10), and even with the ATF750 (some datasheets actually had the fusemap for this part).
 
 It is worth noting that the fusemap for the ATF150x parts has been recently documented in <a href="https://github.com/whitequark/prjbureau">prjbureau</a>. Given the complexity of these devices over PLDs, writing a fusemap by hand for these parts would probably be a bad idea.
 
@@ -1574,14 +1575,25 @@ Atmel Prochip is not free, however, you can <a href="https://ww1.microchip.com/d
 
 Prochip should be downloaded regardless because there are newer fitters for the ATF150x devices that can be extracted from this installation, and these fitters are required in every other approach mentioned here. The newer versions of the fitters should mention version 1918 (3-21-07) when invoked from a command line. (The fitters that come with WinCUPL are old and should be replaced with the ones from this package).
 
-## Quartus (Free, Verilog, VHDL, Schematic Capture). Indirect support for ATF150x.
-* It turns out that the Altera (Now Intel) <a href="https://www.intel.com/content/www/us/en/software-kit/711791/intel-quartus-ii-web-edition-design-software-version-13-0sp1-for-windows.html?">Quartus 13.0sp1</a> can be used to produce a .POF file targeting various CPLD chips made by Altera in the MAX EPM3K/EPM7K series, which can be converted to target an ATF150x device.
+## Quartus (Free, Verilog, VHDL, Schematic Capture). Indirect support for ATF150x. Linux or Windows.
+* It turns out that the Altera (Now Intel) Quartus II 13.0sp1 Web Edition can be used to produce a .POF file targeting various CPLD chips made by Altera in the MAX EPM3K/EPM7K series, which can be converted to target an ATF150x CPLD.
+  * <a href="https://www.intel.com/content/www/us/en/software-kit/711791/intel-quartus-ii-web-edition-design-software-version-13-0sp1-for-windows.html?">Intel® Quartus&reg; II Web Edition Design Software Version 13.0sp1 for Windows</a>
+  * <a href="https://www.intel.com/content/www/us/en/software-kit/711790/intel-quartus-ii-web-edition-design-software-version-13-0sp1-for-linux.html?">Intel® Quartus&reg; II Web Edition Design Software Version 13.0sp1 for Linux</a>
+  * When installing, you only need "MAX II/V, MAX3000/7000" under device support. Unchecking the other devices can save ~2GB.
+  * Finally, you may have trouble running it as libpng12.so.0 may be required. See <a href="https://silverdrs.wordpress.com/2020/11/24/running-older-altera-quartus-on-modern-64bit-gnu-linux/">here</a>
+  * You can move the .desktop shortcut into ~/.local/share/applications/Quartus II 13.0sp1 (64-bit) Web Edition.desktop
+    * I found I had to set Terminal=true for it to work.
 * The resulting .POF file can be converted using a utility called <a href="http://ww1.microchip.com/downloads/archive/pof2jed.zip">POF2JED</a> from Atmel (Now Microchip). This is further detailed in <a href="http://ww1.microchip.com/downloads/en/AppNotes/DOC0916.PDF">this application note.
-* Important!: Newer versions of Quartus will not work. v13.0sp1 last version that had support for the MAX EPM3K/EPM7K chips. Support for these chips has been removed from newer versions of Quartus. You MUST use the old version.
+* Important!: Newer versions of Quartus will not work. v13.0sp1 is the last version that had support for the MAX EPM3K/EPM7K chips. Support for these chips has been removed from newer versions of Quartus. You MUST use the old version.
 
 ## Digital (free, use schematics instead of logic equations / programming)
-"Digital is an easy-to-use digital logic designer and circuit simulator designed for educational purposes." This is an interesting option as one can create a schematic and have a .JED file generated for a GAL16V8 or GAL22V10. If one provides the fitters to Digital, it can produce .JED files for the ATF150x series as well.
-https://github.com/hneemann/Digital
+"Digital is an easy-to-use digital logic designer and circuit simulator designed for educational purposes."
+
+This is an interesting option as one can create a schematic and have a .JED file generated for a GAL16V8 or GAL22V10. If one provides the fitters to Digital, it can produce .JED files for the ATF150x series as well. Note that this is more of an educational tool for learning about logic. You may have trouble if you expect fullly featured support of these devices (Tri-state pins, Bi-directional IO, etc.)
+* https://github.com/hneemann/Digital
+If this appeals to you, you might be interested in similar software (though no support for the Atmel parts):
+* <a href="http://www.cburch.com/logisim/">Logisim</a>
+* <a href="https://github.com/logisim-evolution/logisim-evolution">Logisim Evolution</a>
 
 ## Yosys (Open Source with Atmel Fitters for ATF150x, experimental)
 In theory, one can use Yosys Open SYnthesis Suite (Yosys) with the help of the Atmel Fitters a specific CPLD and a techmap to produce .JED files. This is a bit more experimental, but some have managed to make this work. This allows an almost entirely open-source workflow using Verilog, and probably <a href="https://icestudio.io/">Icestudio</a> if one prefers schematic capture as well. A good place to start would be using the <a href="https://github.com/YosysHQ/oss-cad-suite-build">OSS CAD Suite</a> to get the big parts of the suite set up. After that, there are two approaches to making this work:
