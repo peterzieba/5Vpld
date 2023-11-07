@@ -54,8 +54,8 @@ Ben Eater does a series of <a href="https://www.youtube.com/watch?v=KM0DdEaY5sY&
 Such parts are the spiritual predecessors of more modern FPGAs. Key differences between FPGAs and PLDs:
 
 * FPGAs are typically constructed from a large number of LUTs (Lookup tables). CPLDs use a sum-of-products structure.
-* FPGAs typically expect to have their bitstream uploaded on powerup, requiring an external EEPROM. PLDs are typically non-volatile.
-* FPGAs usually support standard JTAG for programming, whereas many PLDs required specialized device programmers.
+* FPGAs typically expect to have their bitstream uploaded on powerup, requiring an external EEPROM. PLDs are typically non-volatile and instantly ready upon powerup.
+* FPGAs usually support more standard means of programming, whereas many PLDs required specialized device programmers.
 * There are likely exceptions to all of the above in some parts. These are not hard rules.
 </details>
 
@@ -1611,8 +1611,9 @@ There are a few choices on how the part can actually be programmed depending on 
 # Reversing a JED file back into logic equations
 Finally, if one is able to read a .JED out of a device, this can sometimes be reversed back into equations. These devices all have security fuses, however, which can disable any ability to read out the device. Given a .JED file, the following approaches can be taken to arrive at the equations:
 * By hand, comparing the .JED file to the fusemap / macrocells in the datasheet. See this <a href="https://blog.frankdecaire.com/2017/01/22/generic-array-logic-devices/">blog post</a> by Frank DeCaire.
-* JED2EQN.EXE - A DOS utility floating around on the internet.
-* MAME can be compiled with a utility called jedutil
+* `JED2EQN.EXE` - A DOS utility floating around on the internet.
+* `jedutil` - MAME can be compiled with a utility called jedutil which does something similar. Sometimes it is broken out into a seperate package "mame-tools"
+* Brute Force - A PLD that is strictly combonatorial can be read out as though it is an EPROM by stepping through all combinations of possible inputs. Once state/registers are involved, this becomes much more challenging.
 
 # Simulation
 CSIM.EXE can be fed test vectors and be used to simulate the behavior of a particular chip, or even a virtual device. The following things are required to do this successfully:
@@ -1671,5 +1672,5 @@ P Preload internal registers (value is applied to !Q output)
 This repository is merely a bunch of tips, tricks, helper scripts and documentation. The real work comes from:
 * Whitequark for putting together <a href="https://github.com/whitequark/prjbureau">Prjbureau</a>, which documents the fusemap for these devices, provides an ability to go from a .JED file to an .SVF, documentation and more.
 * Yosys
-* hoglet67 for putting together <a href="atf15xx_yosys ">atf15xx_yosys</a>, which shows a workflow using yosys and provides a techmap.
+* hoglet67 for putting together <a href="https://github.com/hoglet67/atf15xx_yosys">atf15xx_yosys</a>, which shows a workflow using yosys and provides a techmap.
 * Countless other tips, tools, contributions and from all over the web and plenty of trial-and-error working around the quirks of WinCUPL and the fitters themselves.
