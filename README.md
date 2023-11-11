@@ -13,8 +13,8 @@ These parts are still active and highly worth considering wherever:
 * Replacing large quantities of various TTL/CMOS Logic Gates
 
 This is a "Choose your own adventure novel". Covered here are many approaches and tradeoffs:
-* Using WinCUPL (Erratic, unreliable)
-* Using just the CUPL.EXE compiler from WinCUPL directly with some wrapper scripts here (5vcomp). Works in Windows/Linux. (recommended)
+* <a href="#old-approach-wincupl-16v8-22v10-and-atf150x">Using WinCUPL (Erratic, unreliable)</a>
+* <a href="#https://github.com/peterzieba/5Vpld#5vcomp-the-cupl-compiler--your-favorite-text-editor-or-ide-16v8-22v10-and-atf150x">Using just the CUPL.EXE compiler from WinCUPL directly with some wrapper scripts here (5vcomp). Works in Windows/Linux. (recommended)</a>
 * Using Quartus (only for the CPLD. Works by first targeting a similar Altera CPLD and then using the POF2JED utility to convert.) Windows/Linux
 * Making your own fusemap / .JED file with nothing more than a datasheet and text editor. Maybe need some graph paper...
 * Experimental approaches with Yosys (Only for the CPLD parts. EDIF is fed into the Atmel fitter)
@@ -27,9 +27,13 @@ This is mostly a collection of documentation, but if you are interested in using
 <details>
 <summary>Scope: Expand here for why similar parts not covered</summary>
 
-* We only consider true 5V parts (not merely 5V tolerant parts). 3.3V parts are not considered: There are simply better choices that are well documented. Also, the CPLD parts have VccIO inputs, so you can technically use them in 3.3V designs just as well.
+* We only consider true 5V parts (not merely parts with 5V tolerant inputs, of which there are many more).
+  * 3.3V parts cannot supply the minimum of 3.6V to drive the input of a 5V CMOS part high, so 5V tolerant parts are not enugh in many cases.
+  * Notably, however, driving 5V TTL inputs from a 3.3V part, on the other hand, is not a problem. A 5V TTL input has a threshold of 2V.
+* 3.3V parts are not considered: There are simply better choices that are well documented. Also, the CPLD parts have VccIO inputs, so you can technically use them in 3.3V designs just as well.
 * The Greekpak devices probably should be covered here, but, they're reasonably well documented with modern tools.
-* Any parts that are NRND or inactive. Since all of the parts considered here are still in full production (as of 2023), they can be used in production designs.
+* Any parts that are NRND or inactive are not covered, as we consider what can be reliably and sensibly purchased.
+* Since all of the parts considered here are still in full production (as of 2023), they can be used in production designs.
 * For the ATF150x CPLD parts specifically:
   * The BE and ASV devices not covered here as they seem to be difficult to obtain and are not 5V devices. If you need 3.3V or lower, there are probably better parts suited to your needs.
 </details>
@@ -89,8 +93,8 @@ A high-level overview of what is required:
 <a href="">.TT2</a> - The Berkeley PLA file format. An intermediary file which CUPL.EXE can generate that can be used by the Atmel fitters.<br />
 <a href="https://en.wikipedia.org/wiki/EDIF">.EDF / .EDN</a> - EDIF is another type of netlist format. The Atmel fitter can use this as both an input, as well as an output. Yosys is capable of generating this format, however, one will still need a techmap for this to work.<br />
 <a href="https://en.wikipedia.org/wiki/Place_and_route">Fitter</a> - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the ATF150x CPLD devices. In more modern parlance, this is basically place & route.<br />
-.STD File - In the context of a fitter, the primitive/device library for PLA. This file is part of the Atmel ATF150x fitters.<br />
-.LIB File - In the context of a fitter, the primitive/device library for EDIF. This file is part of the Atmel ATF150x fitters.
+ATMEL.STD File - Part of the Atmel ATF150x fitter, the primitive/device library for PLA.[^1]<br />
+APRIM.LIB File - Part of the Atmel ATF150x fitter, the primitive/device library for EDIF.[^1]
 
 <a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device.
 
@@ -1667,6 +1671,9 @@ P Preload internal registers (value is applied to !Q output)
 “ ” Enclose output values to be expanded to a specified BASE (octal, decimal, or hex.) Valid values are 0-F, H, L, Z, and X.
 </code>
 </details>
+
+# References
+[^1]: From the Readme.txt of fit5_0.zip (an older version of the Atmel Fitters)
 
 # Acknowledgements
 This repository is merely a bunch of tips, tricks, helper scripts and documentation. The real work comes from:
