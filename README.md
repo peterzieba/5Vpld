@@ -14,7 +14,7 @@ These parts are still active and highly worth considering wherever:
 
 This is a "Choose your own adventure novel". Covered here are many approaches and tradeoffs:
 * <a href="#old-approach-wincupl-16v8-22v10-and-atf150x">Using WinCUPL (Erratic, unreliable)</a>
-* <a href="#https://github.com/peterzieba/5Vpld#5vcomp-the-cupl-compiler--your-favorite-text-editor-or-ide-16v8-22v10-and-atf150x">Using just the CUPL.EXE compiler from WinCUPL directly with some wrapper scripts here (5vcomp). Works in Windows/Linux. (recommended)</a>
+* <a href="#5vcomp-the-cupl-compiler--your-favorite-text-editor-or-ide-16v8-22v10-and-atf150x">Using just the CUPL.EXE compiler from WinCUPL directly with some wrapper scripts here (5vcomp). Works in Windows/Linux. (recommended)</a>
 * Using Quartus (only for the CPLD. Works by first targeting a similar Altera CPLD and then using the POF2JED utility to convert.) Windows/Linux
 * Making your own fusemap / .JED file with nothing more than a datasheet and text editor. Maybe need some graph paper...
 * Experimental approaches with Yosys (Only for the CPLD parts. EDIF is fed into the Atmel fitter)
@@ -1605,6 +1605,10 @@ In theory, one can use Yosys Open SYnthesis Suite (Yosys) with the help of the A
   * prjbureau demonstrates going from RTLIL to a .JED file
 * https://github.com/hoglet67/atf15xx_yosys/
   * This example goes from plain old verilog into a .JED file by implementing a techmap.
+* https://github.com/michaelhunsberger/JsonToCupl/
+  * This is an example of how to use Yosys to generate CUPL code.
+  * Potentially interesting as one could use this to generate a .PLD even for the simpiler 16V8 or 22V10 devices
+  * http://forum.6502.org/viewtopic.php?f=10&t=7601
 
 # Programming / Burning and Device Information
 There are a few choices on how the part can actually be programmed depending on whether it supports JTAG.
