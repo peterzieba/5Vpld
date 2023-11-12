@@ -5,7 +5,7 @@ The CUPL.EXE compiler runs well under Linux using Wine and enables one to use a 
 
 This allows you to avoid the WinCUPL IDE and use your favorite IDE/Text editor instead to develop .PLD files.
 
-WinCUPL is nonetheless a requirement as it provides:
+Installing WinCUPL is nonetheless a requirement, but you'll never have to open it. Installing it provides:
 * The CUPL.EXE compiler
 * The Atmel.dl device library (which CUPL.EXE uses)
 * The fitters for the ATF150x CPLD parts (though this utility will refuse to work with the ones provided by Atmel WinCUPL -- please replace them with the newer ones from the Atmel Prochip package)
@@ -24,7 +24,7 @@ winetricks mfc40 mfc42
 
 From there, you can install WinCUPL and Atmel Prochip:
 * <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
-  * Serial Number is `60008009`
+  * Serial Number freely provided by Microchip is `60008009`
 * <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip">Download Atmel Prochip from here</a>
   * You only need to select the "ProChip Designer 5.0" option if you do not want the all parts of Prochip.
   * Alternately, you can extract the fitters from the installer using innoextract:
@@ -36,7 +36,7 @@ From there, you can install WinCUPL and Atmel Prochip:
     * FIT1502.EXE is copied to FIND1502.EXE
     * FIT1504.EXE is copied to FIND1504.EXE
     * FIT1508.EXE is copied to FIND1508.EXE
-* Once you have everything installed, you can download 5vcomp and place it into your path.
+* Once you have everything installed, you can download and place 5vcomp somewhere like /usr/local/bin/ where it will be conveinently in your path.
 
 # Usage
 <code>

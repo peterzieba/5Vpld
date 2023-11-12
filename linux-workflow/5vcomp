@@ -76,7 +76,7 @@ if [ $# -ne 1 ]; then #Show 5vcomp script usage message if we weren't passed a f
     printf "USAGE: Please pass the name of a .PLD file to be compiled. Example:\n"
     printf "${YEL}5vcomp COUNTER.PLD${NC}\n\n"
     printf "This script will attempt to compile it using reasonable defaults passed to CUPL.EXE\n"
-    printf "Additionally, DEVICE_LIB and CUPL_OPTIONS can be set as environment variables if defaults are not acceptable"
+    printf "Additionally, DEVICE_LIB and CUPL_OPTIONS can be set as environment variables if defaults are not acceptable\n"
     pause_before_exit
     exit 1
 fi
