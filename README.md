@@ -9,13 +9,13 @@ This repository centers around documenting modern ways of developing logic for a
 These parts are still active and highly worth considering wherever:
 * 5V logic is a requirement, avoiding level shifting, low latency (7ns), instant-on & non-volatile.
 * Prototyping / Iteration (reprogrammable)
-* Learning about logic: Through-hole / soldering-friendly is desired: All parts have DIP packages or can be placed in through-hole PLCC sockets.
-* Replacing large quantities of various TTL/CMOS Logic Gates
+* Learning about logic: Through-hole / soldering-friendly is desired: All 16V8 or 22V10 parts are available in DIP packages; ATF150x parts are available in PLCC packages that can be placed in through-hole PLCC sockets. SMD packages are available for any of the parts.
+* Replacing large quantities of various TTL/CMOS Logic Gates (74-series logic)
 
 This is a "Choose your own adventure novel". Covered here are many approaches and tradeoffs:
-* <a href="#old-approach-wincupl-16v8-22v10-and-atf150x">Using WinCUPL (Erratic, unreliable)</a>
+* <a href="#old-approach-wincupl-16v8-22v10-and-atf150x">Using the WinCUPL IDE (Erratic, unreliable)</a>
 * <a href="#5vcomp-the-cupl-compiler--your-favorite-text-editor-or-ide-16v8-22v10-and-atf150x">Using just the CUPL.EXE compiler from WinCUPL directly with some wrapper scripts here (5vcomp). Works in Windows/Linux. (recommended)</a>
-* Using Quartus (only for the CPLD. Works by first targeting a similar Altera CPLD and then using the POF2JED utility to convert.) Windows/Linux
+* <a href="#quartus-free-verilog-vhdl-schematic-capture-indirect-support-for-atf150x-linux-or-windows">Using Quartus (only for the CPLD. Works by first targeting a similar Altera CPLD and then using the POF2JED utility to convert.) Windows/Linux</a>
 * Making your own fusemap / .JED file with nothing more than a datasheet and text editor. Maybe need some graph paper...
 * Experimental approaches with Yosys (Only for the CPLD parts. EDIF is fed into the Atmel fitter)
 * Several Approaches to reverse-engineering a .JED file back into logic equations.
@@ -69,7 +69,7 @@ A high-level overview of what is required:
 * The actual PLD/CPLD chip you'd like to work with from the usual suppliers (Mouser, Digikey, Octopart)
 * A software workflow covered here. Highly recommended is using the 5vcomp script from here to call the CUPL.EXE compiler. This works on Linux and even Windows 10 22H2 x64!
 * An EPROM/Device programmer if you wish to use the ATF16V8 or ATF22V10 parts.
-* A JTAG programmer for the ATF150x parts
+* An EPROM or JTAG programmer for the ATF150x parts
 ![See PROGRAMMING.md](PROGRAMMING.md) for details on what it takes to program these parts in detail.
 
 # Terminology & File Formats
@@ -118,9 +118,9 @@ This diagram is from the help files built into WinCUPL which shows how one can g
 ![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
 
 ## Old Approach: WinCUPL (16V8, 22V10, and ATF150x)
-While logic for these parts can be written using the WinCUPL IDE, the experience may be fraught with difficulty as it is somewhat unstable and requires Windows.
-It does however have value in the help files / documentation / examples. Furthermore, it should be noted that the CUPL compiler itself is actually pretty solid/stable.
-So, the recommended approach is to install and use it for documentation/examples and then simply avoid it for serious work by using the command line CUPL.EXE (perhaps through the helper scripts in this repository as in the next section).
+WinCUPL is basically an IDE, possibly before the term IDE came into existance. While logic for these parts can be written using WinCUPL itself, the experience may be fraught with difficulty as it is a quirky and often unstable Windows application (While it does run great under Wine, this doesn't really change things much). I've seen the editor itself crash just for looking at it sideways, and its copy-paste functionality behave in bewildering ways.
+It does however have value in the help files / documentation / examples. It should emphasized that the CUPL compiler itself is actually pretty solid/stable, and so the troubles of WinCUPL shouldn't be equated with CUPL itself.
+So, the recommended approach is to install and use it for documentation/examples/compiler/device-library and then simply avoid it for serious work by using the command line CUPL.EXE (perhaps through the 5vcomp helper scripts in this repository as in the next section). 
 
 You can <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
 
@@ -130,7 +130,7 @@ To get it working under Linux with Wine, you'll need winetricks so you can insta
 winetricks mfc40 mfc42
 </code>
 
-Furthermore, if you are intending on working with the ATF150x parts, you should probably grab the newer fitters out of the Atmel Prochip package. The utilities in this repository will refuse to work without them.
+Furthermore, if you are intending on working with the ATF150x parts, you should probably grab the newer fitters out of the Atmel Prochip package. The utilities in this repository will refuse to work with the old fitters.
 
 ## 5vcomp: The CUPL compiler & Your favorite text editor or IDE (16V8, 22V10, and ATF150x)
 Since WinCUPL simply is a front-end / IDE on top of the CUPL.EXE compiler and related programs, one can write the desired logic in CUPL, save it in a .PLD file using their favorite editor and have CUPL.EXE compile it into a .JED file for programming into a PLD.
@@ -1609,6 +1609,11 @@ In theory, one can use Yosys Open SYnthesis Suite (Yosys) with the help of the A
   * This is an example of how to use Yosys to generate CUPL code.
   * Potentially interesting as one could use this to generate a .PLD even for the simpiler 16V8 or 22V10 devices
   * http://forum.6502.org/viewtopic.php?f=10&t=7601
+
+Finally, since yosys is extremely complex, a section on understanding the basics is in order especially from the context of these devices. For the moment, however, others have written guides for different parts:
+* https://github.com/Ravenslofty/yosys-cookbook
+  * https://github.com/Ravenslofty/74xx-liberty/
+  * https://github.com/Ravenslofty/74xx-liberty/tree/master/kicad
 
 # Programming / Burning and Device Information
 There are a few choices on how the part can actually be programmed depending on whether it supports JTAG.
