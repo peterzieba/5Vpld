@@ -27,8 +27,10 @@ This is mostly a collection of documentation, but if you are interested in using
 <details>
 <summary>Scope: Expand here for why similar parts not covered</summary>
 
+* The ATF1500 is not covered because it is a more expensive part and does not support JTAG programming. It is fundamentally different from the ATF1502, ATF1504, and ATF1508
+* The ATF750 and ATF2500 are also not covered for similar reasons. Other chips are almost certainly a better choice.
 * We only consider true 5V parts (not merely parts with 5V tolerant inputs, of which there are many more).
-  * 3.3V parts cannot supply the minimum of 3.6V to drive the input of a 5V CMOS part high, so 5V tolerant parts are not enugh in many cases.
+  * 3.3V parts cannot supply the minimum of 3.6V to drive the input of a 5V CMOS part high, so 5V tolerant parts are not enough in many cases.
   * Notably, however, driving 5V TTL inputs from a 3.3V part, on the other hand, is not a problem. A 5V TTL input has a threshold of 2V.
 * 3.3V parts are not considered: There are simply better choices that are well documented. Also, the CPLD parts have VccIO inputs, so you can technically use them in 3.3V designs just as well.
 * The Greekpak devices probably should be covered here, but, they're reasonably well documented with modern tools.
@@ -36,6 +38,7 @@ This is mostly a collection of documentation, but if you are interested in using
 * Since all of the parts considered here are still in full production (as of 2023), they can be used in production designs.
 * For the ATF150x CPLD parts specifically:
   * The BE and ASV devices not covered here as they seem to be difficult to obtain and are not 5V devices. If you need 3.3V or lower, there are probably better parts suited to your needs.
+
 </details>
 
 # Background on digital logic.
