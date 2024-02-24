@@ -2,9 +2,9 @@
 This repository centers around documenting modern ways of developing logic for and programming Atmel (Now Microchip) 5V GAL PLD and CPLD parts under recent Linux (Ubuntu 22.04) and Windows 10 22H2 versions.
 * ![ATF16V8](vendor-datasheets/Atmel-0425-PLD-ATF16V8C-Datasheet.pdf) (Modern/active equivalent of the PAL16V8 and GAL16V8 parts)
 * ![ATF22V10](vendor-datasheets/doc0735.pdf) (Modern/active equivalent of the PAL22V10 and GAL22V10 parts)
-* ![ATF1502](vendor-datasheets/Atmel-0995-CPLD-ATF1502AS(L)-Datasheet.pdf)
-* ![ATF1504](vendor-datasheets/Atmel-0950-CPLD-ATF1504AS(L)-Datasheet.pdf)
-* ![ATF1508](vendor-datasheets/doc0784.pdf)
+* ![ATF1502](vendor-datasheets/Atmel-0995-CPLD-ATF1502AS(L)-Datasheet.pdf) (Active replacement for the EPM7032)
+* ![ATF1504](vendor-datasheets/Atmel-0950-CPLD-ATF1504AS(L)-Datasheet.pdf) (Active replacement for the EPM7064)
+* ![ATF1508](vendor-datasheets/doc0784.pdf) (Active replacement for the EPM7128)
 
 These parts are still active and highly worth considering wherever:
 * 5V logic is a requirement, avoiding level shifting, low latency (7ns), instant-on & non-volatile.
