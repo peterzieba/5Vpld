@@ -103,7 +103,7 @@ APRIM.LIB File - Part of the Atmel ATF150x fitter, the primitive/device library 
 
 
 .SVF File - Serial Vector Format. Generated from the .JED file, the .SVF can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.<br />
-CSIM - A tool for simulating the behavior of logic. This takes an .SI file and produces an .SO file. This is not concerned with timing, but simply logic states.
+CSIM - A tool for simulating the behavior of logic. This takes an .SI file (test vectors) and an [.ABS file](abs-decode/). Given these it produces an .SO file. This is not concerned with timing, but simply logic states.
 
 
 <a href="https://www.winehq.org/">Wine</a> - Wine is not an emulator. Allows running Windows programs under Linux.<br />
