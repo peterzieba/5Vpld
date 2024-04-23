@@ -107,8 +107,8 @@ APRIM.LIB File - Part of the Atmel ATF150x fitter, the primitive/device library 
 <a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device. A JEDEC file is ultimately a text file formatted specifically to the JESD3 standard.
 
 
-.SVF File - Serial Vector Format. Generated from the .JED file, the .SVF can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.<br />
-CSIM - A tool for simulating the behavior of logic. This takes an .SI file (test vectors) and an [.ABS file](abs-decode/). Given these it produces an .SO file. This is not concerned with timing, but simply logic states.
+.SVF File - Serial Vector Format. Generated from the .JED file, the .SVF can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface. The Windows <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP67.zip">ATMISP v6.7</a> <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP7.zip">ATMISP v7</a> tool can be used to generated an .SVF, as well as the <a href="https://github.com/whitequark/prjbureau/blob/main/util/fuseconv.py">fuseconv.py</a> utility by whitequark.<br /><br />
+CSIM.EXE - Part of WinCUPL. A tool for simulating the behavior of logic. This takes an .SI file (test vectors) and an [.ABS file](abs-decode/). Given these it produces an .SO file. Only provides functional simulation (so, logic states but not timing)
 
 
 <a href="https://www.winehq.org/">Wine</a> - Wine is not an emulator. Allows running Windows programs under Linux.<br />
