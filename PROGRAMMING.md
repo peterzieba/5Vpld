@@ -1,11 +1,14 @@
 # Programming / Burning and Device Information
-There are a few choices on how the part can actually be programmed depending on whether it supports JTAG.
+There are a few choices on how the part can actually be programmed depending on whether it supports JTAG. This is an overview.
 
-A word on programming algorithms:<br>
-Programming algorithms were seldom documented on datasheets for a part. Usually, these were behind NDA and only the companies producing Device Programmers had them (Data I/O, Logical Devices, Hi-Lo Systems, BP Microsystems, Wellon). Furthermore, some parts supporting JTAG (which in theory is much more open/universal), can nonetheless be programmed to repurpose the JTAG pins, at which point a dedicated device programmer or specialized knowledge of blanking the device is required.
+## 🟥 Common Pitfall 🟥
+It should be noted that while something like a 16V8 has been produced by multiple suppliers which are _functionally_ identical and likely have indentical (or compatible) fusemaps / JEDEC files, _the programming algorithms for these devices are not the same across manufacturers_. Your device programmer must support the exact device and variant/revision you are attempting to program. Many have wasted hours due to this not being obvious.
 
-Open Source programmers exist (if you really want to build one):<br>
-https://github.com/ole00/afterburner
+## History of device programmers and algorithms
+* First, in the good old days, the chips that were programmable consisted literally of "fuses" (often of nichrome wire) that were "burned" away, hence the term "burning rom". As one could imagine, these required exotic voltages and timing critical pulse sequences to program correctly (or at least with a reliable yield). Programming algorithms were also seldom documented on datasheets for a part. Usually, these were behind NDA and only the companies producing Device Programmers had them (Data I/O, Logical Devices, Hi-Lo Systems, BP Microsystems, Wellon).
+* As time went on, things like UV eraseable devices were created, and when they were packaged in a ceramic package with a window, one could erase them with UV light and reprogram them. Often, the same devices were packaged in opaque plastic, and so these were effectively OTP (one-time-programmable). These relied on unusual programming voltages as well.
+* Eventually, electrically eraseable parts made their way into the market, but still often required device programmers and programming voltages were sometimes required as well.
+* Finally, in more recent history, devices integrated on-die charge pumps and began supporting standardized methods of programming (JTAG, I2C, SPI, etc.)
 
 ## PLD Devices (ATF16V8, ATF22V10)
 These parts require an EPROM programmer, and ideally one from the time period during which these parts were in vogue. <span style="color: red;">Additionally, an important gotcha' is that there are many manufacturers of these parts as well as variants within a manufacturer. While the fusemap may be compatible across variants (GAL16V8 from Lattice vs. the ATF16V8 from Atmel/Microchip), THE PROGRAMMING ALGORITHMS ARE NOT! You will need an EPROM programmer with support for the EXACT manufacturer and EXACT part number of the device you have.</span>
