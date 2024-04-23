@@ -12,11 +12,15 @@ These parts are still active and highly worth considering wherever:
 * Learning about logic: Through-hole / soldering-friendly is desired: All 16V8 or 22V10 parts are available in DIP packages; ATF150x parts are available in PLCC packages that can be placed in through-hole PLCC sockets. SMD packages are available for any of the parts.
 * Replacing large quantities of various TTL/CMOS Logic Gates (74-series logic)
 
+In short, the chips work very well wherever the above requirements are necessary, however, the software (and device programming) experience can be incredibly challenging owing to outdated and buggy software.
+
+This repository aims to make it easier to work with these parts and hopefully keep them active for years to come.
+
 This is a "Choose your own adventure novel". Covered here are many approaches and tradeoffs:
 * <a href="#old-approach-wincupl-16v8-22v10-and-atf150x">Using the WinCUPL IDE (Erratic, unreliable)</a>
 * <a href="#5vcomp-the-cupl-compiler--your-favorite-text-editor-or-ide-16v8-22v10-and-atf150x">Using just the CUPL.EXE compiler from WinCUPL directly with some wrapper scripts here (5vcomp). Works in Windows/Linux. (recommended)</a>
 * <a href="#quartus-free-verilog-vhdl-schematic-capture-indirect-support-for-atf150x-linux-or-windows">Using Quartus (only for the CPLD. Works by first targeting a similar Altera CPLD and then using the POF2JED utility to convert.) Windows/Linux</a>
-* Making your own fusemap / .JED file with nothing more than a datasheet and text editor. Maybe need some graph paper...
+* <a href="#absurd-approach-fusemaps-by-hand-16v8--22v10">Making your own fusemap / .JED file with nothing more than a datasheet and text editor. Maybe need some graph paper...</a>
 * Experimental approaches with Yosys (Only for the CPLD parts. EDIF is fed into the Atmel fitter)
 * Several Approaches to reverse-engineering a .JED file back into logic equations.
 
@@ -27,6 +31,8 @@ This is mostly a collection of documentation, but if you are interested in using
 <details>
 <summary>Scope: Expand here for why similar parts not covered</summary>
 
+* The intention is primarily to make it easier to work with the parts that exist so they do not go NRND and eventually disappear from the market.
+  * While there are gems here for other related historical parts, this is not the focus of this repository.
 * The ATF1500 is not covered because it is a more expensive part and does not support JTAG programming. It is fundamentally different from the ATF1502, ATF1504, and ATF1508
 * The ATF750 and ATF2500 are also not covered for similar reasons. Other chips are almost certainly a better choice.
 * We only consider true 5V parts (not merely parts with 5V tolerant inputs, of which there are many more).
