@@ -2,16 +2,16 @@
 There are a few choices on how the part can actually be programmed depending on whether it supports JTAG. This is an overview.
 
 ## 🟥 Common Pitfall 🟥
-It should be noted that while something like a 16V8 has been produced by multiple suppliers which are _functionally_ identical and likely have indentical (or compatible) fusemaps / JEDEC files, _the programming algorithms for these devices are not the same across manufacturers_. Your device programmer must support the exact device and variant/revision you are attempting to program. Many have wasted hours due to this not being obvious.
+It should be noted that while something like a 16V8 has been produced by multiple suppliers which are _functionally_ identical and likely have identical (or compatible) fusemaps / JEDEC files, _the programming algorithms for these devices are not the same across manufacturers_. Your device programmer must support the exact device and variant/revision you are attempting to program. Many have wasted hours due to this not being obvious.
 
 ## History of device programmers and algorithms
 * First, in the good old days, the chips that were programmable consisted literally of "fuses" (often of nichrome wire) that were "burned" away, hence the term "burning rom". As one could imagine, these required exotic voltages and timing critical pulse sequences to program correctly (or at least with a reliable yield). Programming algorithms were also seldom documented on datasheets for a part. Usually, these were behind NDA and only the companies producing Device Programmers had them (Data I/O, Logical Devices, Hi-Lo Systems, BP Microsystems, Wellon).
 * As time went on, things like UV eraseable devices were created, and when they were packaged in a ceramic package with a window, one could erase them with UV light and reprogram them. Often, the same devices were packaged in opaque plastic, and so these were effectively OTP (one-time-programmable). These relied on unusual programming voltages as well.
 * Eventually, electrically eraseable parts made their way into the market, but still often required device programmers and programming voltages were sometimes required as well.
-* Finally, in more recent history, devices integrated on-die charge pumps and began supporting standardized methods of programming (JTAG, I2C, SPI, etc.)
+* Finally, in more recent history, devices integrated on-die charge pumps and began supporting standardized methods of programming (JTAG, I2C, SPI, etc.). This is the point at which many "EPROM/Device Programmers" fell out of relevance.
 
 ## PLD Devices (ATF16V8, ATF22V10)
-These parts require an EPROM programmer, and ideally one from the time period during which these parts were in vogue. <span style="color: red;">Additionally, an important gotcha' is that there are many manufacturers of these parts as well as variants within a manufacturer. While the fusemap may be compatible across variants (GAL16V8 from Lattice vs. the ATF16V8 from Atmel/Microchip), THE PROGRAMMING ALGORITHMS ARE NOT! You will need an EPROM programmer with support for the EXACT manufacturer and EXACT part number of the device you have.</span>
+These parts require an EPROM/Device programmer, and ideally one from the time period during which these parts were in vogue. <span style="color: red;">Additionally, an important gotcha' is that there are many manufacturers of these parts as well as variants within a manufacturer. While the fusemap may be compatible across variants (GAL16V8 from Lattice vs. the ATF16V8 from Atmel/Microchip), THE PROGRAMMING ALGORITHMS ARE NOT! You will need an EPROM programmer with support for the EXACT manufacturer and EXACT part number of the device you have.</span>
 
 Choices for programmers include:<br>
 * Classic Programmers from their respective time period (Modular Circuit Technologies, Data I/O, Logical Devices, etc.)
@@ -38,6 +38,8 @@ These parts can be programmed via JTAG, so there are a few options.
   * Software: https://www.microchip.com/en-us/development-tool/ATMISP
 * OpenOCD: https://openocd.org/
   * You will need an SVF file to program a device via OpenOCD. This can be created by converting the .JED file using either ATMISP, or fuseconv.py from whitequark/prjbureau
+* <a href="https://github.com/ole00/afterburner/tree/ole-20240406-atf150x-wip2">A special branch of Afterburner</a> has experimental support for these chips.
+  * This is great because the Arduino Uno it is based upon is cheap and ubiquitous and the project has support for generating the 12V Vpp needed to unlock JTAG-Disabled parts.
 
 * To generate a .JED file for these devices, you will need the fitters. While WinCUPL has fitters within it, a much more updated version of the fitters is available inside of Atmel Prochip from <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Microchip's website</a>
 
