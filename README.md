@@ -139,7 +139,7 @@ Since WinCUPL simply is a front-end / IDE on top of the CUPL.EXE compiler and re
 
 5vcomp is a simple wrapper around the CUPL compiler.
 This is probably the most solid approach assuming you are OK with using CUPL as a language. You should start with the WinCUPL approach as a prerequisite since it installs the CUPL compiler and has examples/help files.
-The workflows here simply make this easier/conveinent by catching a lot of common issues and providing reasonable defaults to the compiler:
+The workflows here simply make this easier/convenient by catching a lot of common issues and providing reasonable defaults to the compiler:
 
 * ![Linux Workflow (point 5vcomp at your .PLD file from a command line)](linux-workflow/)
 * ![Windows Workflow (right-click on a .PLD to compile with 5vcomp.bat)](windows-workflow/)
@@ -148,15 +148,15 @@ The workflows here simply make this easier/conveinent by catching a lot of commo
 ## Guide to CUPL itself
 Assuming you're using CUPL either through WinCUPL or 5vcomp, this section has a general reference to the language, device library details, etc.
 
-Here's an overview of how things work:
-An overview of how things work from a diagram built into WinCUPL which shows how one can go from a CUPL .PLD into the .JED files needed to program a device. Note that the Atmel Fitter (place and route) stage is only used when working with the ATF150x CPLD parts. For simpiler CPLD parts, 
+An overview of how things work which shows how one can go from a CUPL .PLD into the .JED files needed to program a device. Note that the Atmel Fitter (place and route) stage is only used when working with the ATF150x CPLD parts. For most simpler parts, CUPL is capable of generating a .JED directly.
 
 ![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
+(diagram from built-in WinCUPL help)
 
 
 ![A detailed User's Guide to the CUPL compiler and language reference in PDF](vendor-docs/CUPL_USERS_GUIDE.pdf)
 
-## 🟥 Common Pitfall - Compiler Mode Selection🟥<br>
+### 🟥 Common Pitfall - Compiler Mode Selection🟥<br>
 A word of warning is that the <code>Device:</code> section at the top of a .PLD file is more than just the part number you are interested in programming -- it is actually a device mnemonic which selects different macrocell configuration modes.<br>
 So, if you're having trouble getting a flip-flop to work, it might be because you have selected the mnemonic for "simple mode".<br>
 As an example, the compiler can be set to four different modes for the ATF16V8 (similar considerations apply to the 22V10 parts, etc):<br>
@@ -205,16 +205,7 @@ where
 </code>
 </details>
 
-<details>
-<summary>Expand here if you are interested in using VS Code as an IDE</summary>
- 
-Recently, two different extensions for VS Code for CUPL have been written:
-* https://marketplace.visualstudio.com/items?itemName=tlgkccampbell.code-cupl
-  * This one handles just syntax highlighting for CUPL .PLD files
-* https://marketplace.visualstudio.com/items?itemName=VaynerSystems.VS-Cupl
-  * This is an entire workflow, which has a bit more functionality beyond just syntax highlighting.
-</details>
-
+### Device Libraries
 <details>
 <summary>Expand here for a list of devices Atmel WinCUPL supports</summary>
  
@@ -1571,10 +1562,14 @@ Copyright 1999,2000 Atmel Corporation
 </code>
 </details>
 
-
-Other people's workflows:
+### Other CUPL workflows:
 * https://github.com/willie68/WCPLD
 * https://github.com/Manawyrm/PAL-GAL-CI
+* Recently, two different extensions for VS Code for CUPL have been written:
+  * https://marketplace.visualstudio.com/items?itemName=tlgkccampbell.code-cupl
+    * This one handles just syntax highlighting for CUPL .PLD files
+  * https://marketplace.visualstudio.com/items?itemName=VaynerSystems.VS-Cupl
+    * This is an entire workflow, which has a bit more functionality beyond just syntax highlighting.
 
 ## Absurd approach: Fusemaps by hand (16V8 / 22V10)
 One can literally create a fusemap by hand for a PLD.
@@ -1632,8 +1627,11 @@ Finally, since yosys is extremely complex, a section on understanding the basics
   * https://github.com/Ravenslofty/74xx-liberty/
   * https://github.com/Ravenslofty/74xx-liberty/tree/master/kicad
 
+## Protel 99SE
+This was a ~1999/2000 era circuit board design tool made by Altium that worked in Windows and which had support for the SPLD and CPLD parts mentioned here. It is mentioned here for completeness sake, but the author has no direct experience with it. It is said to have supported CUPL and Schematic entry for development of logic but neither Verilog nor VHDL.
+
 # Programming / Burning and Device Information
-There are a few choices on how the part can actually be programmed depending on whether it supports JTAG.
+There are a few choices on how a PLD/CPLD part can be programmed depending on whether it supports JTAG.
 
 ![A detailed overview of ways to program a given device.](PROGRAMMING.md)
 
