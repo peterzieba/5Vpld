@@ -99,7 +99,7 @@ A high-level overview of what is required:
 .cat File - A text file corresponding to a .dl device library file with the same name and containing a list of supported devices by CUPL.
 
 <a href="https://en.wikipedia.org/wiki/Netlist">Netlist</a> - A netlist is essentially an electrical schematic in a text file which defines connections. For the purposes here, it is an intermediary file format (Either EDIF or Berkeley PLA), which is used to describe the behavior of logic ultimately fed into the fitter.<br />
-<a href="">.TT2</a> - The Berkeley PLA file format. An intermediary file which CUPL.EXE can generate that can be used by the Atmel fitters.<br />
+<a href="">.TT2</a> - The Berkeley PLA file format. An intermediary file which CUPL.EXE can generate that can be used by the Atmel fitters. Notably, one can use berkeley-abc to work with these files.<br />
 <a href="https://en.wikipedia.org/wiki/EDIF">.EDF / .EDN</a> - EDIF is another type of netlist format. The Atmel fitter can use this as both an input, as well as an output. Yosys is capable of generating this format, however, one will still need a techmap for this to work.<br />
 <a href="https://en.wikipedia.org/wiki/Place_and_route">Fitter</a> - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the ATF150x CPLD devices. In more modern parlance, this is basically place & route.<br />
 ATMEL.STD File - Part of the Atmel ATF150x fitter, the primitive/device library for PLA.[^1]<br />
