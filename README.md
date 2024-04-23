@@ -12,7 +12,7 @@ These parts are still active and highly worth considering wherever:
 * Learning about logic: Through-hole / soldering-friendly is desired: All 16V8 or 22V10 parts are available in DIP packages; ATF150x parts are available in PLCC packages that can be placed in through-hole PLCC sockets. SMD packages are available for any of the parts.
 * Replacing large quantities of various TTL/CMOS Logic Gates (74-series logic)
 
-In short, the chips work very well wherever the above requirements are necessary, however, the software (and device programming) experience can be incredibly challenging owing to outdated and buggy software.
+In short, these chips work very well wherever the above requirements are necessary, however, the software (and device programming) experience can be incredibly challenging owing to outdated and buggy software.
 
 This repository aims to make it easier to work with these parts and hopefully keep them active for years to come.
 
@@ -44,7 +44,7 @@ This is mostly a collection of documentation, but if you are interested in using
 * Since all of the parts considered here are still in full production (as of 2023), they can be used in production designs.
 * For the ATF150x CPLD parts specifically:
   * The BE and ASV devices not covered here as they seem to be difficult to obtain and are not 5V devices. If you need 3.3V or lower, there are probably better parts suited to your needs.
-
+* For applications where 5-Volt tolerant operation is acceptable, it might be worth considering the ispMACH4000 series. Parts such as the LC4032ZE are available is a somewhat soldering friendly TQFP, however there are likely similar challenges with software.
 </details>
 
 # Background on digital logic.
@@ -95,17 +95,16 @@ A high-level overview of what is required:
 
 <a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">CUPL</a> - A early (1983) programming language used to define the behavior of digital logic gates. "Compiler for Universal Programmable Logic.", is essentially a predecessor to languages like Verilog/VHDL. CUPL.EXE is the compiler which is used to compile .PLD files written in CUPL, ultimately to be burned into programmable logic devices.<br />
 <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end/IDE to the CUPL compiler and related programs. It is still part specifically that we are trying to avoid, while keeping everything else underneath/around it as it is buggy.<br />
-.dl File - Device Library File. This file determines what devices CUPL has the ability to compile for.<br>
-.cat File - A text file corresponding to a .dl device library file with the same name and containing a list of supported devices by CUPL.
+[.dl File](device-library/) - Device Library File. This file determines what devices CUPL has the ability to compile for.<br>
 
 <a href="https://en.wikipedia.org/wiki/Netlist">Netlist</a> - A netlist is essentially an electrical schematic in a text file which defines connections. For the purposes here, it is an intermediary file format (Either EDIF or Berkeley PLA), which is used to describe the behavior of logic ultimately fed into the fitter.<br />
-<a href="">.TT2</a> - The Berkeley PLA file format. An intermediary file which CUPL.EXE can generate that can be used by the Atmel fitters. Notably, one can use berkeley-abc to work with these files.<br />
+<a href="">.TT2</a> - The Berkeley PLA file format. An intermediary file which CUPL.EXE can generate that can be used by the Atmel fitters. Notably, one can use [berkeley-abc](https://github.com/berkeley-abc/abc) to work with these files.<br />
 <a href="https://en.wikipedia.org/wiki/EDIF">.EDF / .EDN</a> - EDIF is another type of netlist format. The Atmel fitter can use this as both an input, as well as an output. Yosys is capable of generating this format, however, one will still need a techmap for this to work.<br />
 <a href="https://en.wikipedia.org/wiki/Place_and_route">Fitter</a> - A fitter converts a netlist into the fusemap (.JED) file. Fitters are needed for the ATF150x CPLD devices. In more modern parlance, this is basically place & route.<br />
 ATMEL.STD File - Part of the Atmel ATF150x fitter, the primitive/device library for PLA.[^1]<br />
 APRIM.LIB File - Part of the Atmel ATF150x fitter, the primitive/device library for EDIF.[^1]
 
-<a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device.
+<a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device. A JEDEC file is ultimately a text file formatted specifically to the JESD3 standard.
 
 
 .SVF File - Serial Vector Format. Generated from the .JED file, the .SVF can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface.<br />
@@ -116,20 +115,14 @@ CSIM - A tool for simulating the behavior of logic. This takes an .SI file (test
 
 
 # Writing logic for these parts: Possible Workflows
-Each of the subsections here represents a potential workflow to design logic equations for these parts. The majority of the focus will be on methods that avoid WinCUPL (which is ultimately just an IDE/text-editor that calls CUPL.EXE).
+Each of the subsections here represents a potential workflow to design logic equations for these parts. The majority of the focus will be on methods that avoid using the WinCUPL frontend/IDE directly (unreliable), but which do use the underlying CUPL.EXE command-line compiler which is fairly robust.
 
-Some of the other approaches covered here also avoid the CUPL compiler as well and instead generate netlists provided directly to the device fitter.
-
-Finally, a word on preferred approach, given the options: Using the CUPL.EXE compiler via command line or Quartus are probably the best ways, especially if you are interested in using Hi-Z states. Neither Yosys nor Digital seemed to have robust support for Hi-Z states (important for Bidirectional I/O).
-
-This diagram is from the help files built into WinCUPL which shows how one can go from a CUPL .PLD into the .JED files needed to program a device.
-
-![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
+Finally, a word on preferred approach, given the options: Using the CUPL.EXE compiler via command line or Quartus are probably the best ways, especially if you are interested in using Hi-Z states. Neither Yosys nor Digital seem to have robust support for 'inout' ports, Tristate/Hi-Z states, open collector outputs, etc. If these are important to you, it may be worth considering tools and workflows which are less experimental.
 
 ## Old Approach: WinCUPL (16V8, 22V10, and ATF150x)
 WinCUPL is basically an IDE, possibly before the term IDE came into existance. While logic for these parts can be written using WinCUPL itself, the experience may be fraught with difficulty as it is a quirky and often unstable Windows application (While it does run great under Wine, this doesn't really change things much). I've seen the editor itself crash just for looking at it sideways, and its copy-paste functionality behave in bewildering ways.
 It does however have value in the help files / documentation / examples. It should emphasized that the CUPL compiler itself is actually pretty solid/stable, and so the troubles of WinCUPL shouldn't be equated with CUPL itself.
-So, the recommended approach is to install and use it for documentation/examples/compiler/device-library and then simply avoid it for serious work by using the command line CUPL.EXE (perhaps through the 5vcomp helper scripts in this repository as in the next section). 
+So, the recommended approach is to start here regardless and use it for documentation/examples/compiler/device-library and then simply avoid it for serious work by using the command line CUPL.EXE (perhaps through the 5vcomp helper scripts in this repository as in the next section). 
 
 You can <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
 
@@ -142,7 +135,7 @@ winetricks mfc40 mfc42
 Furthermore, if you are intending on working with the ATF150x parts, you should probably grab the newer fitters out of the Atmel Prochip package. The utilities in this repository will refuse to work with the old fitters.
 
 ## 5vcomp: The CUPL compiler & Your favorite text editor or IDE (16V8, 22V10, and ATF150x)
-Since WinCUPL simply is a front-end / IDE on top of the CUPL.EXE compiler and related programs, one can write the desired logic in CUPL, save it in a .PLD file using their favorite editor and have CUPL.EXE compile it into a .JED file for programming into a PLD.
+Since WinCUPL simply is a front-end / IDE on top of the CUPL.EXE compiler and related programs, one can write the desired logic in the CUPL language, save it in a .PLD file using their favorite editor and have CUPL.EXE compile it into a .JED file for programming into a PLD.
 
 5vcomp is a simple wrapper around the CUPL compiler.
 This is probably the most solid approach assuming you are OK with using CUPL as a language. You should start with the WinCUPL approach as a prerequisite since it installs the CUPL compiler and has examples/help files.
@@ -155,7 +148,22 @@ The workflows here simply make this easier/conveinent by catching a lot of commo
 ## Guide to CUPL itself
 Assuming you're using CUPL either through WinCUPL or 5vcomp, this section has a general reference to the language, device library details, etc.
 
+Here's an overview of how things work:
+An overview of how things work from a diagram built into WinCUPL which shows how one can go from a CUPL .PLD into the .JED files needed to program a device. Note that the Atmel Fitter (place and route) stage is only used when working with the ATF150x CPLD parts. For simpiler CPLD parts, 
+
+![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
+
+
 ![A detailed User's Guide to the CUPL compiler and language reference in PDF](vendor-docs/CUPL_USERS_GUIDE.pdf)
+
+## 🟥 Common Pitfall - Compiler Mode Selection🟥<br>
+A word of warning is that the <code>Device:</code> section at the top of a .PLD file is more than just the part number you are interested in programming -- it is actually a device mnemonic which selects different macrocell configuration modes.<br>
+So, if you're having trouble getting a flip-flop to work, it might be because you have selected the mnemonic for "simple mode".<br>
+As an example, the compiler can be set to four different modes for the ATF16V8 (similar considerations apply to the 22V10 parts, etc):<br>
+Registered - G16V8MS<br>
+Complex - G16V8MA<br>
+Simple - G16V8AS<br>
+Auto - G16V8
 
 <details>
 <summary>Expand here for details of the command line flags for CUPL.EXE</summary>
