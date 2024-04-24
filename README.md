@@ -202,7 +202,7 @@ Simple - G16V8AS<br>
 Auto - G16V8
 
 ### Atmel ATF150x CPLD Fitters
-While CUPL is self-sufficient to generate the final .JED files for most simple devices, the ATF150x CPLD parts rely on a fitter executable (essentially place and route) that was supplied by Atmel. These fitters work with the CUPL compiler, but they can in theory be made to work with anything that can supply a netlist in the correct EDIF or PLA TT2 format.
+While CUPL is self-sufficient to generate the final .JED files for most simple devices, the ATF150x CPLD parts rely on a fitter executable (essentially place and route) that was supplied by Atmel. These fitters work with the CUPL compiler, but the fitters _can in theory_ be made to work with anything that can supply a netlist in the correct EDIF or PLA TT2 format to them. Yosys, Berkeley-ABC, and SpyDrNet might all be able to do this in different ways.
 
 * ![ATF15xx Family Device Fitter User's Manual](vendor-docs/fitter.pdf)
 
