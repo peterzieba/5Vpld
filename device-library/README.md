@@ -12,18 +12,6 @@ A brief survey of some device libraries that exist in the wild include:
 |pldmstr.dl  | pldmstr       | 2/21/00 | 491 |
 |totaldes.dl | totaldes      | 8/19/99 | 664 |
 
-
-The structure of a library file in brief looks something like this:
-* Header Section
-* Chip list Section: A list of all chip names along with the sizes and offsets of the details for each chip that occur in the next section.
-* Chip Details Section
-
-A more detailed Kaitai Struct [cupl-dl.ksy](cupl-dl.ksy) in this directory describes things in greater detail, however, it is incomplete the aspects that are understood might be incorrect.
-
-It is possible that a greater understanding of this file could be used to write custom support for other devices or as a basis for programming devices through other workflows.
-
-The current state of things is that the .ksy file works well enough to parse the same information that the vendor supplied Library Management program <code>CBLD.EXE</code> is capable of outputting from the library and seems to be correct, but has not been thoroughly compared.
-
 The device library is typically managed with the vendor tools using <code>CBLD.EXE</code>, which has the following help output:
 <code>
 CBLD(PM): CUPL Device Library Management Program
@@ -39,15 +27,10 @@ flags:
           -u   use specified library for listings
 </code>
 
-
 # Device Libraries
 Details of the actual chips that are supported.
 <details>
 <summary>Expand here for a list of devices Atmel WinCUPL supports</summary>
- 
-* CBLD.EXE will allow you to see a list of devices that are supported within the CUPL.DL device library.
-* Atmel WinCUPL is limited Atmel devices, however, other versions of CUPL found elsewhere will have parts from a broader array of manufacturers.
-
 <code>wine ./cbld.exe -l
 CBLD(PM): CUPL Device Library Management Program
 Version 5.0a
@@ -1329,3 +1312,17 @@ p8x12a         01   200   99999   5000
 virtual        01   200   99999   5000
 </code>
 </details>
+
+# Inside the Device Library file format
+
+The structure of a library file in brief looks something like this:
+* Header Section
+* Chip list Section: A list of all chip names along with the sizes and offsets of the details for each chip that occur in the next section.
+* Chip Details Section
+
+A more detailed Kaitai Struct [cupl-dl.ksy](cupl-dl.ksy) in this directory describes things in greater detail, however, it is incomplete the aspects that are understood might be incorrect.
+
+It is possible that a greater understanding of this file could be used to write custom support for other devices or as a basis for programming devices through other workflows.
+
+The current state of things is that the .ksy file works well enough to parse the same information that the vendor supplied Library Management program <code>CBLD.EXE</code> is capable of outputting from the library and seems to be correct, but has not been thoroughly compared.
+
