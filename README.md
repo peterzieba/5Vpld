@@ -99,10 +99,10 @@ A high-level overview of what is required:
 ATMEL.STD File - Part of the Atmel ATF150x fitter, the primitive/device library for PLA.[^1]<br />
 APRIM.LIB File - Part of the Atmel ATF150x fitter, the primitive/device library for EDIF.[^1]
 
-<a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device. A JEDEC file is ultimately a text file formatted specifically to the JESD3 standard.
+<a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device. A JEDEC file is ultimately a text file formatted specifically to the JESD3 standard. If you have a device programmer that has support for the exact device you are interested in programming, this file is all that is needed.
 
 
-.SVF File - Serial Vector Format. Generated from the .JED file, the .SVF can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface. The Windows <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP67.zip">ATMISP v6.7</a> <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP7.zip">ATMISP v7</a> tool can be used to generated an .SVF, as well as the <a href="https://github.com/whitequark/prjbureau/blob/main/util/fuseconv.py">fuseconv.py</a> utility by whitequark.<br /><br />
+.SVF File - Serial Vector Format. Generated from the .JED file, the .SVF can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface (So, the ATF150x CPLDs). The Windows <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP67.zip">ATMISP v6.7</a> <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP7.zip">ATMISP v7</a> tool can be used to generated an .SVF, as well as the <a href="https://github.com/whitequark/prjbureau/blob/main/util/fuseconv.py">fuseconv.py</a> utility by whitequark.<br /><br /> Once you have an .SVF, you can use tools like OpenOCD or the experimental builds of Afterburner to program a CPLD with a JTAG interface.
 CSIM.EXE - Part of WinCUPL. A tool for simulating the behavior of logic. This takes an .SI file (test vectors) and an [.ABS file](abs-decode/). Given these it produces an .SO file. Only provides functional simulation (so, logic states but not timing)
 
 
@@ -141,15 +141,16 @@ The workflows here simply make this easier/convenient by catching a lot of commo
 
 
 ## Guide to CUPL itself
-Assuming you're using CUPL either through WinCUPL or 5vcomp, this section has a general reference to the language, device library details, etc.
+Assuming you're using CUPL either through WinCUPL or 5vcomp, this section has a general reference to the language.
 
 An overview of how things work which shows how one can go from a CUPL .PLD into the .JED files needed to program a device. Note that the Atmel Fitter (place and route) stage is only used when working with the ATF150x CPLD parts. For most simpler parts, CUPL is capable of generating a .JED directly.
 
 ![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
 (diagram from built-in WinCUPL help)
 
-
 ![A detailed User's Guide to the CUPL compiler and language reference in PDF](vendor-docs/CUPL_USERS_GUIDE.pdf)
+
+![A thorough review of CUPL Device Libraries](device-library/)
 
 <details>
 <summary>Expand here for details of the command line flags for CUPL.EXE</summary>
