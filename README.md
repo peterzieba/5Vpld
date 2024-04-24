@@ -201,12 +201,13 @@ Complex - G16V8MA<br>
 Simple - G16V8AS<br>
 Auto - G16V8
 
+### Atmel ATF150x CPLD Fitters
+While CUPL is self-sufficient to generate the final .JED files for most simple devices, the ATF150x CPLD parts rely on a fitter executable (essentially place and route) that was supplied by Atmel. These fitters work with the CUPL compiler, but they can in theory be made to work with anything that can supply a netlist in the correct EDIF or PLA TT2 format.
 
-If one is trying to utilize the ATF150X devices, using the appropriate fitter is required.
 * ![ATF15xx Family Device Fitter User's Manual](vendor-docs/fitter.pdf)
 
 <details>
-<summary>Expand for command line options for the latest known version of the ATF1502.EXE fitter.</summary>
+<summary>Expand for command line options for the latest known version of the ATF1502.EXE fitter. Output is similar for ATF1504 and ATF1508 devices.</summary>
 <code>Atmel ATF1502 Fitter Version 1918 (3-21-07)
 Copyright 1999,2000 Atmel Corporation
  Usage: FIT1502.EXE [-i] input_file[.tt2] {options}
@@ -337,6 +338,14 @@ Finally, since yosys is extremely complex, a section on understanding the basics
 
 ## Protel 99SE
 This was a ~1999/2000 era circuit board design tool made by Altium that worked in Windows and which had support for the SPLD and CPLD parts mentioned here. It is mentioned here for completeness sake, but the author has no direct experience with it. It is said to have supported CUPL and Schematic entry for development of logic but neither Verilog nor VHDL.
+
+## Berkeley ABC
+Berkeley ABC can be made to read and write verilog and the PLA format used by the Atmel Fitters. If this works, it could potentially eliminate the need to use the CUPL language altogether and instead have a path from verilog to the Atmel CPLDs without the need for expensive software. This remains to be tested.
+
+## BYU's SpyDrNet
+SpyDrNet is capable of generating an EDIF netlist which could in theory be fed into the Atmel Fitters.
+* https://github.com/byuccl/spydrnet
+* https://byuccl.github.io/spydrnet/docs/stable/index.html
 
 # Programming / Burning and Device Information
 There are a few choices on how a PLD/CPLD part can be programmed depending on whether it supports JTAG. If using JTAG, be mindful of making sure you are using a programmer with the correct voltage levels and not to unintentionally programatically disable the JTAG interface.
