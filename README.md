@@ -339,7 +339,7 @@ Finally, since yosys is extremely complex, a section on understanding the basics
 This was a ~1999/2000 era circuit board design tool made by Altium that worked in Windows and which had support for the SPLD and CPLD parts mentioned here. It is mentioned here for completeness sake, but the author has no direct experience with it. It is said to have supported CUPL and Schematic entry for development of logic but neither Verilog nor VHDL.
 
 # Programming / Burning and Device Information
-There are a few choices on how a PLD/CPLD part can be programmed depending on whether it supports JTAG.
+There are a few choices on how a PLD/CPLD part can be programmed depending on whether it supports JTAG. If using JTAG, be mindful of making sure you are using a programmer with the correct voltage levels and not to unintentionally programatically disable the JTAG interface.
 
 ![A detailed overview of ways to program a given device.](PROGRAMMING.md)
 
