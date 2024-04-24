@@ -99,10 +99,10 @@ A high-level overview of what is required:
 ATMEL.STD File - Part of the Atmel ATF150x fitter, the primitive/device library for PLA.[^1]<br />
 APRIM.LIB File - Part of the Atmel ATF150x fitter, the primitive/device library for EDIF.[^1]
 
-<a href="https://archive.org/details/JEDECJESD3C/mode/2up">.JED/JEDEC File</a> - A fuse map intended to be "burned/programmed" into a logic device. A JEDEC file is ultimately a text file formatted specifically to the JESD3 standard. If you have a device programmer that has support for the exact device you are interested in programming, this file is all that is needed.
+.JED/JEDEC File - A fuse map intended to be "burned/programmed" into a logic device. A JEDEC file is ultimately a text file formatted specifically to the <a href="https://archive.org/details/JEDECJESD3C/mode/2up">JESD3 standard</a>. If you have a device programmer that has support for the exact device you are interested in programming, this file is all that is needed.
 
 
-.SVF File - Serial Vector Format. Generated from the .JED file, the .SVF can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface (So, the ATF150x CPLDs). The Windows <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP67.zip">ATMISP v6.7</a> <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP7.zip">ATMISP v7</a> tool can be used to generated an .SVF, as well as the <a href="https://github.com/whitequark/prjbureau/blob/main/util/fuseconv.py">fuseconv.py</a> utility by whitequark.<br /><br /> Once you have an .SVF, you can use tools like OpenOCD or the experimental builds of Afterburner to program a CPLD with a JTAG interface.
+.SVF File - Serial Vector Format. Generated from the .JED file, the .SVF can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface (So, the ATF150x CPLDs). The Windows <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP67.zip">ATMISP v6.7</a> or <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP7.zip">ATMISP v7</a> tools can be used to generate an .SVF from a .JED file, as well as the <a href="https://github.com/whitequark/prjbureau/blob/main/util/fuseconv.py">fuseconv.py</a> utility by whitequark. Once you have an .SVF, you can use tools like OpenOCD or the experimental branches of Afterburner to program a CPLD with a JTAG interface.<br><br>
 CSIM.EXE - Part of WinCUPL. A tool for simulating the behavior of logic. This takes an .SI file (test vectors) and an [.ABS file](abs-decode/). Given these it produces an .SO file. Only provides functional simulation (so, logic states but not timing)
 
 
@@ -337,7 +337,7 @@ Finally, since yosys is extremely complex, a section on understanding the basics
   * https://github.com/Ravenslofty/74xx-liberty/tree/master/kicad
 
 ## Protel 99SE
-This was a ~1999/2000 era circuit board design tool made by Altium that worked in Windows and which had support for the SPLD and CPLD parts mentioned here. It is mentioned here for completeness sake, but the author has no direct experience with it. It is said to have supported CUPL and Schematic entry for development of logic but neither Verilog nor VHDL.
+This was a ~1999/2000 era circuit board design tool made by Altium that worked in Windows and which had support for the SPLD and CPLD parts mentioned here. It is mentioned here for completeness sake, but the author has no direct experience with it. It is said to have supported CUPL and Schematic entry for development of logic but not Verilog nor VHDL.
 
 ## Berkeley ABC
 Berkeley ABC can be made to read and write verilog and the PLA format used by the Atmel Fitters. If this works, it could potentially eliminate the need to use the CUPL language altogether and instead have a path from verilog to the Atmel CPLDs without the need for expensive software. This remains to be tested.
