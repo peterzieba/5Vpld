@@ -90,7 +90,7 @@ A high-level overview of what is required:
 
 <a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">CUPL</a> - A early (1983) programming language used to define the behavior of digital logic gates. "Compiler for Universal Programmable Logic.", is essentially a predecessor to languages like Verilog/VHDL. CUPL.EXE is the compiler which is used to compile .PLD files written in CUPL, ultimately to be burned into programmable logic devices.<br />
 <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end/IDE to the CUPL compiler and related programs. It is still part specifically that we are trying to avoid, while keeping everything else underneath/around it as it is buggy.<br />
-[.dl File](device-library/) - Device Library File. This file determines what devices CUPL has the ability to compile for.<br>
+[.dl File](device-library/) - A Library File is a binary file used by CUPL compiler that provides support for devices CUPL has the ability to compile logic for. This should not be confused with the Device/Primitive Libraries that are part of the fitter.<br>
 
 <a href="https://en.wikipedia.org/wiki/Netlist">Netlist</a> - A netlist is essentially an electrical schematic in a text file which defines connections. For the purposes here, it is an intermediary file format (Either EDIF or Berkeley PLA), which is used to describe the behavior of logic ultimately fed into the fitter.<br />
 <a href="">.TT2</a> - The Berkeley PLA file format. An intermediary file which CUPL.EXE can generate that can be used by the Atmel fitters. Notably, one can use [berkeley-abc](https://github.com/berkeley-abc/abc) to work with these files.<br />
@@ -105,9 +105,7 @@ APRIM.LIB File - Part of the Atmel ATF150x fitter, the primitive/device library 
 .SVF File - Serial Vector Format. Generated from the .JED file, the .SVF can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface (So, the ATF150x CPLDs). The Windows <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP67.zip">ATMISP v6.7</a> or <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP7.zip">ATMISP v7</a> tools can be used to generate an .SVF from a .JED file, as well as the <a href="https://github.com/whitequark/prjbureau/blob/main/util/fuseconv.py">fuseconv.py</a> utility by whitequark. Once you have an .SVF, you can use tools like OpenOCD or the experimental branches of Afterburner to program a CPLD with a JTAG interface.<br><br>
 CSIM.EXE - Part of WinCUPL. A tool for simulating the behavior of logic. This takes an .SI file (test vectors) and an [.ABS file](abs-decode/). Given these it produces an .SO file. Only provides functional simulation (so, logic states but not timing)
 
-
 <a href="https://www.winehq.org/">Wine</a> - Wine is not an emulator. Allows running Windows programs under Linux.<br />
-
 
 # Writing logic for these parts: Possible Workflows
 Each of the subsections here represents a potential workflow to design logic equations for these parts. The majority of the focus will be on methods that avoid using the WinCUPL frontend/IDE directly (unreliable), but which do use the underlying CUPL.EXE command-line compiler which is fairly robust.
@@ -138,7 +136,6 @@ The workflows here simply make this easier/convenient by catching a lot of commo
 
 * ![Linux Workflow (point 5vcomp at your .PLD file from a command line)](linux-workflow/)
 * ![Windows Workflow (right-click on a .PLD to compile with 5vcomp.bat)](windows-workflow/)
-
 
 ## Guide to CUPL itself
 Assuming you're using CUPL either through WinCUPL or 5vcomp, this section has a general reference to the language.
@@ -354,11 +351,11 @@ There are a few choices on how a PLD/CPLD part can be programmed depending on wh
 
 
 # Reversing a JED file back into logic equations
-Finally, if one is able to read a .JED out of a device, this can sometimes be reversed back into equations. These devices all have security fuses, however, which can disable any ability to read out the device. Given a .JED file, the following approaches can be taken to arrive at the equations:
+Finally, if one is able to read a .JED out of a device, this can sometimes be reversed back into equations, provided the security fuse on the device has not been set. Given a .JED file, the following approaches can be taken to arrive at the equations:
 * By hand, comparing the .JED file to the fusemap / macrocells in the datasheet. See this <a href="https://blog.frankdecaire.com/2017/01/22/generic-array-logic-devices/">blog post</a> by Frank DeCaire.
 * `JED2EQN.EXE` - A DOS utility floating around on the internet.
 * `jedutil` - MAME can be compiled with a utility called jedutil which does something similar. Sometimes it is broken out into a seperate package "mame-tools"
-* Brute Force - A PLD that is strictly combonatorial can be read out as though it is an EPROM by stepping through all combinations of possible inputs. Once state/registers are involved, this becomes much more challenging.
+Finally, brute force can be used on a PLD that is strictly combonatorial can be read out as though it is an EPROM by stepping through all combinations of possible inputs. In this approach, security fuses does not matter because one is not trying to read out the fusemap directly. Once state/registers are involved, this becomes much more challenging.
 
 # Simulation
 CSIM.EXE can be fed test vectors and be used to simulate the behavior of a particular chip, or even a virtual device. The following things are required to do this successfully:
