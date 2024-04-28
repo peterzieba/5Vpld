@@ -18,8 +18,11 @@ Basic customizations (compiler flags, device library) are broken out into variab
 
 To get Wine working on Ubuntu Linux, this would look something like:
 
-<code>sudo apt-get install wine winetricks playonlinux
+<code>dpkg --add-architecture i386
+sudo apt-get install wine wine32:i386 winetricks playonlinux
+WINEARCH=win32 WINEPREFIX=~/.wine wine wineboot
 winetricks mfc40 mfc42
+wine awincupl.exe
 </code>
 
 From there, you can install WinCUPL and Atmel Prochip:
