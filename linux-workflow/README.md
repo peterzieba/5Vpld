@@ -19,7 +19,7 @@ Basic customizations (compiler flags, device library) are broken out into variab
 To get Wine working on Ubuntu Linux, this would look something like:
 
 <code>dpkg --add-architecture i386
-sudo apt-get install wine wine32:i386 winetricks playonlinux
+sudo apt-get install wine wine32:i386 winetricks playonlinux innoextract
 WINEARCH=win32 WINEPREFIX=~/.wine wine wineboot
 winetricks mfc40 mfc42
 wine awincupl.exe
