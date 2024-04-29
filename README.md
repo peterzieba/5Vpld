@@ -410,12 +410,18 @@ P Preload internal registers (value is applied to !Q output)
 </code>
 </details>
 
-# References
-[^1]: From the Readme.txt of fit5_0.zip (an older version of the Atmel Fitters)
-
+# Additional Documentation
+* Engineering Practices for PIC Microcontrollers and the ATMEL (ISBN 
+  * https://archive.org/details/engineerpractice0000salr/page/n5/mode/2up
+ 
 # Acknowledgements
 This repository is merely a bunch of tips, tricks, helper scripts and documentation. The real work comes from:
 * Whitequark for putting together <a href="https://github.com/whitequark/prjbureau">Prjbureau</a>, which documents the fusemap for these devices, provides an ability to go from a .JED file to an .SVF, documentation and more.
 * Yosys
 * hoglet67 for putting together <a href="https://github.com/hoglet67/atf15xx_yosys">atf15xx_yosys</a>, which shows a workflow using yosys and provides a techmap.
 * Countless other tips, tools, contributions and from all over the web and plenty of trial-and-error working around the quirks of WinCUPL and the fitters themselves.
+
+# References
+[^1]: From the Readme.txt of fit5_0.zip (an older version of the Atmel Fitters)
+
+
