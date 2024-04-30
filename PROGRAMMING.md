@@ -38,8 +38,8 @@ These parts can be programmed via JTAG, so there are a few options.
   * Software: https://www.microchip.com/en-us/development-tool/ATMISP
 * OpenOCD: https://openocd.org/
   * You will need an SVF file to program a device via OpenOCD. This can be created by converting the .JED file using either ATMISP, or fuseconv.py from whitequark/prjbureau
-* <a href="https://github.com/ole00/afterburner/tree/ole-20240406-atf150x-wip2">A special branch of Afterburner</a> has experimental support for these chips.
-  * This is great because the Arduino Uno it is based upon is cheap and ubiquitous and the project has support for generating the 12V Vpp needed to unlock JTAG-Disabled parts.
+* ~~A special branch of~~ <a href="https://github.com/ole00/afterburner/">Afterburner</a> has experimental support for these chips.
+  * This is great because the Arduino Uno it is based upon is cheap and ubiquitous and the project has support for generating the 12V Vpp needed to unlock JTAG-Disabled parts. You'll need to convert a .JED -> .SVF -> XSVF to successfully use this.
 
 * To generate a .JED file for these devices, you will need the fitters. While WinCUPL has fitters within it, a much more updated version of the fitters is available inside of Atmel Prochip from <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Microchip's website</a>
 
