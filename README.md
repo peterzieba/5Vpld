@@ -121,8 +121,11 @@ You can <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cp
 
 To get it working under Linux with Wine, you'll need winetricks so you can install mfc40 and mfc42. On Ubuntu Linux, this would look something like:
 
-<code>sudo apt-get install wine winetricks playonlinux
+<code>dpkg --add-architecture i386
+sudo apt-get install wine wine32:i386 winetricks playonlinux innoextract
+WINEARCH=win32 WINEPREFIX=~/.wine wine wineboot
 winetricks mfc40 mfc42
+wine awincupl.exe
 </code>
 
 Furthermore, if you are intending on working with the ATF150x parts, you should probably grab the newer fitters out of the Atmel Prochip package. The utilities in this repository will refuse to work with the old fitters.
