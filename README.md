@@ -148,12 +148,12 @@ An overview of how things work which shows how one can go from a CUPL .PLD into 
 ![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
 (diagram from built-in WinCUPL help)
 
-![A detailed User's Guide to the CUPL compiler and language reference in PDF](vendor-docs/CUPL_USERS_GUIDE.pdf)
-
-![A thorough review of CUPL Device Libraries](device-library/)
+* ![A detailed User's Guide to the CUPL compiler and language reference in PDF](vendor-docs/CUPL_USERS_GUIDE.pdf)
+* ![Atmel WinCUPL User's Manual](vendor-docs/doc0737.pdf)
+* ![CUPL Device Libraries in Detail (This determines the chips the compiler supports)](device-library/)
 
 <details>
-<summary>Expand here for details of the command line flags for CUPL.EXE</summary>
+<summary>Expand here for details of the command line flags for the CUPL.EXE compiler</summary>
 Run CUPL using the following command line format:
 
 <code>cupl [-flags] [library] [device] source
