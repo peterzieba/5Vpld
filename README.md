@@ -31,10 +31,12 @@ This is a "Choose your own adventure novel". Covered here are many approaches an
 * The ATF1500 is not covered because it is a more expensive part and does not support JTAG programming. It is fundamentally different from the ATF1502, ATF1504, and ATF1508
 * The ATF750 and ATF2500 are also not covered for similar reasons. Other chips are almost certainly a better choice.
 * We only consider true 5V parts (not merely parts with 5V tolerant inputs, of which there are many more).
-  * 3.3V parts cannot supply the minimum of 3.6V to drive the input of a 5V CMOS part high, so 5V tolerant parts are not enough in many cases.
+  * 3.3V parts cannot supply the minimum of 3.6V to drive the input of a 5V CMOS part high, so 5V tolerant parts are not enough in many cases. Even the parts covered here may not necessarily be capable of the required VoH as they voltage drops off quickly under load[^2]
   * Notably, however, driving 5V TTL inputs from a 3.3V part, on the other hand, is not a problem. A 5V TTL input has a threshold of 2V.
 * 3.3V parts are not considered: There are simply better choices that are well documented. Also, the CPLD parts have VccIO inputs, so you can technically use them in 3.3V designs just as well.
-* The Greekpak devices probably should be covered here, but, they're reasonably well documented with modern tools.
+* The following 5V IO capable parts probably should be covered, but they're already well supported, documented, modern tools, etc.
+  * The Greekpak devices
+  * The Cypress PSoC5LP (An ARM Cortex M3 with CPLD-like logic blocks), available in 68-pin QFN, 100-pin TQFP
 * Any parts that are NRND or inactive are not covered, as we consider what can be reliably and sensibly purchased.
 * Since all of the parts considered here are still in full production (as of 2023), they can be used in production designs.
 * For the ATF150x CPLD parts specifically:
@@ -426,5 +428,6 @@ This repository is merely a bunch of tips, tricks, helper scripts and documentat
 
 # References
 [^1]: From the Readme.txt of fit5_0.zip (an older version of the Atmel Fitters)
+[^2]: https://www.eevblog.com/forum/beginners/5v-pal-or-gal-with-cmos-outputs/
 
 
