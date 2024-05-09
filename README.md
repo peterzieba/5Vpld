@@ -103,6 +103,7 @@ APRIM.LIB File - Part of the Atmel ATF150x fitter, the primitive/device library 
 
 .JED/JEDEC File - A fuse map intended to be "burned/programmed" into a logic device. A JEDEC file is ultimately a text file formatted specifically to the <a href="https://archive.org/details/JEDECJESD3C/mode/2up">JESD3 standard</a>. If you have a device programmer that has support for the exact device you are interested in programming, this file is all that is needed.
 
+backpin.exe - Utility which can take the pin mappings that have been autoassigned by the fitter and backannotate them into the .PLD file.<br />
 
 .SVF File - Serial Vector Format. Generated from the .JED file, the .SVF can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface (So, the ATF150x CPLDs). The Windows <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP67.zip">ATMISP v6.7</a> or <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP7.zip">ATMISP v7</a> tools can be used to generate an .SVF from a .JED file, as well as the <a href="https://github.com/whitequark/prjbureau/blob/main/util/fuseconv.py">fuseconv.py</a> utility by whitequark. Once you have an .SVF, you can use tools like OpenOCD or the experimental branches of Afterburner to program a CPLD with a JTAG interface.<br><br>
 CSIM.EXE - Part of WinCUPL. A tool for simulating the behavior of logic. This takes an .SI file (test vectors) and an [.ABS file](abs-decode/). Given these it produces an .SO file. Only provides functional simulation (so, logic states but not timing)
@@ -202,6 +203,23 @@ Registered - G16V8MS<br>
 Complex - G16V8MA<br>
 Simple - G16V8AS<br>
 Auto - G16V8
+
+<details>
+<summary>Expand Here for a list of mnemonic prefixes</summary>
+<code>
+EP	Erasable Programmable Logic Device (EPLD)
+G	Generic Array Logic (GAL)
+F	Field Programmable Logic Array (FPLA)
+F	Field Programmable Gate Array (FPGA)
+F	Field Programmable Logic Sequencer (FPLS)
+F	Field Programmable Sequence Generator (FPSG)
+P	Programmable Logic Array (PAL)
+P	Programmable Logic Device (PLD)
+P	Programmable Electrically Erasable Logic (PEEL)
+PLD	Pseudo Logical Device
+RA	Bipolar Programmable Read Only Memory (PROM)
+</code>
+</details>
 
 ### Atmel ATF150x CPLD Fitters
 While CUPL is self-sufficient to generate the final .JED files for most simple devices, the ATF150x CPLD parts rely on a fitter executable (essentially place and route) that was supplied by Atmel. These fitters work with the CUPL compiler, but the fitters _can in theory_ be made to work with anything that can supply a netlist in the correct EDIF or PLA TT2 format to them. Yosys, Berkeley-ABC, and SpyDrNet might all be able to do this in different ways.
