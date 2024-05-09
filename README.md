@@ -308,17 +308,25 @@ While not the easiest approach, just as one can write G-Code in notepad or Assem
 
 It is worth noting that the fusemap for the ATF150x parts has been recently documented in <a href="https://github.com/whitequark/prjbureau">prjbureau</a>. Given the complexity of these devices over PLDs, writing a fusemap by hand for these parts would probably be a bad idea.
 
-## Other languages: ABEL, PALASM
+## Other languages / Software: ABEL, PALASM
 These will only be covered very briefly:
 * ABEL: "Advanced Boolean Expression Language" was created in 1983 by Data I/O Corporation.
 * PALASM: Introduced by Monolithic Memories, Inc. (MMI) in the 1980's
   * A modern version of this is called <a href="https://github.com/daveho/GALasm">GALASM</a> which is a continuation of something called GALer. This might be worth considering if you are happy with just PLDs.
+* Atmel-Synario: A 1999-era ABEL-HDL and Schematic PLD/CPLD design tool.
+* Viewlogic's Workview/ProPLD: 90's-era software.
+* Atmel-ProPLD: (possibly Atmel's bundled version of the above?)
 
 ## Atmel Prochip (Not Free, Verilog/VHDL support for ATF150x)
 ![PDF: Example Verilog Design flows with using ProChip 5.0.1](vendor-docs/CPLD_Mentor_Verilog_tutorial[1].pdf)<br />
 Atmel Prochip is not free, however, you can <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip">download it from here</a>, and may be able to <a href="https://www.microchip.com/prochiplicensing/#/">request a trial license from Microchip</a>. This workflow supports Verilog/VHDL, which is great if one wants to move away from CUPL entirely and can afford to purchase a license.
 
 Prochip should be downloaded regardless because there are newer fitters for the ATF150x devices that can be extracted from this installation, and these fitters are required in every other approach mentioned here. The newer versions of the fitters should mention version 1918 (3-21-07) when invoked from a command line. (The fitters that come with WinCUPL are old and should be replaced with the ones from this package).
+
+In essence, Prochip is the Atmel fitter bundled with:
+* "Precision® RTL Synthesis" from Mentor Graphics for Verilog/VHDL synthesis.
+* (optionally) "ModelSim®" from Mentor Graphics for Functional/Timing Simulation
+* (optionally) "Protel Design Explorer 99SE" for Schematic/CUPL design entry.
 
 ## Quartus (Free, Verilog, VHDL, Schematic Capture). Indirect support for ATF150x. Linux or Windows.
 * It turns out that the Altera (Now Intel) Quartus II 13.0sp1 Web Edition can be used to produce a .POF file targeting various CPLD chips made by Altera in the MAX EPM3K/EPM7K series, which can be converted to target an ATF150x CPLD.
