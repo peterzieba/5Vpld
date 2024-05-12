@@ -1,11 +1,11 @@
 # Overview
-5vcomp is a Linux Shell Script that is a light wrapper around the CUPL.EXE
+5vcomp is a Linux Shell Script that is a light wrapper around the CUPL.EXE compiler.
 
 The CUPL.EXE compiler runs well under Linux using Wine and enables one to use a command-line/scripted approach to compilation.
 
 This allows you to avoid the WinCUPL IDE and use your favorite IDE/Text editor instead to develop .PLD files.
 
-Installing WinCUPL is nonetheless a requirement, but you'll never have to open it. Installing it provides:
+Installing WinCUPL is nonetheless a requirement to get the compiler, but you'll never have to open WinCUPL itself. Installing it provides:
 * The CUPL.EXE compiler
 * The Atmel.dl device library (which CUPL.EXE uses)
 * The fitters for the ATF150x CPLD parts (though this utility will refuse to work with the ones provided by Atmel WinCUPL -- please replace them with the newer ones from the Atmel Prochip package)
