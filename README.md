@@ -7,7 +7,7 @@ This repository centers around documenting modern ways of developing logic for a
 * ![ATF1508](vendor-datasheets/doc0784.pdf) (Active replacement for the EPM7128)
 
 These parts are still active and highly worth considering wherever:
-* 5V logic is a requirement, avoiding level shifting, low latency (7ns), instant-on & non-volatile.
+* 5V logic is a requirement, avoiding level shifting, low latency (7ns), instant-on & non-volatile, and situations needing Hi-Z / Open-collector states.
 * Prototyping / Iteration (reprogrammable)
 * Learning about logic: Through-hole / soldering-friendly is desired: All 16V8 or 22V10 parts are available in DIP packages; ATF150x parts are available in PLCC packages that can be placed in through-hole PLCC sockets. SMD packages are available for any of the parts.
 * Replacing large quantities of various TTL/CMOS Logic Gates (74-series logic)
@@ -40,7 +40,8 @@ This is a "Choose your own adventure novel". Covered here are many approaches an
 * Any parts that are NRND or inactive are not covered, as we consider what can be reliably and sensibly purchased.
 * Since all of the parts considered here are still in full production (as of 2023), they can be used in production designs.
 * For the ATF150x CPLD parts specifically:
-  * The BE and ASV devices not covered here as they seem to be difficult to obtain and are not 5V devices. If you need 3.3V or lower, there are probably better parts suited to your needs.
+  * The parts ending in 'BE' are not covered here as they seem to be very expensive. In principle these are interesting because they have multiple IO bank voltages.
+  * The parts ending in 'ASV' are 3.3V only. The 'AS' devices can be operated at 3.3V IO through the VccIO pins. The 44-pin devices to not show a VccIO pin, but it does seem to be the case that two pins are Vcc and two are VccIO.
 * For applications where 5-Volt tolerant operation is acceptable, it might be worth considering the ispMACH4000 series. Parts such as the LC4032ZE are available is a somewhat soldering friendly TQFP, however there are likely similar challenges with software.
 </details>
 
