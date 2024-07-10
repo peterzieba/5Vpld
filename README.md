@@ -334,7 +334,8 @@ In essence, Prochip is the Atmel fitter bundled with:
   * <a href="https://www.intel.com/content/www/us/en/software-kit/711791/intel-quartus-ii-web-edition-design-software-version-13-0sp1-for-windows.html?">Intel® Quartus&reg; II Web Edition Design Software Version 13.0sp1 for Windows</a>
   * <a href="https://www.intel.com/content/www/us/en/software-kit/711790/intel-quartus-ii-web-edition-design-software-version-13-0sp1-for-linux.html?">Intel® Quartus&reg; II Web Edition Design Software Version 13.0sp1 for Linux</a>
   * When installing, you only need "MAX II/V, MAX3000/7000" under device support. Unchecking the other devices can save ~2GB.
-  * Finally, you may have trouble running it as libpng12.so.0 may be required. See <a href="https://silverdrs.wordpress.com/2020/11/24/running-older-altera-quartus-on-modern-64bit-gnu-linux/">here</a>
+  * You may have trouble running it as libpng12.so.0 may be required. See <a href="https://silverdrs.wordpress.com/2020/11/24/running-older-altera-quartus-on-modern-64bit-gnu-linux/">here</a>.
+  * Quartus frequently crashes and can even crash your whole desktop session. Fix that by <a href="https://zkre.xyz/posts/quartus/">replacing the bundled libtbb</a>.
   * You can move the .desktop shortcut into ~/.local/share/applications/Quartus II 13.0sp1 (64-bit) Web Edition.desktop
     * I found I had to set Terminal=true for it to work.
 * The resulting .POF file can be converted using a utility called <a href="http://ww1.microchip.com/downloads/archive/pof2jed.zip">POF2JED</a> from Atmel (Now Microchip). This is further detailed in <a href="http://ww1.microchip.com/downloads/en/AppNotes/DOC0916.PDF">this application note.
