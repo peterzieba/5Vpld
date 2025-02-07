@@ -1,5 +1,17 @@
 # Overview
-The behavior of logic equations to be programmed into a device can be simulated with a utility called WinSim which is part of WinCUPL.
+The behavior of logic equations to be programmed into a device can be simulated with a utility called WinSim which is part of WinCUPL. Note that this is only a functional simulation and not a timing simulation.
+
+<details>
+<summary>Scope: Expand here for details on timing simulations</summary>
+There are some possibilities:
+
+
+* PLD devices are probably simple enough where the datasheet can be utilized.
+  * Perhaps this might be useful: https://github.com/ezrec/galpal
+* For ATF150x devices see the fitter options, specifically:
+  * <code>-strategy Verilog_sim [sdf | Verilog | OFF]</code>
+  * <code>-strategy Vhdl_sim [sdf | vhdl | OFF]</code>
+</details>
 
 # Alternatives
 As this utility is somewhat erratic, alternatives are examined here.
