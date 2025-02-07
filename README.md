@@ -30,6 +30,7 @@ This is a "Choose your own adventure novel". Covered here are many approaches an
 * The intention is primarily to make it easier to work with parts that are still active so they do not go NRND and eventually disappear from the market. While there are gems here for other related historical parts, this is not the focus of this repository.
 * The ATF1500 is not covered because it is a more expensive part and does not support JTAG programming. It is fundamentally different from the ATF1502, ATF1504, and ATF1508
 * The ATF750 and ATF2500 are also not covered for similar reasons. Other chips are almost certainly a better choice.
+  * The ATF2500C might be worth examining in spite of the somwhat high cost due to being available in a DIP-40 package and thus breadboard friendly. Without understanding the programming algorithm however, it would be of use to very few people as no recent/affordable device programmers support this chip.
 * We only consider true 5V parts (not merely parts with 5V tolerant inputs, of which there are many more).
   * 3.3V parts cannot supply the minimum of 3.6V to drive the input of a 5V CMOS part high, so 5V tolerant parts are not enough in many cases. Even the parts covered here may not necessarily be capable of the required VoH as their output voltage drops off quickly under load. In these cases, pullup resistors can be considered.[^2]
   * Notably, however, driving 5V TTL inputs from a 3.3V part, on the other hand, is not a problem. A 5V TTL input has a threshold of 2V.
