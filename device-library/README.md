@@ -1,7 +1,7 @@
 # Overview
 This directory is concerned with the Device Libraries used by the CUPL Compiler.
 
-Typically, with WinCUPL, you'll be using <code>Atmel.dl</code>, which only provides support for some common Atmel PLD/CPLD chips, however, there are other libraries out there as part of other software packages which are useful to be aware of in case you are trying to work with a device not supported in WinCUPL.
+Typically, with Atmel WinCUPL, you'll be using <code>Atmel.dl</code>, which only provides support for some common Atmel PLD/CPLD chips, however, there are other libraries out there as part of other software packages which are useful to be aware of in case you are trying to work with a possibly obsolete device not supported in Atmel WinCUPL.
 
 A brief survey of some device libraries that exist in the wild include:
 | Filename   | Library name  | Timestamp    | Number of Chips       |
@@ -12,7 +12,7 @@ A brief survey of some device libraries that exist in the wild include:
 |pldmstr.dl  | pldmstr       | 2/21/00 | 491 |
 |totaldes.dl | totaldes      | 8/19/99 | 664 |
 
-The device library is typically managed with the vendor tools using <code>CBLD.EXE</code>, which has the following help output:
+A device library can be inspected with the <code>CBLD.EXE</code> executable, which has the following help output:
 <code>
 CBLD(PM): CUPL Device Library Management Program
 Version 5.0a
@@ -26,6 +26,10 @@ flags:
           -t   list contents of library
           -u   use specified library for listings
 </code>
+
+It would be very fascinating to know what a 'build file' looks like, but this is likely only known to the vendor.
+
+Finally, an interesting thing supported in the "PLD Master" device library is that one can use a standard EPROM as a combinatorial logic device.
 
 # Device Libraries
 Details of the actual chips that are supported.
@@ -1315,12 +1319,12 @@ virtual        01   200   99999   5000
 
 # Inside the Device Library file format
 
-The structure of a library file in brief looks something like this:
+The binary structure of a device library file in brief looks something like this:
 * Header Section
 * Chip list Section: A list of all chip names along with the sizes and offsets of the details for each chip that occur in the next section.
 * Chip Details Section
 
-A more detailed Kaitai Struct [cupl-dl.ksy](cupl-dl.ksy) in this directory describes things in greater detail, however, it is incomplete the aspects that are understood might be incorrect.
+A more detailed examination of the libraries led to the following Kaitai Struct [cupl-dl.ksy](cupl-dl.ksy) in this directory, which describes things in greater detail, however, it is incomplete, based on partial understandings, and currently of limited practical utility.
 
 It is possible that a greater understanding of this file could be used to write custom support for other devices or as a basis for programming devices through other workflows.
 
