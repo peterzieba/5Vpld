@@ -1,0 +1,12 @@
+Windows Registry Editor Version 5.00
+
+
+;These are a series of quick changes to make the colors in WinCUPL's WinSIM more visible and the grid-size slightly larger.
+
+[HKEY_CURRENT_USER\Software\Logical Devices\WinSim\1.0\Settings]
+"lGridWidth"=dword:000001c2
+"lGridHeight"=dword:000001c2
+"Color*"=dword:00ff7f7f
+"ColorH"=dword:00ff7f7f
+"ColorL"=dword:00ff7f7f
+
