@@ -6,6 +6,18 @@ Just like WinCUPL, it is an erratic front-end. Thankfully however, the simulatio
 Note that this page only covers the 'functional simulation' within CUPL/CSIM/WinSim. This is not a 'timing simulation'.
 
 <details>
+<summary>Scope: Expand here for details on timing simulations instead</summary>
+
+>There are some possibilities:
+
+>* PLD devices are probably simple enough where the datasheet can be utilized.
+>  * Perhaps this might be useful: https://github.com/ezrec/galpal
+>* For ATF150x devices see the fitter options, specifically:
+>  * <code>-strategy Verilog_sim [sdf | Verilog | OFF]</code>
+>  * <code>-strategy Vhdl_sim [sdf | vhdl | OFF]</code>
+</details>
+
+<details>
 <summary>Scope: Expand here for details on graphical/schematic logic simulators instead</summary>
 
 >[Digital](https://github.com/hneemann/Digital) is an easy-to-use digital logic designer and circuit simulator designed for educational purposes.
