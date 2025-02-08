@@ -3,7 +3,7 @@ The behavior of logic equations to be programmed into a device (or even a virtua
 
 Just like WinCUPL, it is an erratic front-end. Thankfully however, the simulation itself is actually performed by the CUPL compiler and is solid.
 
-Note that this is only a 'functional simulation' and not a 'timing simulation' and covered here are primarily details on WinSim/CSIM.EXE
+Note that this page only covers the 'functional simulation' within CUPL/CSIM/WinSim. This is not a 'timing simulation'.
 
 <details>
 <summary>Scope: Expand here for details on timing simulations instead</summary>
@@ -38,7 +38,8 @@ Under the hood, WinSim creates a <code>.SI</code> file (simulation input) which 
 
 One potential alternative to WinSim is to simply create test vectors in a <code>.SI</code> file and have CUPL/CSIM generate the <code>.SO</code> file for us and parse it directly.
 
-It is worth mentioning that while legend has it that you can use <code>CSIM.EXE</code> directly, the proper invocation of it seems elusive. What seems to work well instead is passing the <code>-s</code> compiler flag to <code>CUPL.EXE</code>, which then appears to utilize <code>csima.dll</code>.
+>[!IMPORTANT]
+>It is worth mentioning that while legend has it that you can use <code>CSIM.EXE</code> directly, the proper invocation of it seems elusive. What seems to work well instead is passing the <code>-s</code> compiler flag to <code>CUPL.EXE</code>, which then appears to utilize <code>csima.dll</code>.
 <details>
 <summary>Expand here if you insist on trying to get the CSIM.EXE command-line options to work for you. Again, just use CUPL.EXE with the -s flag for something that works.</summary>
 <code>csim [-flags] [library] [device] source
@@ -68,7 +69,8 @@ Creating a .SI file:<br />
   * The ORDER keyword is used to list the variable / inputs and outputs to be used in the simulation table, and to define how they are displayed. Typically, the variable names are the same as those in the corresponding CUPL logic description file.
   * The BASE keyword specifies a number base. Hexadecimal is the default if unspecified.
   * The VECTORS keyword specifies a list of test vectors (signals that are applied and expected outputs).
-* If you simply want to see what will happen on the outputs rather than setting a pre-determined expected value, set the outputs to *
+* If you simply want to see what will happen on the outputs rather than setting a pre-determined expected value, set the outputs to as asterisk <code>*</code>
+* For an explanation of CUPL and JEDEC test vector values, see this [Atmel Application Note: 'Tips on Using Test Vectors for Atmel PLDs'](https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ApplicationNotes/ApplicationNotes/DOC0479.PDF)
 
 <details>
 <summary>Expand for a list of valid Test Values used in a test vector</summary>
