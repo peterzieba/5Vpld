@@ -2,7 +2,7 @@
 There are a few choices on how the part can actually be programmed depending on whether it supports JTAG. This is an overview.
 
 ## 🟥 Common Pitfall 🟥
-It should be noted that while something like a 16V8 has been produced by multiple suppliers which are _functionally_ identical and likely have identical (or compatible) fusemaps / JEDEC files, _the programming algorithms for these devices are not the same across manufacturers_. Your device programmer must support the exact device and variant/revision you are attempting to program. Many have wasted hours due to this not being obvious.
+It should be noted that while something like a 16V8 has been produced by multiple IC manufacturers and that while these might be _functionally_ equivalent and likely have identical (or compatible) fusemaps / JEDEC files, _the programming algorithms for these devices are not the same across device manufacturers_. Your device programmer must support the exact device and variant/revision you are attempting to program. Many have wasted hours due to this not being obvious.
 
 ## History of device programmers and algorithms
 * First, in the good old days, the chips that were programmable consisted literally of "fuses" (often of nichrome wire) that were "burned" away, hence the term "burning rom". As one could imagine, these required exotic voltages and timing critical pulse sequences to program correctly (or at least with a reliable yield). Programming algorithms were also seldom documented on datasheets for a part. Usually, these were behind NDA and only the companies producing Device Programmers had them (Data I/O, Logical Devices, Hi-Lo Systems, BP Microsystems, Wellon).
@@ -45,10 +45,12 @@ These parts can be programmed via JTAG, so there are a few options.
 
 * Finally, it is worth pointing out that the JTAG pins on these devices can be repurposed for user I/O in a design. However, if one does this, the devices will no longer be reprogrammable via JTAG. One then requires a universal device programmer (and requisite adapters) to blank the device. Some information is out there concerning a trick of applying 12V Vpp to the OE1 pin in order to unlock the device, and some unofficial documentation exists for this.
 
-## Other Atmel CPLD Parts (ATF750, ATF1500)
+## Other Atmel CPLD Parts (ATF750C, ATF1500, ATF2500C)
 * These parts do not support JTAG and are a bit more expensive, so they haven't been tried. You'll need an EPROM programmer that supports these.
 * In theory the ATF1500 fitter should work fine under Wine and so if fed with a netlist it should work. This means either CUPL.EXE or in theory Yosys with the right techmap could work.
-* I believe CUPL should be able to generate a .JED directly for the ATF750 without a fitter.
+* I believe CUPL should be able to generate a .JED directly for the ATF750C and ATF2500C without a fitter.
+  * The ATF750C is recently supported in the <a href="https://github.com/ole00/afterburner/">Afterburner</a> project.
+  * The programming algorithm for the ATF2500C remains elusive, however, it might actually end up being similar to the ATF750C in one were to speculate.
 
 ## Altera EPM3X and EPM7X parts
 I believe these parts are no longer produced, or possibly NRND, at least as far are true 5V devices are concerned (and not merely 5V tolerant), so I would recommend moving toward the ATF150x parts. However, since a large number of people seem to really like these parts and seek them out on used markets I will say this:
