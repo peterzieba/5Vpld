@@ -101,8 +101,8 @@ P Preload internal registers (value is applied to !Q output)
 </details>
 
 ## JEDEC Test Vectors
-Finally, of note is that this functionality isn't strictly for simulation. Test vectors can be appended to a <code>.JED</code> file. If one has an ancient and fancy device programmer which supports these, the idea would be that once a device is programmed by the device programmer, it then runs the test vectors to perform a user-defined test routine on the programmed device. This is useful for a few reasons:
-* Correctly reading back and verifying a fusemap from a device is not the same as functionally tested it with read inputs and outputs. Performing both is a more thorough test.
+Finally, of note is that this functionality isn't strictly for simulation. Test vectors can be appended to a <code>.JED</code> file. Then, if one has an ancient and fancy device programmer which supports these, the idea would be that once a device is programmed by the device programmer, it then runs the test vectors to perform a user-defined test routine on the programmed device. This is useful for a few reasons:
+* Correctly reading back and verifying a fusemap from a device is not the same as functionally testing it by setting inputs and reading output pin values in a sequence. Performing both is a more thorough test.
 * In situations where the security-fuse is blown (preventing further readout of the fusemap), a test vector can still be used to check a programmed device.
 
 If an <code>.SI</code> file is present and CUPL has the -s and -j options passed to it, it sounds like it will append the test vectors to the <code>.JED</code> file. In theory the -j option passed to CSIM.EXE does this as well, but again, this author was unable to get it to run.
