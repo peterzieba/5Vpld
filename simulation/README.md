@@ -6,37 +6,35 @@ Just like WinCUPL, it is an erratic front-end. Thankfully however, the simulatio
 Note that this page only covers the 'functional simulation' within CUPL/CSIM/WinSim. This is not a 'timing simulation'.
 
 <details>
-<summary>Scope: Expand here for details on timing simulations instead</summary>
-
->There are some possibilities:
-
->* PLD devices are probably simple enough where the datasheet can be utilized.
->  * Perhaps this might be useful: https://github.com/ezrec/galpal
->* For ATF150x devices see the fitter options, specifically:
->  * <code>-strategy Verilog_sim [sdf | Verilog | OFF]</code>
->  * <code>-strategy Vhdl_sim [sdf | vhdl | OFF]</code>
-</details>
-
-<details>
 <summary>Scope: Expand here for details on graphical/schematic logic simulators instead</summary>
 
->[Digital](https://github.com/hneemann/Digital) is an easy-to-use digital logic designer and circuit simulator designed for educational purposes. See also discussion here: https://github.com/peterzieba/5Vpld/issues/4
+>[Digital](https://github.com/hneemann/Digital) is an easy-to-use digital logic designer and circuit simulator designed for educational purposes.
+>
+>See also discussion here: https://github.com/peterzieba/5Vpld/issues/4
 
->This is an interesting option as one can create a schematic and have a .JED file generated for a GAL16V8 or GAL22V10. If one provides the fitters to Digital, it can produce .JED files for the ATF150x series as well. Note that this is more of an educational tool for learning about logic. You may have trouble if you expect fullly featured support of these devices (Tri-state pins, Bi-directional IO, etc.)
+>[Digital](https://github.com/hneemann/Digital) is an interesting option as one can create a schematic, view its behavior live on a screen, and then have a .JED file generated for a GAL16V8 or GAL22V10. If one provides the fitters to Digital, it can produce .JED files for the ATF150x series as well. Note that this is more of an educational tool for learning about logic. You may have trouble if you expect fullly featured support of these devices (Tri-state pins, Bi-directional IO, etc.)
 >* https://github.com/hneemann/Digital
 
 >If this appeals to you, you might be interested in similar software (though no support for the Atmel parts):
 >* <a href="http://www.cburch.com/logisim/">Logisim</a>
 >* <a href="https://github.com/logisim-evolution/logisim-evolution">Logisim Evolution</a>
+>* <a href="http://visual6502.org/">The Visual 6502</a>
+
+>Finally if what you really want is just schematic entry, consider the Quartus workflow, as it is a modern and fairly powerful tool.
+
+>Other strange (not recommended) but historically notable graphical software that was sometimes bundled with other non-Atmel WinCUPL distributions:
+>* There was a piece of software called "Schematic"
+>* There was also a piece of software called SMCupl. State Machine Cupl "is a tool used for creating State Diagrams for initial design analysis."
+>* Neither of these is likely worth trying to find or use.
 
 </details>
 
-# Alternatives
+# Alternatives to WinSim
 As WinSim is somewhat erratic, alternative approaches are examined here.
 
 Under the hood, WinSim creates a <code>.SI</code> file (simulation input) which contains test vectors that are ultimately provided to CUPL/CSIM, and result in a <code>.SO</code> file (simulation output) being generated.
 
-One potential alternative to WinSim is to simply create test vectors in a <code>.SI</code> file and have CUPL/CSIM generate the <code>.SO</code> file for us and parse it directly.
+Since these are human readable text files, one potential alternative to WinSim is to simply create test vectors in a <code>.SI</code> file and have CUPL/CSIM generate the <code>.SO</code> file for us and view/parse it directly.
 
 >[!IMPORTANT]
 >It is worth mentioning that while legend has it that you can use <code>CSIM.EXE</code> directly, the proper invocation of it seems elusive. What seems to work well instead is passing the <code>-s</code> compiler flag to <code>CUPL.EXE</code>, which then appears to utilize <code>csima.dll</code>.
@@ -60,13 +58,13 @@ extension .SI is assumed for the source file and may be omitted when giving the
 CSIM command.</code>
 </details>
 
-The <code>.SI</code> file can be populated with test vectors and be used to simulate the behavior of a particular chip, or even a virtual device.
+The <code>.SI</code> file can be populated with test vectors and be used to simulate the behavior of a particular chip, or even a virtual device. The basic idea of this file is that each column of the VECTORS section represents a single PIN/INPUT/OUTPUT, etc. The characters in this line represent values applied to or tested for on these pins (High, Low, Hi-Z, etc.). Each subsequent line represents another set of values applied to or tested for on these pins. These are applied in sequence starting with the first test vector line and continuing until the end.
 
 Creating a .SI file:<br />
 * An .SI file should have the same header information as the original .PLD source file. If not, this will generate warnings.
-* Comments begin with a /* and end with a */
+* It has been noticed that DOS-style newlines are important in this file. Maybe pass it through <code>unix2dos</code> if on Linux.
 * An .SI file can have the following keywords/statements: ORDER, BASE, and VECTORS
-  * The ORDER keyword is used to list the variable / inputs and outputs to be used in the simulation table, and to define how they are displayed. Typically, the variable names are the same as those in the corresponding CUPL logic description file.
+  * The ORDER keyword (Mandatory) is used to list the variable / inputs and outputs to be used in the simulation table / vector section, and to define how they are displayed. Typically, the variable names are the same as those in the corresponding CUPL logic description file.
   * The BASE keyword specifies a number base. Hexadecimal is the default if unspecified.
   * The VECTORS keyword specifies a list of test vectors (signals that are applied and expected outputs).
 * If you simply want to see what will happen on the outputs rather than setting a pre-determined expected value, set the outputs to as asterisk <code>*</code>
@@ -89,3 +87,10 @@ P Preload internal registers (value is applied to !Q output)
 “ ” Enclose output values to be expanded to a specified BASE (octal, decimal, or hex.) Valid values are 0-F, H, L, Z, and X.
 </code>
 </details>
+
+## JEDEC Test Vectors
+Finally, of note is that this functionality isn't strictly for simulation. Test vectors can be appended to a <code>.JED</code> file. If one has an ancient and fancy device programmer which supports these, the idea would be that once a device is programmed by the device programmer, it then runs the test vectors to perform a user-defined test routine on the programmed device. This is useful for a few reasons:
+* Correctly reading back and verifying a fusemap from a device is not the same as functionally tested it with read inputs and outputs. Performing both is a more thorough test.
+* In situations where the security-fuse is blown (preventing further readout of the fusemap), a test vector can still be used to check a programmed device.
+
+If an <code>.SI</code> file is present and CUPL has the -s and -j options passed to it, it sounds like it will append the test vectors to the <code>.JED</code> file. In theory the -j option passed to CSIM.EXE does this as well, but again, this author was unable to get it to run.
