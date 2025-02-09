@@ -27,23 +27,23 @@ This is a "Choose your own adventure novel". Covered here are many approaches an
 <details>
 <summary>Scope: Expand here for why similar parts not covered</summary>
 
-* The intention is primarily to make it easier to work with parts that are still active so they do not go NRND and eventually disappear from the market. While there are gems here for other related historical parts, this is not the focus of this repository.
-* The ATF1500 is not covered because it is a more expensive part and does not support JTAG programming. It is fundamentally different from the ATF1502, ATF1504, and ATF1508
-* The ATF750 and ATF2500 are also not covered for similar reasons. Other chips are almost certainly a better choice.
-  * The ATF2500C might be worth examining in spite of the somwhat high cost due to being available in a DIP-40 package and thus breadboard friendly. Without understanding the programming algorithm however, it would be of use to very few people as no recent/affordable device programmers support this chip.
-* We only consider true 5V parts (not merely parts with 5V tolerant inputs, of which there are many more).
-  * 3.3V parts cannot supply the minimum of 3.6V to drive the input of a 5V CMOS part high, so 5V tolerant parts are not enough in many cases. Even the parts covered here may not necessarily be capable of the required VoH as their output voltage drops off quickly under load. In these cases, pullup resistors can be considered.[^2]
-  * Notably, however, driving 5V TTL inputs from a 3.3V part, on the other hand, is not a problem. A 5V TTL input has a threshold of 2V.
-* 3.3V parts are not considered: There are simply better choices that are well documented. Also, the CPLD parts have VccIO inputs, so you can technically use them in 3.3V designs just as well.
-* The following 5V IO capable parts probably should be covered, but they're already well supported, documented, modern tools, etc.
-  * The Greekpak devices
-  * The Cypress PSoC5LP (An ARM Cortex M3 with CPLD-like logic blocks), available in 68-pin QFN, 100-pin TQFP
-* Any parts that are NRND or inactive are not covered, as we consider what can be reliably and sensibly purchased.
-* Since all of the parts considered here are still in full production (as of 2023), they can be used in production designs.
-* For the ATF150x CPLD parts specifically:
-  * The parts ending in 'BE' are not covered here as they seem to be very expensive. In principle these are interesting because they have multiple IO bank voltages.
-  * The parts ending in 'ASV' are 3.3V only. The 'AS' devices can be operated at 3.3V IO through the VccIO pins. The 44-pin devices to not show a VccIO pin, but it does seem to be the case that two pins are Vcc and two are VccIO.
-* For applications where 5-Volt tolerant operation is acceptable, it might be worth considering the ispMACH4000 series. Parts such as the LC4032ZE are available is a somewhat soldering friendly TQFP, however there are likely similar challenges with software.
+>* The intention is primarily to make it easier to work with parts that are still active so they do not go NRND and eventually disappear from the market. While there are gems here for other related historical parts, this is not the focus of this repository.
+>* The ATF1500 is not covered because it is a more expensive part and does not support JTAG programming. It is fundamentally different from the ATF1502, ATF1504, and ATF1508
+>* The ATF750 and ATF2500 are also not covered for similar reasons. Other chips are almost certainly a better choice.
+>   * The ATF2500C might be worth examining in spite of the somwhat high cost due to being available in a DIP-40 package and thus breadboard friendly. Without understanding the programming algorithm however, it would be of use to very few people as no recent/affordable device programmers support this chip.
+>* We only consider true 5V parts (not merely parts with 5V tolerant inputs, of which there are many more).
+>   * 3.3V parts cannot supply the minimum of 3.6V to drive the input of a 5V CMOS part high, so 5V tolerant parts are not enough in many cases. Even the parts covered here may not necessarily be capable of the required VoH as their output voltage drops off quickly under load. In these cases, pullup resistors can be considered.[^2]
+>   * Notably, however, driving 5V TTL inputs from a 3.3V part, on the other hand, is not a problem. A 5V TTL input has a threshold of 2V.
+>* 3.3V parts are not considered: There are simply better choices that are well documented. Also, the CPLD parts have VccIO inputs, so you can technically use them in 3.3V designs just as well.
+>* The following 5V IO capable parts probably should be covered, but they're already well supported, documented, modern tools, etc.
+>   * The Greekpak devices
+>   * The Cypress PSoC5LP (An ARM Cortex M3 with CPLD-like logic blocks), available in 68-pin QFN, 100-pin TQFP
+>* Any parts that are NRND or inactive are not covered, as we consider what can be reliably and sensibly purchased.
+>* Since all of the parts considered here are still in full production (as of 2023), they can be used in production designs.
+>* For the ATF150x CPLD parts specifically:
+>   * The parts ending in 'BE' are not covered here as they seem to be very expensive. In principle these are interesting because they have multiple IO bank voltages.
+>   * The parts ending in 'ASV' are 3.3V only, however, these are supported just fine in the workflows discussed here. Incidentally, the 'AS' devices can be operated at 3.3V IO through the VccIO pins. The lower pincount (44-pin) devices to not show VccIO pins in their datasheet, but it does seem to be the case that two pins are Vcc and two are VccIO, so this is possible as well.
+>* For applications where 5-Volt tolerant operation is acceptable, it might be worth considering the ispMACH4000 series. Parts such as the LC4032ZE are available is a somewhat soldering friendly TQFP, however there are likely similar challenges with software.
 </details>
 
 # Background on digital logic.
@@ -51,24 +51,26 @@ This repository isn't intended to be an introduction to digital logic, but a bri
 
 <details>
 <summary>Expand here for tutorials on Digital Logic</summary>
-Ben Eater does a series of <a href="https://www.youtube.com/watch?v=KM0DdEaY5sY&list=PLowKtXNTBypGqImE405J2565dvjafglHU&index=6">Videos on Digital Logic</a> that are a really excellent introduction to some of the concepts here.
+
+ >Ben Eater does a series of <a href="https://www.youtube.com/watch?v=KM0DdEaY5sY&list=PLowKtXNTBypGqImE405J2565dvjafglHU&index=6">Videos on Digital Logic</a> that are a really excellent introduction to some of the concepts here.
 </details>
 
 <details>
 <summary>Expand here for a description of how these parts compare to ladder logic on a PLC</summary>
 
-* Each rung's output in ladder-logic can be thought of as a single macrocell.
-* The inputs on a rung can be "normally open" or "normally closed" (active high or low), and can consist of any number of inputs (or even the state of another macrocell). The inputs defined on a single rung are basically equivalent to a single product-term belonging to a macrocell. There can be multiple product terms defined that activate a given macrocell.
+>* Each rung's output in ladder-logic can be thought of as a single macrocell.
+>* The inputs on a rung can be "normally open" or "normally closed" (active high or low), and can consist of any number of inputs (or even the state of another macrocell). The inputs defined on a single rung are basically equivalent to a single product-term belonging to a macrocell. There can be multiple product terms defined that activate a given macrocell.
 </details>
 
 <details>
 <summary>Expand here for details on how all of these compare to FPGAs</summary>
-Such parts are the spiritual predecessors of more modern FPGAs. Key differences between FPGAs and PLDs:
 
-* FPGAs are typically constructed from a large number of LUTs (Lookup tables). CPLDs use a sum-of-products structure.
-* FPGAs typically expect to have their bitstream uploaded on powerup, requiring an external EEPROM. PLDs are typically non-volatile and instantly ready upon powerup.
-* FPGAs usually support more standard means of programming, whereas many PLDs required specialized device programmers.
-* There are likely exceptions to all of the above in some parts. These are not hard rules.
+>Such parts are the spiritual predecessors of more modern FPGAs. Key differences between FPGAs and PLDs:
+
+>* FPGAs are typically constructed from a large number of LUTs (Lookup tables). CPLDs use a sum-of-products structure.
+>* FPGAs typically expect to have their bitstream uploaded on powerup, requiring an external EEPROM. PLDs are typically non-volatile and instantly ready upon powerup.
+>* FPGAs usually support more standard means of programming, whereas many PLDs required specialized device programmers.
+>* There are likely exceptions to all of the above in some parts. These are not hard rules.
 </details>
 
 # Requirements
@@ -197,14 +199,17 @@ where
 </code>
 </details>
 
-### 🟥 Common Pitfall - Compiler Mode Selection🟥<br>
-A word of warning is that the <code>Device:</code> section at the top of a .PLD file is more than just the part number you are interested in programming -- it is actually a device mnemonic which selects different macrocell configuration modes.<br>
-So, if you're having trouble getting a flip-flop to work, it might be because you have selected the mnemonic for "simple mode".<br>
-As an example, the compiler can be set to four different modes for the ATF16V8 (similar considerations apply to the 22V10 parts, etc):<br>
-Registered - G16V8MS<br>
-Complex - G16V8MA<br>
-Simple - G16V8AS<br>
-Auto - G16V8
+>[!IMPORTANT]
+>**Compiler Mode Selection**
+>
+>A word of warning is that the <code>Device:</code> section at the top of a .PLD file is more than just the part number you are interested in programming -- it is actually a device mnemonic which selects different macrocell configuration modes.
+>
+>So, if you're having trouble getting a flip-flop to work, it might be because you have selected the mnemonic for "simple mode".<br>
+>As an example, the compiler can be set to four different modes for the ATF16V8 (similar considerations apply to the 22V10 parts, etc):<br>
+>Registered - <code>G16V8MS</code><br>
+>Complex - <code>G16V8MA</code><br>
+>Simple - <code>G16V8AS</code><br>
+>Auto - <code>G16V8</code>
 
 <details>
 <summary>Expand Here for a list of mnemonic prefixes</summary>
@@ -405,6 +410,7 @@ This repository is merely a bunch of tips, tricks, helper scripts and documentat
 * Whitequark for putting together <a href="https://github.com/whitequark/prjbureau">Prjbureau</a>, which documents the fusemap for these devices, provides an ability to go from a .JED file to an .SVF, documentation and more.
 * Yosys
 * hoglet67 for putting together <a href="https://github.com/hoglet67/atf15xx_yosys">atf15xx_yosys</a>, which shows a workflow using yosys and provides a techmap.
+* ole00 for putting together [Afterburner](https://github.com/ole00/afterburner/) a modern, open-source device programmer that supports a majority of these devices
 * Countless other tips, tools, contributions and from all over the web and plenty of trial-and-error working around the quirks of WinCUPL and the fitters themselves.
 
 # References
