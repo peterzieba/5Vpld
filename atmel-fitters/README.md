@@ -32,3 +32,9 @@ A [Manual for the Atmel Fitters](https://www.microchip.com/content/dam/mchp/docu
 Since these fitters ultimately process a netlist, one could in theory use these fitters in any environment that is capable of producing a netlist. Be warned that while the EDIF format is a standard, the details of the implemetation may not be consistent or compatible across software in practice.
 
 Finally, one thing to keep in mind is that the version of these fitters included with Atmel WinCUPL is rather old and so they should be replaced with newer versions from [Atmel Prochip 5.0.1](https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip)
+
+# In this folder
+> 
+> <code>README.md</code> - This file.
+> 
+> <code>argparse*</code> - Simple executable and source code for a Windows executable that was briefly used for determining what arguments WinCUPL was passing to the fitters.
