@@ -21,7 +21,7 @@ This is a "Choose your own adventure novel". Covered here are many approaches an
 * <a href="#5vcomp-the-cupl-compiler--your-favorite-text-editor-or-ide-16v8-22v10-and-atf150x">Using just the CUPL.EXE compiler from WinCUPL directly with some wrapper scripts here (5vcomp). Works in Windows/Linux. (recommended)</a>
 * <a href="#quartus-free-verilog-vhdl-schematic-capture-indirect-support-for-atf150x-linux-or-windows">Using Quartus (only for the CPLD. Works by first targeting a similar Altera CPLD and then using the POF2JED utility to convert.) Windows/Linux</a>
 * <a href="#absurd-approach-fusemaps-by-hand-16v8--22v10">Making your own fusemap / .JED file with nothing more than a datasheet and text editor. Maybe need some graph paper...</a>
-* Experimental approaches with Yosys (Only for the CPLD parts. EDIF is fed into the Atmel fitter)
+* Experimental approaches with Yosys (Only for the CPLD parts. EDIF is fed into the [Atmel fitter](atmel-fitters/))
 * Several Approaches to reverse-engineering a .JED file back into logic equations.
 
 <details>
@@ -96,11 +96,11 @@ A high-level overview of what is required:
 
 <a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">CUPL</a> - A early (1983) programming language used to define the behavior of programmable digital logic. "Compiler for Universal Programmable Logic.", is essentially a predecessor to languages like Verilog/VHDL. CUPL.EXE is the compiler which is used to compile .PLD files written in CUPL, ultimately to be burned into programmable logic devices.<br />
 <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">WinCUPL</a> - A Windows front-end/IDE to the CUPL compiler and related programs. WinCUPL itself is best avoided but installing it is necessary to get the CUPL compiler and device libraries.<br />
-[.dl File](device-library/) - A Library File is a binary file used by CUPL compiler that provides support for devices CUPL has the ability to compile logic for. This should not be confused with the Device/Primitive Libraries that are part of the fitter.<br>
+[.dl File](device-library/) - A Library File is a binary file used by CUPL compiler that provides support for devices CUPL has the ability to compile logic for. This should not be confused with the Device/Primitive Libraries that are part of the .<br>
 
-<a href="https://en.wikipedia.org/wiki/Netlist">Netlist</a> - A netlist is essentially an electrical schematic in a text file which defines connections. For the purposes here, it is an intermediary file format (Either EDIF or Berkeley PLA), which is used to describe the behavior of logic ultimately fed into the fitter.<br />
-<a href="">.TT2</a> - The Berkeley PLA file format. An intermediary file which CUPL.EXE can generate that can be used by the Atmel fitters. Notably, one can use [berkeley-abc](https://github.com/berkeley-abc/abc) to work with these files.<br />
-<a href="https://en.wikipedia.org/wiki/EDIF">.EDF / .EDN</a> - EDIF is another type of netlist format. The Atmel fitter can use this as both an input, as well as an output. Yosys is capable of generating this format, however, one will still need a techmap for this to work.<br />
+<a href="https://en.wikipedia.org/wiki/Netlist">Netlist</a> - A netlist is essentially an electrical schematic in a text file which defines connections. For the purposes here, it is an intermediary file format (Either EDIF or Berkeley PLA), which is used to describe the behavior of logic ultimately fed into the .<br />
+<a href="">.TT2</a> - The Berkeley PLA file format. An intermediary file which CUPL.EXE can generate that can be used by the [Atmel fitter](atmel-fitters/). Notably, one can use [berkeley-abc](https://github.com/berkeley-abc/abc) to work with these files.<br />
+<a href="https://en.wikipedia.org/wiki/EDIF">.EDF / .EDN</a> - EDIF is another type of netlist format. The [Atmel fitter](atmel-fitters/) can use this as both an input, as well as an output. Yosys is capable of generating this format, however, one will still need a techmap for this to work.<br />
 <a href="https://en.wikipedia.org/wiki/Place_and_route">Fitter</a> - A fitter converts a netlist into the fusemap (.JED) file. It is specific to the device in question and provided by the device manufacturer (Atmel in this case). Fitters are needed only for the ATF150x CPLD devices, whereas the PLD devices can go straight from a .PLD to a .JED file. In more modern parlance the fitter is basically the place & route stage.<br />
 ATMEL.STD File - Part of the Atmel ATF150x fitter, the primitive/device library for PLA.[^1]<br />
 APRIM.LIB File - Part of the Atmel ATF150x fitter, the primitive/device library for EDIF.[^1]
@@ -350,14 +350,14 @@ In essence, Prochip is the Atmel fitter bundled with:
 ## Digital (free, use schematics instead of logic equations / programming)
 "Digital is an easy-to-use digital logic designer and circuit simulator designed for educational purposes."
 
-This is an interesting option as one can create a schematic and have a .JED file generated for a GAL16V8 or GAL22V10. If one provides the fitters to Digital, it can produce .JED files for the ATF150x series as well. Note that this is more of an educational tool for learning about logic. You may have trouble if you expect fullly featured support of these devices (Tri-state pins, Bi-directional IO, etc.)
+This is an interesting option as one can create a schematic and have a .JED file generated for a GAL16V8 or GAL22V10. If one provides the [Atmel fitter](atmel-fitters/) to Digital, it can produce .JED files for the ATF150x series as well. Note that this is more of an educational tool for learning about logic. You may have trouble if you expect fullly featured support of these devices (Tri-state pins, Bi-directional IO, etc.)
 * https://github.com/hneemann/Digital
 If this appeals to you, you might be interested in similar software (though no support for the Atmel parts):
 * <a href="http://www.cburch.com/logisim/">Logisim</a>
 * <a href="https://github.com/logisim-evolution/logisim-evolution">Logisim Evolution</a>
 
 ## Yosys (Open Source with Atmel Fitters for ATF150x, experimental)
-In theory, one can use Yosys Open SYnthesis Suite (Yosys) with the help of the Atmel Fitters a specific CPLD and a techmap to produce .JED files. This is a bit more experimental, but some have managed to make this work. This allows an almost entirely open-source workflow using Verilog, and probably <a href="https://icestudio.io/">Icestudio</a> if one prefers schematic capture as well. A good place to start would be using the <a href="https://github.com/YosysHQ/oss-cad-suite-build">OSS CAD Suite</a> to get the big parts of the suite set up. After that, there are two approaches to making this work:
+In theory, one can use Yosys Open SYnthesis Suite (Yosys) with the help of the [Atmel fitter](atmel-fitters/) a specific CPLD and a techmap to produce .JED files. This is a bit more experimental, but some have managed to make this work. This allows an almost entirely open-source workflow using Verilog, and probably <a href="https://icestudio.io/">Icestudio</a> if one prefers schematic capture as well. A good place to start would be using the <a href="https://github.com/YosysHQ/oss-cad-suite-build">OSS CAD Suite</a> to get the big parts of the suite set up. After that, there are two approaches to making this work:
 * https://github.com/whitequark/prjbureau
   * prjbureau demonstrates going from RTLIL to a .JED file
 * https://github.com/hoglet67/atf15xx_yosys/
@@ -376,10 +376,10 @@ Finally, since yosys is extremely complex, a section on understanding the basics
 This was a ~1999/2000 era circuit board design tool made by Altium that worked in Windows and which had support for the SPLD and CPLD parts mentioned here. It is mentioned here for completeness sake, but the author has no direct experience with it. It is said to have supported CUPL and Schematic entry for development of logic but not Verilog nor VHDL.
 
 ## Berkeley ABC
-Berkeley ABC can be made to read and write verilog and the PLA format used by the Atmel Fitters. If this works, it could potentially eliminate the need to use the CUPL language altogether and instead have a path from verilog to the Atmel CPLDs without the need for expensive software. This remains to be tested.
+Berkeley ABC can be made to read and write verilog and the PLA format used by the [Atmel fitter](atmel-fitters/). If this works, it could potentially eliminate the need to use the CUPL language altogether and instead have a path from verilog to the Atmel CPLDs without the need for expensive software. This remains to be tested.
 
 ## BYU's SpyDrNet
-SpyDrNet is capable of generating an EDIF netlist which could in theory be fed into the Atmel Fitters.
+SpyDrNet is capable of generating an EDIF netlist which could in theory be fed into the [Atmel fitter](atmel-fitters/).
 * https://github.com/byuccl/spydrnet
 * https://byuccl.github.io/spydrnet/docs/stable/index.html
 
