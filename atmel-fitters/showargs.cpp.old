@@ -1,0 +1,33 @@
+// Simple program which prints the name of the executable and all arguments passed to it.
+// To compile you will need:
+// apt-get install g++-mingw-w64-i686-win32
+// i686-w64-mingw32-g++ showargs.cpp -static -o showargs.exe
+
+//This is useful for determining how cupl.exe is calling the fitters.
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <errno.h>
+ 
+// Command Line Arg 
+int main(int argc, char *argv[])    
+{
+    int i;
+    int fid;
+    if ( (fid = open("junk.data", O_WRONLY | O_CREAT | O_BINARY)) == -1 ) {
+    //if ( (fid = open("junk.data", O_CREAT | O_BINARY)) == -1 ) {
+        printf("ERROR opening.\n\terror is:%s\n", strerror(errno));
+        return 1;
+    }
+    for (i = 0; i < argc; i++)
+    {
+        // Printing all the Arguments
+        printf("%s ", argv[i]);
+        write(fid, argv[i], sizeof(argv[i]));
+    }
+    printf("\n");
+    close(fid);
+    return 0;
+}
