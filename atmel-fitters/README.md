@@ -33,6 +33,72 @@ Since these fitters ultimately process a netlist, one could in theory use these 
 
 Finally, one thing to keep in mind is that the version of these fitters included with Atmel WinCUPL is rather old and so they should be replaced with newer versions from [Atmel Prochip 5.0.1](https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip)
 
+<details>
+<summary>Expand for command line options for the latest known version of the ATF1502.EXE fitter. Output is similar for ATF1504 and ATF1508 devices.</summary>
+<code>Atmel ATF1502 Fitter Version 1918 (3-21-07)
+Copyright 1999,2000 Atmel Corporation
+ Usage: FIT1502.EXE [-i] input_file[.tt2] {options}
+ Options:
+   -help
+   -o output_file_name (for *.tt3 and *.jed)
+   -device package_type (PLCC44/TQFP44)
+   -tech tech_name (ATF1502AS/ATF1502ASV/ATF1502BE)
+   -module module_name
+   -preassign TRY|keep|ignore (pin preassignment options)
+   -silent (no message on screen)
+   -h2 (advanced help option)
+   -has (advanced help option for AS)
+   -hbe (advanced help option for BE)
+</code>
+
+Advanced help options:
+<code>
+Atmel ATF1502 Fitter Version 1918 (3-21-07)
+Copyright 1999,2000 Atmel Corporation
+   -strategy c [command file name]
+   -strategy ifmt (input file format) [TT | edif]
+   -strategy lib (library file name for edif input)
+   -strategy open_collector = [   OFF |   on  | = pin_name1 pin_name2...]
+   -strategy JTAG = [   off |   ON ]
+   -strategy pd1 [   OFF |   on ] (power down 1)
+   -strategy pd2 [   OFF |   on ] (power down 2)
+   -strategy TDI_pullup = [   OFF |   on ]
+   -strategy TMS_pullup = [   OFF |   on ]
+   -strategy DEBUG = [   on |   OFF ]
+   -strategy output_fast [on | OFF | = pin_name1 pin_name2...]
+   -strategy pin_keep [ off | = pin_name1 pin_name2...]
+   -strategy ues [value ] (2 ASCII characters)
+   -strategy security [ OFF | on ]
+   -strategy tPD = [ 5 | 7 ]
+   -strategy voltage_level_A [ 1.8 | 2.5 | 3.3]
+   -strategy voltage_level_B [ 1.8 | 2.5 | 3.3]
+   -strategy fast_inlatch [ OFF | on | = pin_name1 pin_name2...]
+   -strategy schmitt_trigger [ OFF | = pin_name1 pin_name2...]
+   -strategy pull_up [ OFF | = pin_name1 pin_name2...]
+   -strategy unused_To_PinKeeper [ off | ON ]
+   -strategy pull_up_unused [ OFF | on]
+   -strategy unused_To_Ground [ OFF | on]
+   -strategy pull_down [ OFF | = dedicated_pin1 dedicated_pin2...]
+   -strategy Latch_Synthesis [ON | off ]
+   -strategy Optimize [ON | off]
+   -strategy Cascade_Logic [ON | off |= pin_name1 ..pin_nameN]
+   -strategy Foldback_Logic [ON | off |= node_name1 ..node_nameN]
+   -strategy Soft_Buffer [on | OFF |= node_name1 ..node_nameN]
+   -strategy XOR_Synthesis [on | OFF |= pin_name1 ..pin_nameN]
+   -strategy Push_Gate [on | OFF]
+   -strategy Verilog_sim [sdf | Verilog | OFF]
+   -strategy Vhdl_sim [sdf | vhdl | OFF]
+   -strategy Out_Edif [on | OFF]
+   -strategy Global_Fold [node_name1 ..node_nameN]
+   -strategy Global_OE [node_name1 ..node_nameN]
+   -strategy OE_node [node_Number1..node_NumberN]
+   -strategy logic_doubling [on | OFF]
+   -strategy twoclock [clockname]
+   -strategy pinfile
+</code>
+</details>
+
+
 # In this folder
 > 
 > <code>README.md</code> - This file.
