@@ -19,7 +19,7 @@ The fitter also has control over various low-level, device-specific options whic
   PROPERTY <manuf ID> { property statement };
 ```
 
-As an example, the following would leave the JTAG pins enabled (allowing future reprogramming), and enable the weak pullups on the TCK/TDI pins, and make pin assignments from the .PLD design file mandatory:
+As an example, the following would leave the JTAG pins enabled (allowing future reprogramming), enable the weak pullups on the TMS/TDI pins, and make pin assignments from the .PLD design file mandatory:
 ```
 PROPERTY ATMEL { jtag=on }; /* This keeps the JTAG pins on after programming */
 PROPERTY ATMEL { TMS_pullup=on };
@@ -37,4 +37,4 @@ Finally, one thing to keep in mind is that the version of these fitters included
 > 
 > <code>README.md</code> - This file.
 > 
-> <code>argparse*</code> - Simple executable and source code for a Windows executable that was briefly used for determining what arguments WinCUPL was passing to the fitters.
+> <code>showargs*</code> - Simple executable and source code for a Windows executable that was briefly used for determining what arguments WinCUPL was passing to the fitters.
