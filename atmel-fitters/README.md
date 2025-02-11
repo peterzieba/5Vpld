@@ -1,9 +1,9 @@
 # Overview
 Fitting, perhaps more commonly known as "place and route" is the stage that translates the logic into the physical hardware available on a given device.
 
-Most simpler devices in WinCUPL do not use an external fitter executable and so WinCUPL can directly produce a .JED file for them.
+Most simpler devices in WinCUPL do not use an external fitter executable -- WinCUPL directly produces a .JED file for these.
 
-The following CPLD devices are unique in that they have fitters that are provided by Atmel and bundled with Atmel WinCUPL:
+The following CPLD devices are unique in that they require fitters that are provided by Atmel and bundled with Atmel WinCUPL in order to ultimately produce a .JED file:
 * ATF1500
 * ATF1502
 * ATF1504
@@ -11,7 +11,7 @@ The following CPLD devices are unique in that they have fitters that are provide
 
 Note that these are not part of WinCUPL or the CUPL compiler per-se, but rather they are executables which are supplied by Atmel and included with the package.
 
-The fitter accepts a netlist that WinCUPL provides and transforms it into a fusemap specific for a given device. They ultimately determine the optimal way to utilize the resources of the device and are responsible for the final implementation of the logic in hardware.
+When compiling a .PLD file, CUPL generates a .TT2 PLA netlist and provides it to the specific fitter for that device, which then transforms it into a .JED fusemap. Fitters ultimately determine the optimal way to utilize the resources of the device and are responsible for the final implementation of the logic in hardware.
 
 The fitter also has control over various low-level, device-specific options which WinCUPL/CUPL would not have direct knowledge of, but which nonetheless can be specified inside of a <code>.PLD</code> design file using the <code>PROPERTY</code> statement, allowing them to be passed down to the fitter.
 
@@ -98,6 +98,7 @@ Copyright 1999,2000 Atmel Corporation
 </code>
 </details>
 
+In instances where one would prefer the fitter handle the pin assignments <code>Preassign=ignore</code>, it can be useful to take pin mappings that have been autoassigned by the fitter and  backannotate them into the .PLD file. The <code>backpin.exe</code> utility performs this function. One should probably change to <code>Preassign=keep</code> to make these stick across future compilations.
 
 # In this folder
 > 
