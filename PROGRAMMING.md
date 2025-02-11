@@ -8,7 +8,7 @@ There are a few choices on how the part can actually be programmed, primarily de
 * Finally, in more recent history, devices integrated on-die charge pumps and began supporting standardized methods of programming (JTAG, I2C, SPI, etc.). This is the point at which many "EPROM/Device Programmers" fell out of relevance.
 
 ## PLD Devices (ATF16V8, ATF22V10, ATF750C)
-These parts require an EPROM/Device programmer, and ideally one from the time period during which these parts were in vogue.
+These parts require an EPROM/Device programmer, and ideally one from the time period during which these parts were in vogue. None of these parts support JTAG.
 >[!IMPORTANT]
 >It should be noted that while something like a 16V8 has been produced by multiple IC manufacturers and that while these might be _functionally_ equivalent and likely have identical (or compatible) fusemaps / JEDEC files, _the programming algorithms for these devices are not the same across device manufacturers_.
 >
@@ -36,6 +36,20 @@ Choices for programmers include:<br>
     * While projects like these are likely created without the formal programming specifications, they nonetheless seem to be getting very good results.
 
 ## CPLD Devices (ATF1502, ATF1504, ATF1508)
+These parts can be programmed via JTAG, so there are a few options.
+* [Official FTDI-based Kanda programmer](https://www.kanda.com/CPLD-Programmers.175.html) (basically a fancy USB-FTDI box) and [ATMISP Software](https://www.microchip.com/en-us/development-tool/ATMISP)
+  * Upsides
+    * Get going right away. Direct support for .JED files with included ATMISP software.
+    * Expects VccIO from the device and sends it into IO buffers to handle different programming voltages.
+  * Downsides
+    * Windows only -- [If you know how to handle the sorcery required to get ftd2xx to run in Wine ATMISP might be usable in Linux](https://github.com/brentr/wineftd2xx/issues/15)
+    * $100.
+* Any standard JTAG Programmers (you will need to convert your .JED to an .SVF first):
+  * OpenOCD: https://openocd.org/
+  * Raspberry Pi Pico-based Dirty JTAG: https://github.com/phdussud/pico-dirtyJtag
+  * <a href="https://github.com/ole00/afterburner/">Afterburner (An arduino-based PLD programmer)</a>~~A special branch of Afterburner~~ has experimental support for these chips.
+    * This project is great because the Arduino Uno it is based upon is cheap and ubiquitous and the project has support for generating the 12V Vpp needed to unlock JTAG-Disabled parts via the secret +12V OE1 trick. You'll need to convert a .JED -> .SVF -> XSVF to successfully use this.
+
 Unlike the case with a majority of devices in CUPL, CUPL does not directly produce a .JED file for these CPLD parts. Instead, it provides a netlist to the Atmel Fitters (essentially place-and-route in modern terminology) which in turn creates a .JED file. Since this is its own process beyond CUPL, it creates its own log file which will have a <code>.fit</code> file extension, as well as an error file with the <code>.err</code> extension.
 
 >[!IMPORTANT]
@@ -51,7 +65,7 @@ Unlike the case with a majority of devices in CUPL, CUPL does not directly produ
 <details>
 <summary>Expand Here: What happens if I don't use <code>jtag=on</code>?</summary>
 
->Well, the resulting <code>.JED</code> file will disable the JTAG pins and then you can't erase or reprogram your device using JTAG. So, why on earth would you want to set this to <code>off</code>? Well, if your design needed more pins you can set this to 'off' and repurpose the JTAG pins for your own needs. Once this is done however, the device cannot be erased or reprogrammed without using a fancy device programmer, or you need to know about the secret that involves applying +12V to the OE1 pin to re-enable the JTAG pins temporarily.
+>Well, the resulting <code>.JED</code> file will disable the JTAG pins and then you can't erase or reprogram your device using JTAG. So, why on earth would you want to set this to <code>off</code>? If your design needed more pins you can set this to 'off' and repurpose the JTAG pins for your own needs. Once this is done however, the device cannot be erased or reprogrammed without using a fancy device programmer, or you need to know about the secret that involves applying +12V to the OE1 pin to re-enable the JTAG pins temporarily.
 >
 >If you are using the fitter in a workflow other than CUPL, you can also add this to the fitter's command line invocation:
 >
@@ -70,15 +84,7 @@ Unlike the case with a majority of devices in CUPL, CUPL does not directly produ
 Once you have a .JED file, any ancient device programmer with support for these (and the requisite adapters) should be able to program these. Since most people will not have one of these, you'll probably be interested in programming via JTAG .... heed the prior warnings about not disabling the JTAG pins and read on.
 
 >[!IMPORTANT]
->Be Mindful of JTAG programming voltages as there are 3.3V and 5V variants of these parts. There are also 5V parts where it is acceptable to have the VccIO pins at 3.3V. If you are programming in-circuit be mindful of where power is coming from and to use the correct IO voltages.
-
-These parts can be programmed via JTAG, so there are a few options.
-* [Official FTDI-based Kanda programmer](https://www.kanda.com/CPLD-Programmers.175.html) and [ATMISP Software](https://www.microchip.com/en-us/development-tool/ATMISP)
-* Any standard JTAG Programmers (you will need to convert your .JED to an .SVF first):
-  * OpenOCD: https://openocd.org/
-  * Raspberry Pi Pico-based Dirty JTAG: https://github.com/phdussud/pico-dirtyJtag
-  * <a href="https://github.com/ole00/afterburner/">Afterburner (An arduino-based PLD programmer)</a>~~A special branch of Afterburner~~ has experimental support for these chips.
-    * This project is great because the Arduino Uno it is based upon is cheap and ubiquitous and the project has support for generating the 12V Vpp needed to unlock JTAG-Disabled parts via the secret +12V OE1 trick. You'll need to convert a .JED -> .SVF -> XSVF to successfully use this.
+>Be Mindful of JTAG programming voltages as there are 3.3V and 5V variants of these parts. There are also 5V parts where it is acceptable to have the VccIO pins at 3.3V. If you are programming in-circuit be mindful of where power is coming (does your programmer provide power? Is there a danger of backpowering your device with your programmer?).
 
 ## Other Atmel CPLD Parts (ATF1500, ATF2500C)
 * These parts do not support JTAG and are a bit more expensive, so they haven't been tried. You'll need an ancient device programmer that supports these.
