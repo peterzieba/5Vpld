@@ -40,17 +40,25 @@ These parts can be programmed via JTAG, so there are a few options.
 * [Official FTDI-based Kanda programmer](https://www.kanda.com/CPLD-Programmers.175.html) (basically a fancy USB-FTDI box) and [ATMISP Software](https://www.microchip.com/en-us/development-tool/ATMISP)
   * Upsides
     * Get going right away. Direct support for .JED files with included ATMISP software.
+    * In-circuit programming
     * Expects VccIO from the device and sends it into IO buffers to handle different programming voltages.
   * Downsides
     * Windows only -- [If you know how to handle the sorcery required to get ftd2xx to run in Wine ATMISP might be usable in Linux](https://github.com/brentr/wineftd2xx/issues/15)
+    * Cannot reprogram a device if the JTAG pins have been disabled.
     * $100.
+* Ancient Device Programmers (Hi-Lo ALL-07, etc.)
+  * Upsides:
+    * Generally support reprogramming devices even if the JTAG pins have been disabled.
+  * Downsides:
+    * Often require a machine running DOS. Moving files to and from can be tricky. Your PC is a deskmonster.
+    * Require programming adapters for the specific socket type you have.
 * Any standard JTAG Programmers (you will need to convert your .JED to an .SVF first):
   * OpenOCD: https://openocd.org/
   * Raspberry Pi Pico-based Dirty JTAG: https://github.com/phdussud/pico-dirtyJtag
   * <a href="https://github.com/ole00/afterburner/">Afterburner (An arduino-based PLD programmer)</a>~~A special branch of Afterburner~~ has experimental support for these chips.
     * This project is great because the Arduino Uno it is based upon is cheap and ubiquitous and the project has support for generating the 12V Vpp needed to unlock JTAG-Disabled parts via the secret +12V OE1 trick. You'll need to convert a .JED -> .SVF -> XSVF to successfully use this.
 
-Unlike the case with a majority of devices in CUPL, CUPL does not directly produce a .JED file for these CPLD parts. Instead, it provides a netlist to the Atmel Fitters (essentially place-and-route in modern terminology) which in turn creates a .JED file. Since this is its own process beyond CUPL, it creates its own log file which will have a <code>.fit</code> file extension, as well as an error file with the <code>.err</code> extension.
+Unlike the case with a majority of devices in CUPL, CUPL does not directly produce a .JED file for these CPLD parts. Instead, it provides a netlist to the Atmel Fitters (essentially place-and-route in modern terminology) which in turn creates a .JED file. Since this is its own process beyond CUPL, it creates its own log file which will have a <code>.fit</code> file extension, as well as an error file with the <code>.err</code> extension. It is good to glance at these to make sure pins were assigned the way you wanted, JTAG was left on, etc. If you did not successfully produce a .JED file and it was not a CUPL error the reason might be in these logs.
 
 >[!IMPORTANT]
 >There are some bear traps when using these parts and the Atmel Fitters. Consider adding the following lines to your <code>.PLD</code> file somewhere after your header to save yourself from headaches. These lines are not processed by CUPL per-se, but rather passed onto the Atmel Fitter.
@@ -80,8 +88,6 @@ Unlike the case with a majority of devices in CUPL, CUPL does not directly produ
 >* keep: force pin mappings from the design file. Do not remap.
 >* ignore: ignore all pin mappings from design file. Let the fitter decide the best arrangement of pins.
 </details>
-
-Once you have a .JED file, any ancient device programmer with support for these (and the requisite adapters) should be able to program these. Since most people will not have one of these, you'll probably be interested in programming via JTAG .... heed the prior warnings about not disabling the JTAG pins and read on.
 
 >[!IMPORTANT]
 >Be Mindful of JTAG programming voltages as there are 3.3V and 5V variants of these parts. There are also 5V parts where it is acceptable to have the VccIO pins at 3.3V. If you are programming in-circuit be mindful of where power is coming (does your programmer provide power? Is there a danger of backpowering your device with your programmer?).
