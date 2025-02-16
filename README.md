@@ -110,6 +110,8 @@ APRIM.LIB File - Part of the Atmel ATF150x fitter, the primitive/device library 
 [.SVF File](https://en.wikipedia.org/wiki/Serial_Vector_Format) - Serial Vector Format. Generated from the .JED file, the .SVF can be used by any JTAG programmer (vendor-independent) to program a device that has a JTAG interface (So, the ATF150x CPLDs). The Windows <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP67.zip">ATMISP v6.7</a> or <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ATMISP7.zip">ATMISP v7</a> tools can be used to generate an .SVF from a .JED file, as well as the <a href="https://github.com/whitequark/prjbureau/blob/main/util/fuseconv.py">fuseconv.py</a> utility by whitequark. Once you have an .SVF, you can use tools like OpenOCD or the experimental branches of Afterburner to program a CPLD with a JTAG interface.<br>
 [.XSVF File](http://www.jtagtest.com/pdf/xapp503_svf_xsvf.pdf) - A compressed variant of an .SVF file created by Xilinx. This normally never shows up in the tools mentioned here with the exception of the [Open-Source 'Afterburner' Device Programmer](https://github.com/ole00/afterburner/) project, where it is the format that it accepts when programming a JTAG device.
 <br><br>
+Security bit - Aka Security Fuse. When enabled, this prevents copying of a device by disabling readout. This does not prevent reprogramming of the device -- if the device is eraseable, the security bit is returned to disabled status when erased. After programming, verification of the device becomes impossible if the security bit is set, so this bit should be set last if verification is desired. The CUPL compiler will produce a .JED file with the security bit set if the 'g' flag is passed. Within the JESD3 standard, the G1 command enables device security. The ATMISP programmer supports setting this in the interface, and other device programmers may have this option as well, so it need not be set within the .JED file. Finally, the Atmel fitters also have a parameter to set this.
+<br><br>
 CSIM.EXE - Part of WinCUPL. A tool for simulating the behavior of logic. This takes an .SI file (test vectors) and an [.ABS file](abs-decode/). Given these it produces an .SO file. Only provides functional simulation (so, logic states but not timing)
 
 <a href="https://www.winehq.org/">Wine</a> - Wine is not an emulator. Allows running Windows programs under Linux.<br />
@@ -394,12 +396,12 @@ Finally, if one is able to read a .JED out of a device, this can sometimes be re
 * By hand, comparing the .JED file to the fusemap / macrocells in the datasheet. See this <a href="https://blog.frankdecaire.com/2017/01/22/generic-array-logic-devices/">blog post</a> by Frank DeCaire.
 * `JED2EQN.EXE` - A DOS utility floating around on the internet.
 * `jedutil` - MAME can be compiled with a utility called jedutil which does something similar. Sometimes it is broken out into a seperate package "mame-tools"
-Finally, brute force can be used on a PLD that is strictly combonatorial can be read out as though it is an EPROM by stepping through all combinations of possible inputs. In this approach, security fuses does not matter because one is not trying to read out the fusemap directly. Once state/registers are involved, this becomes much more challenging.
+* Finally, brute force can be used on a PLD that is strictly combonatorial: it can be read out as though it is an EPROM by stepping through all combinations of possible inputs. In this approach, security fuses do not matter because one is not trying to read out the fusemap directly. Once state/registers are involved, this becomes much more challenging.
 
 # Simulation
 The behavior of logic equations to be programmed into a device (or even a virtual device) can be simulated with a utility called WinSim which is part of WinCUPL.
 
-Just like WinCUPL, it is an erratic front-end. Thankfully however, the simulation itself is actually performed by the CUPL compiler and this underlying functionality is solid.
+Just like WinCUPL, WinSim is an erratic front-end. Thankfully however, the simulation itself is actually performed by the CUPL compiler and this underlying functionality is solid.
 
 Note that this is only a 'functional simulation' and not a 'timing simulation' and covered here are primarily details on WinSim/CSIM.EXE. Functional simulation is achieved using what are essentially JEDEC-style test vectors.
 
