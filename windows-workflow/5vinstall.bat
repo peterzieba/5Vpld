@@ -6,6 +6,7 @@ echo.
 if not exist C:\Wincupl\WinCupl\Fitters\fit1502.exe goto :missingwincupl
 if not exist C:\ATMEL_PLS_Tools\Prochip\pldfit\fit1502.exe goto :missingprochip
 
+pause
 
 if exist C:\Wincupl\WinCupl\Fitters\atmel.std.old goto :copyfitters
 
@@ -35,15 +36,18 @@ goto :success
 rem Expected install directory is C:\ATMEL_PLS_Tools
 echo ERROR: Atmel Prochip is not installed or is not in the default installation directory.
 echo You can download Atmel Prochip from:
+echo https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources
 echo https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip
-
+pause
 exit /B 3
 
 :missingwincupl
 echo ERROR: WinCUPL is not installed or is not in the default installation directory.
 echo You can download WinCUPL from:
 echo https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources
+echo https://ww1.microchip.com/downloads/en/DeviceDoc/awincupl.exe.zip
 echo Serial Number: 60008009
+pause
 exit /B 2
 
 :success
@@ -51,4 +55,4 @@ echo Done.
 echo If everything went well, the old Atmel fitters have been renamed to .old and replaced with those from Atmel Prochip.
 echo If you have placed 5vcomp.bat into C:\Wincupl\WinCupl\Fitters
 echo You should now be able to use 5vcomp to compile .PLD files.
-
+pause
