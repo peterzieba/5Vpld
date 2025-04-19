@@ -37,7 +37,7 @@ Choices for programmers include:<br>
 
 ## CPLD Devices (ATF1502, ATF1504, ATF1508)
 These parts can be programmed via JTAG, so there are a few options.
-* [Official FTDI-based Kanda programmer](https://www.kanda.com/CPLD-Programmers.175.html) (basically a fancy USB-FTDI box) and [ATMISP Software](https://www.microchip.com/en-us/development-tool/ATMISP)
+* [Official FTDI-based Kanda programmer](https://www.kanda.com/CPLD-Programmers.175.html) (basically a fancy USB-FTDI box) and [ATMISP Software](https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources)
   * Upsides
     * Get going right away. Direct support for .JED files with included ATMISP software.
     * In-circuit programming
