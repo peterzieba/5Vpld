@@ -55,4 +55,6 @@ echo Done.
 echo If everything went well, the old Atmel fitters have been renamed to .old and replaced with those from Atmel Prochip.
 echo If you have placed 5vcomp.bat into C:\Wincupl\WinCupl\Fitters
 echo You should now be able to use 5vcomp to compile .PLD files.
+echo.
+echo Additionally, if you import context-menu-pld-5vcomp.reg, this will allow you to right-click and compile a .PLD file without opening a command prompt first.
 pause
