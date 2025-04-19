@@ -369,6 +369,9 @@ In theory, one can use Yosys Open SYnthesis Suite (Yosys) with the help of the [
   * This is an example of how to use Yosys to generate CUPL code.
   * Potentially interesting as one could use this to generate a .PLD even for the simpiler 16V8 or 22V10 devices
   * http://forum.6502.org/viewtopic.php?f=10&t=7601
+* https://github.com/annoyatron255/yosys4gal Verilog Flow for the GAL16V8 and GAL22V10
+  * A Verilog flow for GAL16V8 and GAL22V10 logic chips (and pin-compatible alternatives like the ATF16V8 and ATF22V10). It leverages [Yosys](https://www.github.com/YosysHQ/yosys) and [Galette](https://www.github.com/simon-frankau/galette).
+
 
 Finally, since yosys is extremely complex, a section on understanding the basics is in order especially from the context of these devices. For the moment, however, others have written guides for different parts:
 * https://github.com/Ravenslofty/yosys-cookbook
