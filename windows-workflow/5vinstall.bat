@@ -8,6 +8,7 @@ if not exist C:\ATMEL_PLS_Tools\Prochip\pldfit\fit1502.exe goto :missingprochip
 
 pause
 
+rem Skip backup up old fitters if a backup has already has been made before.
 if exist C:\Wincupl\WinCupl\Fitters\atmel.std.old goto :copyfitters
 
 echo Backing up old fitters in WinCUPL to *.old
@@ -54,7 +55,9 @@ exit /B 2
 echo Done.
 echo If everything went well, the old Atmel fitters have been renamed to .old and replaced with those from Atmel Prochip.
 echo If you have placed 5vcomp.bat into C:\Wincupl\WinCupl\Fitters
+rem copy 5vcomp.bat C:\Wincupl\WinCupl\Fitters\
 echo You should now be able to use 5vcomp to compile .PLD files.
 echo.
 echo Additionally, if you import context-menu-pld-5vcomp.reg, this will allow you to right-click and compile a .PLD file without opening a command prompt first.
+rem reg import context-menu-pld-5vcomp.reg
 pause
