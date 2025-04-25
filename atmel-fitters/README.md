@@ -1,7 +1,7 @@
 # Overview
 Fitting, perhaps more commonly known as "place and route" is the stage that translates the logic into the physical hardware available on a given device.
 
-Most simpler devices in WinCUPL do not use an external fitter executable -- WinCUPL directly produces a .JED file for these.
+Most simple devices in WinCUPL do not use an external fitter executable -- The CUPL compiler directly produces a .JED file for these using only its device library.
 
 The following CPLD devices are unique in that they require fitters that are provided by Atmel and bundled with Atmel WinCUPL in order to ultimately produce a .JED file:
 * ATF1500
@@ -9,9 +9,9 @@ The following CPLD devices are unique in that they require fitters that are prov
 * ATF1504
 * ATF1508
 
-Note that these are not part of WinCUPL or the CUPL compiler per-se, but rather they are executables which are supplied by Atmel and included with the package.
+Note that these are not part of WinCUPL or the CUPL compiler per-se, but rather they are executables which are supplied by Atmel and bundled with the Atmel WinCUPL package.
 
-When compiling a .PLD file, CUPL generates a .TT2 PLA netlist and provides it to the specific fitter for that device, which then transforms it into a .JED fusemap. Fitters ultimately determine the optimal way to utilize the resources of the device and are responsible for the final implementation of the logic in hardware.
+When compiling a `.PLD` file, CUPL generates a `.TT2` PLA netlist and provides it to the specific fitter for that device, which then transforms it into a `.JED` fusemap. Fitters ultimately determine the optimal way to utilize the resources of the device and are responsible for the final implementation of the logic in hardware.
 
 The fitter also has control over various low-level, device-specific options which WinCUPL/CUPL would not have direct knowledge of, but which nonetheless can be specified inside of a <code>.PLD</code> design file using the <code>PROPERTY</code> statement, allowing them to be passed down to the fitter.
 
@@ -105,3 +105,5 @@ In instances where one would prefer the fitter handle the pin assignments <code>
 > <code>README.md</code> - This file.
 > 
 > <code>showargs*</code> - Simple executable and source code for a Windows executable that was briefly used for determining what arguments WinCUPL was passing to the fitters.
+>
+> <code>Atmel-ATF1500-tshirt.webp</code> - A picture of what is perhaps the most incredible bit of programmable logic history.
