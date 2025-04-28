@@ -43,7 +43,16 @@ This is a "Choose your own adventure novel". Covered here are many approaches an
 >* For the ATF150x CPLD parts specifically:
 >   * The parts ending in 'BE' are not covered here as they seem to be very expensive. In principle these are interesting because they have multiple IO bank voltages.
 >   * The parts ending in 'ASV' are 3.3V only, however, these are supported just fine in the workflows discussed here. Incidentally, the 'AS' devices can be operated at 3.3V IO through the VccIO pins. The lower pincount (44-pin) devices to not show VccIO pins in their datasheet, but it does seem to be the case that two pins are Vcc and two are VccIO, so this is possible as well.
->* For applications where 5-Volt tolerant operation is acceptable, it might be worth considering the ispMACH4000 series. Parts such as the LC4032ZE are available is a somewhat soldering friendly TQFP, however there are likely similar challenges with software.
+>* For applications where 5-Volt tolerant operation is acceptable, it might be worth considering the ispMACH4000 series. Parts such as the LC4032ZE are available in a somewhat soldering friendly TQFP, however there are likely similar challenges with software.
+>   * Vendor Tools:
+>      * ispLEVER v3.1 (2003)
+>      * ispLEVER v4.0 (2004)
+>      * ispLEVER Classic v1.8 (2014)
+>      * ispLEVER Classic v2.0 (2015)
+>   * Open source paths for these parts:
+>      * https://github.com/bcrist/re4k
+>      * https://github.com/bcrist/Zig-LC4k
+>      * Vendor Fitter: `C:\ispLEVER_Classic2_1\ispcpld\bin\lpf4k.exe`
 </details>
 
 # Background on digital logic.
