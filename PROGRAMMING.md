@@ -46,6 +46,8 @@ These parts can be programmed via JTAG, so there are a few options.
     * Windows only -- [If you know how to handle the sorcery required to get ftd2xx to run in Wine ATMISP might be usable in Linux](https://github.com/brentr/wineftd2xx/issues/15)
     * Cannot reprogram a device if the JTAG pins have been disabled.
     * $100.
+* https://github.com/roscopeco/atfprog-tools
+* https://github.com/hackup/ATF2FT232HQ
 * Ancient Device Programmers (Hi-Lo ALL-07, etc.)
   * Upsides:
     * Generally support reprogramming devices even if the JTAG pins have been disabled.
