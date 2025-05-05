@@ -34,7 +34,11 @@ Choices for programmers include:<br>
     * The ATF750C is recently supported in <a href="https://github.com/ole00/afterburner">Afterburner</a>.
     * This project is an invaluable resource for understanding how the algorithms work for these parts and also links to programmers created by others in the past, some of which utilized the parallel port, DOS, etc.
     * While projects like these are likely created without the formal programming specifications, they nonetheless seem to be getting very good results.
-
+* If you really like parallel ports, there is ATFBlast:
+  * Prior art is the "GALBlast" project.
+  * https://www.pcbway.com/project/shareproject/ATFBlast___ATF16V8__GAL16V8__ATF22V10_and_GAL22V10_chips_programmer.html
+  * http://www.bhabbott.net.nz/atfblast.html
+  * https://github.com/UzixLS/atfblast
 ## CPLD Devices (ATF1502, ATF1504, ATF1508)
 These parts can be programmed via JTAG, so there are a few options.
 * [Official FTDI-based Kanda programmer](https://www.kanda.com/CPLD-Programmers.175.html) (basically a fancy USB-FTDI box) and [ATMISP Software](https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources)
@@ -46,11 +50,8 @@ These parts can be programmed via JTAG, so there are a few options.
     * Windows only -- [If you know how to handle the sorcery required to get ftd2xx to run in Wine ATMISP might be usable in Linux](https://github.com/brentr/wineftd2xx/issues/15)
     * Cannot reprogram a device if the JTAG pins have been disabled.
     * $100.
-* https://github.com/roscopeco/atfprog-tools
-  * Python based, works on Windows, Linux, Mac.
-  * Seems to be based on a USB-Attached Arduino available for purchase on Tindie. Unclear if design files / code for board available.
 * https://github.com/hackup/ATF2FT232HQ
-  * Kicad files of a "hat" of sorts based on a FT232H development board.
+  * Kicad files of a "hat" of sorts based on a common FT232H development board.
   * Provides 12V to unlock JTAG locked devices.
   * Uses Openocd
 * Ancient Device Programmers (Hi-Lo ALL-07, etc.)
@@ -64,6 +65,11 @@ These parts can be programmed via JTAG, so there are a few options.
   * Raspberry Pi Pico-based Dirty JTAG: https://github.com/phdussud/pico-dirtyJtag
   * <a href="https://github.com/ole00/afterburner/">Afterburner (An arduino-based PLD programmer)</a>~~A special branch of Afterburner~~ has experimental support for these chips.
     * This project is great because the Arduino Uno it is based upon is cheap and ubiquitous and the project has support for generating the 12V Vpp needed to unlock JTAG-Disabled parts via the secret +12V OE1 trick. You'll need to convert a .JED -> .SVF -> XSVF to successfully use this.
+* https://github.com/roscopeco/atfprog-tools
+  * This is/was? what looks like an Arduino-based, USB-attached JTAG programmer, likely based on the Afterburner project.
+    * It no longer seems available for purchase and the gerbers/firmware for the programmer do not seem to be published.
+    * Only the Python software to interact with it seems available.
+  * Seems to be based on a USB-Attached Arduino available for purchase on Tindie. Unclear if design files / code for board available.
 
 Unlike the case with a majority of devices in CUPL, CUPL does not directly produce a .JED file for these CPLD parts. Instead, it provides a netlist to the Atmel Fitters (essentially place-and-route in modern terminology) which in turn creates a .JED file. Since this is its own process beyond CUPL, it creates its own log file which will have a <code>.fit</code> file extension, as well as an error file with the <code>.err</code> extension. It is good to glance at these to make sure pins were assigned the way you wanted, JTAG was left on, etc. If you did not successfully produce a .JED file and it was not a CUPL error the reason might be in these logs.
 
