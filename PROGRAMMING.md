@@ -34,11 +34,12 @@ Choices for programmers include:<br>
     * The ATF750C is recently supported in <a href="https://github.com/ole00/afterburner">Afterburner</a>.
     * This project is an invaluable resource for understanding how the algorithms work for these parts and also links to programmers created by others in the past, some of which utilized the parallel port, DOS, etc.
     * While projects like these are likely created without the formal programming specifications, they nonetheless seem to be getting very good results.
-* If you really like parallel ports, there is ATFBlast:
-  * Prior art is the "GALBlast" project.
+* If you really like parallel ports or the history of these algorithms, there is GALBlast and the newer ATFBlast:
+  * Prior art is [Manfred Winterhoff's GALBlast](https://web.archive.org/web/20241019151325/http://www.armory.com/~rstevew/Public/Pgmrs/GAL/_ClikMe1st.htm) project.
   * https://www.pcbway.com/project/shareproject/ATFBlast___ATF16V8__GAL16V8__ATF22V10_and_GAL22V10_chips_programmer.html
   * http://www.bhabbott.net.nz/atfblast.html
   * https://github.com/UzixLS/atfblast
+
 ## CPLD Devices (ATF1502, ATF1504, ATF1508)
 These parts can be programmed via JTAG, so there are a few options.
 * [Official FTDI-based Kanda programmer](https://www.kanda.com/CPLD-Programmers.175.html) (basically a fancy USB-FTDI box) and [ATMISP Software](https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources)
