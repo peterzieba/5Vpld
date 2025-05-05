@@ -47,7 +47,12 @@ These parts can be programmed via JTAG, so there are a few options.
     * Cannot reprogram a device if the JTAG pins have been disabled.
     * $100.
 * https://github.com/roscopeco/atfprog-tools
+  * Python based, works on Windows, Linux, Mac.
+  * Seems to be based on a USB-Attached Arduino available for purchase on Tindie. Unclear if design files / code for board available.
 * https://github.com/hackup/ATF2FT232HQ
+  * Kicad files of a "hat" of sorts based on a FT232H development board.
+  * Provides 12V to unlock JTAG locked devices.
+  * Uses Openocd
 * Ancient Device Programmers (Hi-Lo ALL-07, etc.)
   * Upsides:
     * Generally support reprogramming devices even if the JTAG pins have been disabled.
