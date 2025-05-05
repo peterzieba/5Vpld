@@ -8,13 +8,13 @@ There are a few choices on how the part can actually be programmed, primarily de
 * Finally, in more recent history, devices integrated on-die charge pumps and began supporting standardized methods of programming (JTAG, I2C, SPI, etc.). This is the point at which many "EPROM/Device Programmers" fell out of relevance.
 
 ## PLD Devices (ATF16V8, ATF22V10, ATF750C)
-These parts require an EPROM/Device programmer, and ideally one from the time period during which these parts were in vogue. None of these parts support JTAG.
+These parts require an EPROM/Device programmer, and ideally one from the time period during which these parts were in vogue. None of these parts support JTAG, with the exception of the now obsolete ispGAL series by Lattice.
 >[!IMPORTANT]
 >It should be noted that while something like a 16V8 has been produced by multiple IC manufacturers and that while these might be _functionally_ equivalent and likely have identical (or compatible) fusemaps / JEDEC files, _the programming algorithms for these devices are not the same across device manufacturers_.
 >
 >As an example: While the fusemap may be compatible across variants (GAL16V8 from Lattice vs. the ATF16V8 from Atmel/Microchip), THE PROGRAMMING ALGORITHMS ARE NOT! You will need an EPROM programmer with support for the EXACT manufacturer and EXACT part number of the device you have.
 >
->Your device programmer must support the exact device and variant/revision you are attempting to program. Many have wasted hours due to this not being obvious.
+>Your device programmer must support the exact device and variant/revision you are attempting to program. Many have wasted hours due to this not being obvious. Because higher than 5V programming voltages are used, trying to program anyway with the wrong algorithm might also lead to destruction of the device.
 
 Choices for programmers include:<br>
 * Classic Programmers from their respective time period (Modular Circuit Technologies, Data I/O, Logical Devices, etc.)
@@ -71,7 +71,8 @@ These parts can be programmed via JTAG, so there are a few options.
     * Only the Python software to interact with it seems available.
   * Seems to be based on a USB-Attached Arduino available for purchase on Tindie. Unclear if design files / code for board available.
 
-Unlike the case with a majority of devices in CUPL, CUPL does not directly produce a .JED file for these CPLD parts. Instead, it provides a netlist to the Atmel Fitters (essentially place-and-route in modern terminology) which in turn creates a .JED file. Since this is its own process beyond CUPL, it creates its own log file which will have a <code>.fit</code> file extension, as well as an error file with the <code>.err</code> extension. It is good to glance at these to make sure pins were assigned the way you wanted, JTAG was left on, etc. If you did not successfully produce a .JED file and it was not a CUPL error the reason might be in these logs.
+### Fitters and their options
+Unlike the case with a majority of PLD devices in CUPL, CUPL does not directly produce a .JED file for these CPLD parts. Instead, it provides a netlist to the Atmel Fitters (essentially place-and-route in modern terminology) which in turn creates a .JED file. Since this is its own process beyond CUPL, it creates its own log file which will have a <code>.fit</code> file extension, as well as an error file with the <code>.err</code> extension. It is good to glance at these to make sure pins were assigned the way you wanted, JTAG was left on, etc. If you did not successfully produce a .JED file and it was not a CUPL error the reason might be in these logs.
 
 >[!IMPORTANT]
 >There are some bear traps when using these parts and the Atmel Fitters. Consider adding the following lines to your <code>.PLD</code> file somewhere after your header to save yourself from headaches. These lines are not processed by CUPL per-se, but rather passed onto the Atmel Fitter.
