@@ -79,6 +79,7 @@ This repository isn't intended to be an introduction to digital logic, but a bri
 >* FPGAs are typically constructed from a large number of LUTs (Lookup tables). CPLDs use a sum-of-products structure.
 >* FPGAs typically expect to have their bitstream uploaded on powerup, requiring an external EEPROM. PLDs are typically non-volatile and instantly ready upon powerup.
 >* FPGAs usually support more standard means of programming, whereas many PLDs required specialized device programmers.
+>* From input to output, CPLDs can be thought of as shallow but wide, theoretically having lower propagation delays (in practice, if we're talking about 5V logic, don't expect better than 7ns). FPGA have much deeper internal logic but are composed of LUTs with relatively tiny input widths (LUT4, LUT5, etc.).
 >* There are likely exceptions to all of the above in some parts. These are not hard rules.
 </details>
 
@@ -95,7 +96,7 @@ A high-level overview of what is required:
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device">**PLD/GAL**</a> - Programmable Logic Device. Small, generally DIP-package 5V programmable Logic.<br />
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#CPLDs">**CPLD**</a> - Complex Programmable Logic Device. Larger packages, many pins, much more complex.<br />
 
-**5vcomp** - A utility in this repository (batch file for Windows / shell script for linux) that is a wrapper around the CUPL.EXE compiler<br>
+**5vcomp** - A utility in this repository ([batch file for Windows](windows-workflow/) / [shell script for linux](linux-workflow)) that is a wrapper around the CUPL.EXE compiler<br>
 
 <a href="https://en.wikipedia.org/wiki/Combinational_logic">**Combinatorial Logic**</a> - Simple logic (AND, OR, NOT, gates, etc.) that does not use flip-flops / registers / clocks. Such logic could technically be implemented with an EPROM/Memory, where a series of inputs always maps to a known set of outputs.<br>
 <a href="https://en.wikipedia.org/wiki/Sequential_logic">**Registered Logic**</a> - Logic that uses registers (flip-flops), and can thus hold state. On the GAL16V8 and GAL22V10, each macrocell can be configured as a D-Flip-Flop, and all flip-flops share the same clock pin. On the ATF150x, much more complex types of registered logic and clocking options are available.
@@ -121,9 +122,9 @@ A high-level overview of what is required:
 <br><br>
 **Security bit** - Aka Security Fuse. When enabled, this prevents copying of a device by disabling readout. This does not prevent reprogramming of the device -- if the device is eraseable, the security bit is returned to disabled status when erased. After programming, verification of the device becomes impossible if the security bit is set, so this bit should be set last if verification is desired. The CUPL compiler will produce a .JED file with the security bit set if the 'g' flag is passed. Within the JESD3 standard, the G1 command enables device security. The ATMISP programmer supports setting this in the interface, and other device programmers may have this option as well, so it need not be set within the .JED file. Finally, the Atmel fitters also have a parameter to set this.
 <br><br>
-**CSIM.EXE** - Part of WinCUPL. A tool for simulating the behavior of logic. This takes an .SI file (test vectors) and an [.ABS file](abs-decode/). Given these it produces an .SO file. Only provides functional simulation (so, logic states but not timing)
+**CSIM.EXE** - Part of WinCUPL. A tool for [simulating](simulation/) the behavior of logic. This takes an .SI file (test vectors) and an `.ABS file`. Given these it produces an .SO file. Only provides functional simulation (so, logic states but not timing)
 
-<a href="https://www.winehq.org/">**Wine**</a> - Wine is not an emulator. Allows running Windows programs under Linux. This guide assumes enough familiarity with Linux & Wine. If these are new topics, consider running everything under Windows to keep things simple.<br />
+<a href="https://www.winehq.org/">**Wine**</a> - "Wine Is Not an Emulator". Allows running Windows programs under Linux. This guide assumes enough familiarity with Linux & Wine. If these are new topics, consider running everything under Windows to keep things simple in the beginning.<br />
 **Wine Prefix** - Just as with an emulator, you can have multiple virtual machines. In Wine, though it is not an emulator, you can have multiple virtual environments. The location of the 'default' wine prefix is ```~/.wine```. The 5vcomp scripts assume the default the default prefix, which might be annoying for advanced users.
 
 # Writing logic for these parts: Possible Workflows
