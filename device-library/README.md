@@ -1319,14 +1319,18 @@ virtual        01   200   99999   5000
 
 # Inside the Device Library file format
 
-The binary structure of a device library file in brief looks something like this:
+>[!IMPORTANT]
+>This is a rabbit hole which probably serves no practical purpose. You have been warned.
+
+In theory, understanding devices files could provide insight into specific devices or even pave the way to extending support for other chips in CUPL. In practice, this is probably not worth doing.
+
+The broad structure of a binary device library file has three main sections:
 * Header Section
 * Chip list Section: A list of all chip names along with the sizes and offsets of the details for each chip that occur in the next section.
 * Chip Details Section
 
-A more detailed examination of the libraries led to the following Kaitai Struct [cupl-dl.ksy](cupl-dl.ksy) in this directory, which describes things in greater detail, however, it is incomplete, based on partial understandings, and currently of limited practical utility.
+A more detailed examination of the device libraries led to the following Kaitai Struct [cupl-dl.ksy](cupl-dl.ksy) in this directory, which describes things in greater detail, however, it is incomplete, based on partial understandings, and currently of limited practical utility.
 
-It is possible that a greater understanding of this file could be used to write custom support for other devices or as a basis for programming devices through other workflows.
+Kaitai Struct is a great way of handling data structures of binary file formats, and has the added benefit that once a `.ksy` file has been created for a given file type, you can automatically create a parser for quite a few different languages automatically (C++, PHP, Python, and many more). This is especially beneficial when you have a poorly understood format which is undergoing multiple attempts at refinement and you don't want to maintain several parsers across languages.<br>
 
 The current state of things is that the .ksy file works well enough to parse the same information that the vendor supplied Library Management program <code>CBLD.EXE</code> is capable of outputting from the library and seems to be correct, but has not been thoroughly compared.
-
