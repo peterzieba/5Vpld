@@ -36,12 +36,16 @@ From there, you can install WinCUPL and Atmel Prochip:
     * <code>innoextract -I app/Prochip/pldfit/aprim.lib -I app/Prochip/pldfit/atmel.std -I app/Prochip/pldfit/fit1502.exe -I app/Prochip/pldfit/fit1504.exe -I app/Prochip/pldfit/fit1508.exe ProChip5_setup.exe</code>
 
 * Move the new fitters over to WinCUPL:
-  * Overwrite the ATF150x.EXE fitters in C:\Wincupl\WinCupl\Fitters\ with those from Atmel Prochip (C:\ATMEL_PLS_Tools\Prochip\pldfit\)
+  * Overwrite the ATF150x.EXE fitters in `C:\Wincupl\WinCupl\Fitters\` <br>with those from Atmel Prochip `C:\ATMEL_PLS_Tools\Prochip\pldfit\`
   * Also delete all three of the FIND150x.EXE files in C:\Wincupl\WinCupl\Fitters\ and copy each of the corresponding FIT150x.EXE in their place.
-    * FIT1502.EXE is copied to FIND1502.EXE
-    * FIT1504.EXE is copied to FIND1504.EXE
-    * FIT1508.EXE is copied to FIND1508.EXE
-* Once you have everything installed, you can download and place 5vcomp somewhere like /usr/local/bin/ where it will be conveinently in your path.
+```
+cp fit1502.exe find1502.exe
+cp fit1504.exe find1504.exe
+cp fit1508.exe find1508.exe
+```
+* Once you have everything installed, you can download and place 5vcomp somewhere like /usr/local/bin/ where it will be conveniently in your path.
+
+
 
 # Usage
 <code>
