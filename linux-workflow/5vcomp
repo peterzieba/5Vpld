@@ -243,12 +243,13 @@ if [ $? -eq 0 ]; then
     sleep 2
 else
     printf "${RED}ERROR: CUPL returns a non-zero exit code: ${?}${NC}\n"
-    if [ -n ${CUPL_SIMULATION_OPTIONS} ]; then
-        printf "${RED}\nBecause simulation was requested, the problem may be limited to just the last stage (simulation)${NC}\n\n"
-    fi
+
     printf "${RED}Check above for clues to what may have gone wrong.${NC}\n"
     printf "${RED}Please note that messages containing ':fixme:' are actually coming from Wine.\nThese ':fixme:' messages are almost certainly not the problem.${NC}\n"
-    printf "${RED}Additionally, you may find this key useful to understand the various stages / modules within CUPL:\n\n\
+    if [ -n ${CUPL_SIMULATION_OPTIONS} ]; then
+        printf "${RED}\nBecause simulation was requested, the problem might be limited to just the last stage (simulation)${NC}\n\n"
+    fi
+    printf "${RED}You may find the following key helpful to understanding which stage within CUPL encountered the problem:\n\n\
 CUPL  processor ck \n\
 CUPLX preprocessor cx \n\
 CUPLA source file parser ca \n\
@@ -258,7 +259,7 @@ CUPLC fusemap generator cc \n\
 CSIM  processor sk \n\
 CSIMA logic simulator sa \n \
 
-Finally, references to fit/find are from the Atmel fitters.${NC}
+Finally, references to fit/find are from the Atmel CPLD fitters. If applicable, a .fit file should be present.${NC}
 
 "
     pause_before_exit
