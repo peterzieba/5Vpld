@@ -43,7 +43,7 @@ cp fit1502.exe find1502.exe
 cp fit1504.exe find1504.exe
 cp fit1508.exe find1508.exe
 ```
-* Once you have everything installed, you can download and place 5vcomp somewhere like /usr/local/bin/ where it will be conveniently in your path.
+* Once you have everything installed, you can download and place 5vcomp somewhere like `/usr/local/bin/` or `~/.local/bin/` where it will be conveniently in your path.
 
 
 
