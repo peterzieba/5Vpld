@@ -66,7 +66,7 @@ class PLDGenerator(tk.Tk):
 
         lines = [
             f"Name        {data['Name']};",
-            f"PartNo      {data['PartNo']}; //Device specific: this is burned into the device as the UES / User Signature when supported by a device. Often 8 bytes for PLD parts, 2 Bytes for CPLD parts. See device datasheet.",
+            f"PartNo      {data['PartNo']}; //Device specific: this is burned into the device as the UES / User Signature when supported by a device. Often 8-bytes for PLD parts, 2-Bytes for CPLD parts. See device datasheet.",
             f"Revision    {data['Revision']};",
             f"Designer    {data['Designer']};",
             f"Company     {data['Company']};",
@@ -87,7 +87,7 @@ class PLDGenerator(tk.Tk):
         ]
 
         try:
-            with open(filename, "w", encoding="utf-8") as fp:
+            with open(filename, "w", encoding="ascii") as fp:
                 fp.write("\n".join(lines))
         except OSError as err:
             messagebox.showerror("File Error", f"Could not write file:\n{err}")
