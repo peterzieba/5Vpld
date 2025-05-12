@@ -5,10 +5,12 @@ The CUPL.EXE compiler runs well under Linux using Wine and enables one to use a 
 
 This allows you to avoid the WinCUPL IDE and use your favorite IDE/Text editor instead to develop .PLD files.
 
-Installing WinCUPL is nonetheless a requirement to get the compiler, but you'll never have to open WinCUPL itself. Installing it provides:
+If you are not already familiar with Wine, you might want to consider using the [windows workflow](../windows-workflow/) as it might be easier to get started.
+
+Installing WinCUPL is required to get the compiler, but you'll never have to open WinCUPL itself. Installing it provides:
 * The CUPL.EXE compiler
 * The Atmel.dl device library (which CUPL.EXE uses)
-* The fitters for the ATF150x CPLD parts (though this utility will refuse to work with the ones provided by Atmel WinCUPL -- please replace them with the newer ones from the Atmel Prochip package)
+* The fitters for the ATF150x CPLD parts (though this script/workflow will refuse to work with the ones provided by Atmel WinCUPL -- please replace them with the newer ones from the Atmel Prochip package)
 
 This script isn't anything too sophisticated. It merely checks for a bunch of common but esoteric gotchas and provides a working example on how to go from a .PLD to a .JED
 
@@ -54,6 +56,8 @@ cp fit1508.exe find1508.exe
 5vcomp your-project.PLD</code>
 
 This should generate a bunch of files and most crucially, a .JED file if everything works properly.
+
+See the [examples folder](../examples) for some simple .PLD files to make sure everything is working properly.
 
 # Misc
 These files make it easier to handle file associations and their usual actions when using a GUI filemanager:
