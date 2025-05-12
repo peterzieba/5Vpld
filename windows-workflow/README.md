@@ -40,9 +40,13 @@ option to any `.PLD` files, which will simply call `C:\Wincupl\WinCupl\Fitters\5
 * It's simply not worth using the old fitters -- too many variables of things that can go wrong.
 
 # Usage
-Simply right-click on your .PLD file and select "Compile PLD"
+Run `5vcomp your-project.PLD`
+
+Alternately, if you have imported `context-menu-pld-5vcomp.reg`, you can simply right-click on your .PLD file and select "Compile PLD"
 
 This should generate a bunch of files and most crucially, a .JED file if everything works properly.
+
+See the [examples folder](../examples) for some simple .PLD files to make sure everything is working properly.
 
 # Notes
 
