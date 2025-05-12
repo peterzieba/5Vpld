@@ -18,17 +18,19 @@ Basic customizations (compiler flags, device library) are broken out into variab
 
 To get Wine working on Ubuntu Linux, this could look something like:
 
-<code>dpkg --add-architecture i386
+```
+dpkg --add-architecture i386
 sudo apt-get install wine wine32:i386 winetricks playonlinux innoextract
 WINEARCH=win32 WINEPREFIX=~/.wine wine wineboot
 winetricks mfc40 mfc42
-wine awincupl.exe
-</code>
+```
+* Alternately, you may want to consider installing Wine from <a href="https://wiki.winehq.org/Download">WineHQ</a> (more frequently updated than distro packages. Better file association defaults (.HLP files, etc.))
 
-* You may want to consider installing Wine from <a href="https://wiki.winehq.org/Download">WineHQ</a> (more frequently updated than distro packages. Better file association defaults (.HLP files, etc.))
 
 From there, you can install WinCUPL and Atmel Prochip:
 * <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
+  * `unzip awincupl.exe.zip`
+  * `wine awincupl.exe`
   * Serial Number freely provided by Microchip is `60008009`
 * <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip">Download Atmel Prochip from here</a>
   * You only need to select the "ProChip Designer 5.0" option if you do not want the all parts of Prochip.
