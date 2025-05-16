@@ -17,10 +17,15 @@
 
 DEFAULT_DEVICE_LIB="c:/Wincupl/Shared/Atmel.dl" #Do not change this.
 
-#You can override the options passed to CUPL here by either
-#Seting CUPL_OPTIONS at rutime, setting it in your environment (.profile), or by uncommenting below (and risking it being overwritten with an update):
+#This section is concerned with compiler options for CUPL.
+
+#You can override the compiler options passed to CUPL by either:
+#  * Seting CUPL_OPTIONS at runtime:
+#      user@host:~/your_project$ CUPL_OPTIONS="m1jn" 5vcomp yourproject.pld
+#  * Setting it in your environment (.profile)
+#  * By uncommenting and editing below (and risking it being overwritten with an update of this script):
 #CUPL_OPTIONS="m1jn"
-CUPL_DEFAULT_OPTIONS="m1jn" #These are the options that will be passed to the CUPL.EXE compiler if not explicitly set in CUPL_OPTIONS.
+CUPL_DEFAULT_OPTIONS="m1jn" #These are the options that will be passed to the CUPL.EXE compiler if CUPL_OPTIONS is not defined.
 CUPL_SIMULATION_OPTIONS="sw" #These options are added only if an .SI file is found and no CUPL options have been explicitly set.
 
 #A summary of the most relevant/important options to CUPL is here. See documentation for a full list/explanation.
@@ -228,7 +233,7 @@ if [ $? -eq 0 ]; then
     printf "${GRN} * A .JED file should have been produced, which can be used to program the target device.${NC}\n"
     if [ -f "${BASEFILENAME}.edn" ]; then
         printf "INFO: An EDIF file has been detected.\n * In the future, we may process this further using Spydrnet to either convert to a Graphviz visualization or to generate verilog.\n"
-        ediftimestamp.sh ${BASEFILENAME}.edn
+        #ediftimestamp.sh ${BASEFILENAME}.edn
         #EDIF2V_LOC=`which edif2v.py`
         #if [ $? -eq 0 ]; then
         #    printf " * Trying to create a verilog file..."
