@@ -26,7 +26,7 @@ set PLD_FILE=%1
 if not exist %PLD_FILE% set PLD_FILE=%1.pld
 if not exist %PLD_FILE% goto :notexist
 
-if not exist %~dpn1.si set CUPL_SIMULATION_OPTIONS=
+if not exist "%~dpn1.si" set CUPL_SIMULATION_OPTIONS=
 
 if "%CUPL_SIMULATION_OPTIONS%" == "" echo No .SI file found. Simulation will not be performed.
 
@@ -89,10 +89,11 @@ exit /B 2
 :noargs
 cls
 echo This batch file compiles a CUPL .PLD file
-echo It requires a single argument:
-echo the name of the .PLD file you'd like compiled
+echo Usage:
+echo 5vcomp yourproject.pld
 echo.
 echo It will place all resulting files in the same directory.
+echo Alternately, context-menu-pld-5vcomp.reg can be used to allow .PLD files to be compiled by right-clicking on them.
 echo This utility will now exit.
 pause
 exit /B 3
