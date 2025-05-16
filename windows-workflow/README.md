@@ -23,7 +23,14 @@ The Linux equivalent version of 5vcomp is probably a bit ahead of this and more 
   * <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip">Download Atmel Prochip from here</a>
   * You only need to select the "ProChip Designer 5.0" option if you do not want the additional software.
 
+* Set up 5vpld:
+  * Download this whole [repository as a .zip](https://github.com/peterzieba/5Vpld/archive/refs/heads/main.zip), Extract
+  * From the windows-workflow folder, run `5vinstall.bat`
+    * Hopefully everything just works.
+  * Double-click on `context-menu-pld-5vcomp.reg` to import it to the registry.
 
+## Manual Installation (this is done automatically by 5vinstall.bat)
+After WinCUPL and Atmel Prochip is installed, the following needs to be done.
 Place `5vcomp.bat` inside of `C:\Wincupl\WinCupl\Fitters` and it should end up in your path so you can run it from anywhere.
 
 Adding `context-menu-pld-5vcomp.reg` to the registry will add the "compile" right-click
