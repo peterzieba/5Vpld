@@ -39,7 +39,7 @@ From there, you can install WinCUPL and Atmel Prochip:
   * Alternately, you can extract the fitters from the installer using innoextract:
     * <code>innoextract -I app/Prochip/pldfit/aprim.lib -I app/Prochip/pldfit/atmel.std -I app/Prochip/pldfit/fit1502.exe -I app/Prochip/pldfit/fit1504.exe -I app/Prochip/pldfit/fit1508.exe ProChip5_setup.exe</code>
 
-* Move the new fitters over to WinCUPL:
+* Copy the new fitters as well as `aprim.lib` and `atmel.std` over to C:\Wincupl\WinCupl\Fitters:
   * Overwrite the ATF150x.EXE fitters in `C:\Wincupl\WinCupl\Fitters\` <br>with those from Atmel Prochip `C:\ATMEL_PLS_Tools\Prochip\pldfit\`
   * Also delete all three of the FIND150x.EXE files in C:\Wincupl\WinCupl\Fitters\ and copy each of the corresponding FIT150x.EXE in their place.
 ```
@@ -50,14 +50,18 @@ cp fit1508.exe find1508.exe
 * Once you have everything installed, you can download and place 5vcomp somewhere like `/usr/local/bin/` or `~/.local/bin/` where it will be conveniently in your path.
 
 
-
 # Usage
-<code>
-5vcomp your-project.PLD</code>
+From the command line run:<br>
+`5vcomp your-project.PLD`
 
-This should generate a bunch of files and most crucially, a .JED file if everything works properly.
+Alternately, you can use <code>5vpld.xml</code> and <code>5vcomp.desktop</code> as templates, modifying them to suit your paths so that you can simply right-click on your .PLD file to have it open with 5vcomp.
 
-See the [examples folder](../examples) for some simple .PLD files to make sure everything is working properly.
+This should generate a bunch of files and most crucially, a .JED file if everything works properly.<br>
+If a .SI file is detected, it will pass additional flags to the compiler to run simulation as well, producing a .SO file and many others.
+
+See the [examples folder](../examples) for some very simple (buffer, inverter) .PLD files to make sure everything is working properly.
+
+See also `C:\Wincupl\Examples\Atmel` for a bunch of more elaborate vendor included examples, demonstrating the language as well as what is possible to build using these devices.
 
 # Misc
 These files make it easier to handle file associations and their usual actions when using a GUI filemanager:
