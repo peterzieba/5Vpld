@@ -2,6 +2,10 @@ echo off
 cls
 
 echo This batch file replaces the WinCUPL installed fitters with those from Atmel Prochip.
+
+rem This batch file is aims to be compatible across as many Windows Versions as possible, but is not thoroughly tested.
+rem Care has been taken not to utilize functionality that might be missing in older versions.
+
 echo.
 if not exist C:\Wincupl\WinCupl\Fitters\fit1502.exe goto :missingwincupl
 if not exist C:\ATMEL_PLS_Tools\Prochip\pldfit\fit1502.exe goto :missingprochip
@@ -30,8 +34,14 @@ copy C:\ATMEL_PLS_Tools\Prochip\pldfit\fit1508.exe C:\Wincupl\WinCupl\Fitters\
 copy C:\ATMEL_PLS_Tools\Prochip\pldfit\fit1502.exe C:\Wincupl\WinCupl\Fitters\find1502.exe
 copy C:\ATMEL_PLS_Tools\Prochip\pldfit\fit1504.exe C:\Wincupl\WinCupl\Fitters\find1504.exe
 copy C:\ATMEL_PLS_Tools\Prochip\pldfit\fit1508.exe C:\Wincupl\WinCupl\Fitters\find1508.exe
+if not exist 5vcomp.bat goto :skipcomp
+echo Installing 5vcomp.bat to C:\Wincupl\WinCupl\Fitters\
+copy 5vcomp.bat C:\Wincupl\WinCupl\Fitters\
+goto :done
 
-goto :success
+:skipcomp
+echo 5vcomp.bat not found. Copy 5vcomp.bat manually into C:\Wincupl\WinCupl\Fitters\
+goto :done
 
 :missingprochip
 rem Expected install directory is C:\ATMEL_PLS_Tools
@@ -51,13 +61,13 @@ echo Serial Number: 60008009
 pause
 exit /B 2
 
-:success
+:done
 echo Done.
 echo If everything went well, the old Atmel fitters have been renamed to .old and replaced with those from Atmel Prochip.
-echo If you have placed 5vcomp.bat into C:\Wincupl\WinCupl\Fitters
-rem copy 5vcomp.bat C:\Wincupl\WinCupl\Fitters\
 echo You should now be able to use 5vcomp to compile .PLD files.
 echo.
 echo Additionally, if you import context-menu-pld-5vcomp.reg, this will allow you to right-click and compile a .PLD file without opening a command prompt first.
 rem reg import context-menu-pld-5vcomp.reg
+rem FIXME: import registry stuff across windows versions
+rem We don't do this automatically because it requires privilege elevation and it's probably different across Windows versions.
 pause
