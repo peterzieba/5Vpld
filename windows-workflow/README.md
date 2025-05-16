@@ -40,13 +40,21 @@ option to any `.PLD` files, which will simply call `C:\Wincupl\WinCupl\Fitters\5
 * It's simply not worth using the old fitters -- too many variables of things that can go wrong.
 
 # Usage
-Run `5vcomp your-project.PLD`
+From command line, run:<br>
+`5vcomp your-project.PLD`
 
 Alternately, if you have imported `context-menu-pld-5vcomp.reg`, you can simply right-click on your .PLD file and select "Compile PLD"
 
-This should generate a bunch of files and most crucially, a .JED file if everything works properly.
+![demonstration](rt-click-compile-pld.gif)
 
-See the [examples folder](../examples) for some simple .PLD files to make sure everything is working properly.
+This should generate a bunch of files and most crucially, a .JED file if everything works properly.<br>
+If a .SI file is detected, it will pass additional flags to the compiler to run simulation as well, producing a .SO file and many others.
+
+See the [examples folder](../examples) for some very simple (buffer, inverter) .PLD files to make sure everything is working properly.
+
+See also `C:\Wincupl\Examples\Atmel` for a bunch of more elaborate vendor included examples, demonstrating the language as well as what is possible to build using these devices.
+
+Sensible compiler defaults are used, but can be changed inside of 5vcomp.bat.
 
 # Notes
 
@@ -57,4 +65,8 @@ This workflow has been tested to run properly on:
 
 Todo:
 * Impose character length limit on filenames (CSIM.EXE issues)
+* Maybe automatically import `context-menu-pld-5vcomp.reg`
 * Probably check to make sure find150x.exe files have been replaced with their corresponding fit150x.exe files. **If you don't do this, the fitter will not be automatically run and you won't get a .JED file for the CPLD parts.**
+
+Bugs:
+* Probably. Please report as limited testing has been performed.
