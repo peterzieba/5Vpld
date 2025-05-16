@@ -29,6 +29,14 @@ The Linux equivalent version of 5vcomp is probably a bit ahead of this and more 
     * Hopefully everything just works.
   * Double-click on `context-menu-pld-5vcomp.reg` to import it to the registry.
 
+* WinCUPLs built-in help does not work on newer versions of Windows (Vista, 7, 8, 8.1).
+  * The built-in help has lots of very useful information, however, Windows removed support for .HLP files starting with Vista.
+  * Install the WinHelp viewer (KB917607) for your specific version of Windows
+  * https://archive.org/download/kb917607
+  * https://www.helpscribble.com/KB917607.html
+  * WinHelp viewer either does not seem to be available or is limited in functionality on Windows 10/11.
+    * Maybe it is worth trying to install Windows6.1-KB917607-x64.msu ?
+
 ## Manual Installation (this is done automatically by 5vinstall.bat)
 After WinCUPL and Atmel Prochip is installed, the following needs to be done.
 Place `5vcomp.bat` inside of `C:\Wincupl\WinCupl\Fitters` and it should end up in your path so you can run it from anywhere.
