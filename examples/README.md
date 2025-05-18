@@ -7,4 +7,6 @@ Running this should generate many files. Refer to "Terminology & File Formats" o
 
 `5vtemplate.py` is a simple GUI that will generate a skeleton `.PLD` file.
 
-More elaborate examples are included with WinCUPL. References for the CUPL programming language are invaluable for getting further work done.
+See also `C:\Wincupl\Examples\Atmel` for a bunch of more elaborate vendor included examples, demonstrating the language as well as what is possible to build using these devices.
+
+References for the CUPL programming language are invaluable for getting further work done.
