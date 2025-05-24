@@ -104,7 +104,7 @@ A high-level overview of what is required:
 <a href="https://en.wikipedia.org/wiki/Macrocell_array">**Macrocell**</a> - Each output has a macrocell associated with it. These can often be configured as active high, active low, flip-flops, etc.<br />
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#/media/File:Programmable_Logic_Device.svg">**Product Term**</a> - Each macrocell has a number of product terms associated with it (typically around 5). A product term is essentially a giant AND gate with inputs to each pin on the device. Burning away fuses allows selecting which inputs are fed into this AND gate, ultimately selecting the conditions required for a product term to be activated. Product terms belonging to the same output macrocell are then combined into an OR gate before being fed into the macrocell. This means that there can be several combination of inputs that allow a given macrocell to be triggered. This architecture is called a Sum-of-Products logic array.
 
-<a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">**CUPL**</a> - A early (1983) programming language used to define the behavior of programmable digital logic. "Compiler for Universal Programmable Logic.", is essentially a predecessor to languages like Verilog/VHDL. CUPL.EXE is the compiler which is used to compile .PLD files written in CUPL, ultimately to be burned into programmable logic devices.<br />
+<a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">**CUPL**</a> - A early (1983) programming language by [Assisted Technology, Inc.](https://deramp.com/swtpc.com/PLD_History/ABEL_project/CUPL_Data_Sheet_1983_ocr.pdf) used to define the behavior of programmable digital logic. "Compiler for Universal Programmable Logic.", is essentially a predecessor to languages like Verilog/VHDL. CUPL.EXE is the compiler which is used to compile .PLD files written in CUPL, ultimately to be burned into programmable logic devices.<br />
 <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">**WinCUPL**</a> - A Windows front-end/IDE to the CUPL compiler and related programs. WinCUPL itself is best avoided but installing it is necessary to get the CUPL compiler and device libraries.<br />
 [**.dl File**](device-library/) - A Library File is a binary file used by CUPL compiler that provides support for devices CUPL has the ability to compile logic for. This should not be confused with the Device/Primitive Libraries that are part of the [Atmel fitter](atmel-fitters/).<br>
 
@@ -330,7 +330,7 @@ It is worth noting that the fusemap for the ATF150x parts has been recently docu
 
 ## Other languages / Software: ABEL, PALASM
 These will only be covered very briefly:
-* ABEL: "Advanced Boolean Expression Language" was created in 1983 by Data I/O Corporation.
+* ABEL: "Advanced Boolean Expression Language" was created in 1983 by Data I/O Corporation. [Bit of Abel (and CUPL) history](https://deramp.com/swtpc.com/PLD_History/ABEL_project/ABEL_Memos.htm)
 * PALASM: Introduced by Monolithic Memories, Inc. (MMI) in the 1980's
   * A modern version of this is called <a href="https://github.com/daveho/GALasm">GALASM</a> which is a continuation of something called GALer. This might be worth considering if you are happy with just PLDs.
 * Atmel-Synario: A 1999-era ABEL-HDL and Schematic PLD/CPLD design tool.
