@@ -1,4 +1,6 @@
 # Overview
+This directory only applies to the ATF150x CPLD parts.
+
 Fitting, perhaps more commonly known as "place and route" is the stage that translates the logic into the physical hardware available on a given device.
 
 Most simple devices in WinCUPL do not use an external fitter executable -- The CUPL compiler directly produces a .JED file for these using only its device library.
@@ -107,3 +109,7 @@ In instances where one would prefer the fitter handle the pin assignments <code>
 > <code>showargs*</code> - Simple executable and source code for a Windows executable that was briefly used for determining what arguments WinCUPL was passing to the fitters.
 >
 > <code>Atmel-ATF1500-tshirt.webp</code> - A picture of what is perhaps the most incredible bit of programmable logic history.
+>
+> [fitter15xx.pdf](fitter15xx.pdf) - A manual for the Atmel Fitters.
+>
+> [fitter.pdf](fitter.pdf) - A manual for the Atmel Fitters.
