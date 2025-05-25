@@ -13,6 +13,8 @@ The following CPLD devices are unique in that they require fitters that are prov
 
 Note that these are not part of WinCUPL or the CUPL compiler per-se, but rather they are executables which are supplied by Atmel and bundled with the Atmel WinCUPL package.
 
+Additionally, the fitters included with WinCUPL are fairly outdated and so the `5vcomp` script in this repository is very adamant that they be replaced with those found in the [Atmel Prochip 5.0.1](https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip)
+
 When compiling a `.PLD` file, CUPL generates a `.TT2` PLA netlist and provides it to the specific fitter for that device, which then transforms it into a `.JED` fusemap. Fitters ultimately determine the optimal way to utilize the resources of the device and are responsible for the final implementation of the logic in hardware.
 
 The fitter also has control over various low-level, device-specific options which WinCUPL/CUPL would not have direct knowledge of, but which nonetheless can be specified inside of a <code>.PLD</code> design file using the <code>PROPERTY</code> statement, allowing them to be passed down to the fitter.
@@ -21,7 +23,7 @@ The fitter also has control over various low-level, device-specific options whic
   PROPERTY <manuf ID> { property statement };
 ```
 
-As an example, the following would leave the JTAG pins enabled (allowing future reprogramming), enable the weak pullups on the TMS/TDI pins, and make pin assignments from the .PLD design file mandatory:
+As an example of generally desirable options, the following would leave the JTAG pins enabled (allowing future reprogramming via JTAG), enable the weak pullups on the TMS/TDI pins, and make pin assignments from the .PLD design file mandatory:
 ```
 PROPERTY ATMEL { jtag=on }; /* This keeps the JTAG pins on after programming */
 PROPERTY ATMEL { TMS_pullup=on };
@@ -31,9 +33,8 @@ PROPERTY ATMEL { Preassign=keep }; /* This forces the Atmel Fitter to use the pi
 
 A [Manual for the Atmel Fitters](https://www.microchip.com/content/dam/mchp/documents/FPGA/pld-design-resources/ATF15xx%20Fitter%20Manual.zip) is available on Microchip's website. Note that these fitters are integrated into software packages beyond just WinCUPL, and so the manual has references to Atmel Prochip, ABEL, Atmel Synario, Protel, etc.
 
-Since these fitters ultimately process a netlist, one could in theory use these fitters in any environment that is capable of producing a netlist. Be warned that while the EDIF format is a standard, the details of the implemetation may not be consistent or compatible across software in practice.
+Since these fitters ultimately process a netlist, one could in theory use these fitters in any environment that is capable of sending a netlist to them, which would allow workflows that do not involve CUPL entirely for the ATF150x parts. If such a thing sounds interesting, you might want to have a look at the primitive libraries found in: `ATMEL.STD`(for PLA) and `APRIM.LIB` (for EDIF). Be warned that while the EDIF format is a standard, the details of the implemetation may not be consistent or compatible across software in practice.
 
-Finally, one thing to keep in mind is that the version of these fitters included with Atmel WinCUPL is rather old and so they should be replaced with newer versions from [Atmel Prochip 5.0.1](https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip)
 
 <details>
 <summary>Expand for command line options for the latest known version of the ATF1502.EXE fitter. Output is similar for ATF1504 and ATF1508 devices.</summary>
