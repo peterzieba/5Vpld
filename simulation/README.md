@@ -6,10 +6,10 @@ This section covers Test Vectors (functional simulation) within CUPL, WinSim and
 >There are some possibilities:
 
 >* PLD devices are probably simple enough where the datasheet can be utilized.
->  * Perhaps this might be useful: https://github.com/ezrec/galpal
+>   * Perhaps this might be useful: https://github.com/ezrec/galpal
 >* For ATF150x devices see the fitter options, specifically:
->  * <code>-strategy Verilog_sim [sdf | Verilog | OFF]</code>
->  * <code>-strategy Vhdl_sim [sdf | vhdl | OFF]</code>
+>   * <code>-strategy Verilog_sim [sdf | Verilog | OFF]</code>
+>   * <code>-strategy Vhdl_sim [sdf | vhdl | OFF]</code>
 </details>
 
 <details>
