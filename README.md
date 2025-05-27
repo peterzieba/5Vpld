@@ -433,7 +433,7 @@ This repository is merely a bunch of tips, tricks, helper scripts and documentat
 * Countless other tips, tools, contributions and from all over the web and plenty of trial-and-error working around the quirks of WinCUPL and the fitters themselves.
 
 # References
-[^1]: From the Readme.txt of fit5_0.zip (an older version of the Atmel Fitters)
+[^1]: From the Readme.txt of fit5_0.zip (an older version of the Atmel Fitters) found here: http://ebook.pldworld.com/_semiconductors/Atmel/Databook%20CDROM/Atmel/prod147.htm
 [^2]: https://www.eevblog.com/forum/beginners/5v-pal-or-gal-with-cmos-outputs/
 
 
