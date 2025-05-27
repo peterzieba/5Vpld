@@ -105,7 +105,7 @@ A high-level overview of what is required:
 <a href="https://en.wikipedia.org/wiki/Programmable_logic_device#/media/File:Programmable_Logic_Device.svg">**Product Term**</a> - Each macrocell has a number of product terms associated with it (typically around 5). A single product term is essentially a giant AND gate with inputs to each pin on the device. Burning away fuses allows selecting which inputs are fed into this AND gate, ultimately selecting the conditions required for a product term to be activated. Multiple product terms belonging to the same output macrocell are then combined into an OR gate before being fed into the macrocell. This means that there can be several combination of inputs that allow a given macrocell to be triggered. This architecture is called a Sum-of-Products logic array.
 
 <a href="https://en.wikipedia.org/wiki/Programmable_Array_Logic#CUPL">**CUPL**</a> - A early (1983) programming language by [Assisted Technology, Inc.](https://deramp.com/swtpc.com/PLD_History/ABEL_project/CUPL_Data_Sheet_1983_ocr.pdf) used to define the behavior of programmable digital logic. "Compiler for Universal Programmable Logic.", is essentially a predecessor to languages like Verilog/VHDL. CUPL.EXE is the compiler which is used to compile .PLD files written in CUPL, ultimately to be burned into programmable logic devices.<br />
-**.PLD** file - A logic design file written in the CUPL language. See [examples/](examples) for a basic idea of what this looks like.<br />
+**.PLD** file - A logic design source file written in the CUPL language. See [examples/](examples) for a basic idea of what this looks like.<br />
 <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">**WinCUPL**</a> - A Windows front-end/IDE to the CUPL compiler and related programs. WinCUPL itself is best avoided but installing it is necessary to get the CUPL compiler and device libraries.<br />
 **Variable Extensions** (such as .D or .OE) can be added to variable names to indicate specific functions associated with the major nodes inside a programmable device, including such capabilities as flip-flop description and programmable tri-state enables.<br />
 [**.dl File**](device-library/) - A Device Library file is a binary file used by the CUPL compiler which provides support for the various devices CUPL has the ability to compile logic for. This should not be confused with the Device/Primitive Libraries that are part of the [Atmel fitter](atmel-fitters/).<br>
@@ -157,7 +157,7 @@ Since WinCUPL simply is a front-end / IDE on top of the CUPL.EXE compiler and re
 
 5vcomp is a simple wrapper around the CUPL compiler.
 This is probably the most solid approach assuming you are OK with using CUPL as a language. You should start with the WinCUPL approach as a prerequisite since it installs the CUPL compiler and has examples/help files.
-The workflows here simply make this easier/convenient by catching a lot of common issues and providing reasonable defaults to the compiler:
+The workflows here simply make it easier/convenient to get started with CUPL by catching a lot of common issues and providing reasonable defaults to the compiler. It intentionally tries to be as simple as possible so that it may be easily understood, modified, and stand the tests of time across operating system versions. It also tries to catch any errors that might arise so that they are obvious and actionable. Using 5vcomp with example .PLD files (from here or those included with WinCUPL) and modifying them to suit is probably the easiest way of getting started with CUPL that avoids a lot of the quirks of WinCUPL itself.:
 
 * ![Linux Workflow (point 5vcomp at your .PLD file from a command line)](linux-workflow/)
 * ![Windows Workflow (right-click on a .PLD to compile with 5vcomp.bat)](windows-workflow/)
@@ -316,6 +316,7 @@ Copyright 1999,2000 Atmel Corporation
 ### Other CUPL workflows:
 * https://github.com/willie68/WCPLD
 * https://github.com/Manawyrm/PAL-GAL-CI
+  * This uses Github Actions to run CUPL under Wine to compile .PLD files.
 * Recently, two different extensions for VS Code for CUPL have been written:
   * https://marketplace.visualstudio.com/items?itemName=tlgkccampbell.code-cupl
     * This one handles just syntax highlighting for CUPL .PLD files
