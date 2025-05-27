@@ -165,7 +165,7 @@ The workflows here simply make it easier/convenient to get started with CUPL by 
 ## Guide to the CUPL Language and Compiler
 Assuming you're using CUPL either through WinCUPL or 5vcomp, this section has a general reference to the language.
 
-An overview of how things work which shows how one can go from a CUPL .PLD into the .JED files needed to program a device. Note that the Atmel Fitter (place and route) stage is only used when working with the ATF150x CPLD parts. For most simpler parts, CUPL is capable of generating a .JED directly.
+An overview of how things work which shows how one can go from a CUPL .PLD into the .JED file needed to program a device. Note that the Atmel Fitter (place and route) stage is only used when working with the ATF150x CPLD parts. For most simpler parts, CUPL is capable of generating a .JED directly.
 
 ![WinCUPL Data Flow Diagram](vendor-docs/WinCUPL-data-flow-diagram.png)
 (diagram from built-in WinCUPL help)
@@ -217,9 +217,9 @@ where
 >[!IMPORTANT]
 >**Compiler Mode Selection**
 >
->A word of warning is that the <code>Device:</code> section at the top of a .PLD file is more than just the part number you are interested in programming -- it is actually a device mnemonic which selects different macrocell configuration modes.
+>A word of warning is that the <code>Device:</code> keyword in the header section at the top of a .PLD file is not quite the part number you are interested in programming -- it is actually a device mnemonic which selects different macrocell configuration modes and these mnemonics should be mentioned in the datasheet for your device.
 >
->So, if you're having trouble getting a flip-flop to work, it might be because you have selected the mnemonic for "simple mode".<br>
+>So, if you're having trouble getting a flip-flop to work on a 16V8, it might be because you have selected the mnemonic for "simple mode".<br>
 >As an example, the compiler can be set to four different modes for the ATF16V8 (similar considerations apply to the 22V10 parts, etc):<br>
 >Registered - <code>G16V8MS</code><br>
 >Complex - <code>G16V8MA</code><br>
