@@ -31,14 +31,18 @@ PROPERTY ATMEL { TDI_pullup=on };
 PROPERTY ATMEL { Preassign=keep }; /* This forces the Atmel Fitter to use the pin assignments you specify. */
 ```
 
+In instances where one would prefer the fitter handle the pin assignments <code>Preassign=ignore</code>, it can be useful to take pin mappings that have been autoassigned by the fitter and backannotate them into the .PLD file. The <code>backpin.exe</code> utility performs this function. One should probably change to <code>Preassign=keep</code> to make these stick across future compilations.
+
 A [Manual for the Atmel Fitters](https://www.microchip.com/content/dam/mchp/documents/FPGA/pld-design-resources/ATF15xx%20Fitter%20Manual.zip) is available on Microchip's website. Note that these fitters are integrated into software packages beyond just WinCUPL, and so the manual has references to Atmel Prochip, ABEL, Atmel Synario, Protel, etc.
 
 Since these fitters ultimately process a netlist, one could in theory use these fitters in any environment that is capable of sending a netlist to them, which would allow workflows that do not involve CUPL entirely for the ATF150x parts. If such a thing sounds interesting, you might want to have a look at the primitive libraries found in: `ATMEL.STD`(for PLA) and `APRIM.LIB` (for EDIF). Be warned that while the EDIF format is a standard, the details of the implemetation may not be consistent or compatible across software in practice.
 
-
 <details>
-<summary>Expand for command line options for the latest known version of the ATF1502.EXE fitter. Output is similar for ATF1504 and ATF1508 devices.</summary>
-<code>Atmel ATF1502 Fitter Version 1918 (3-21-07)
+<summary>Expand for command line options for the latest known version (1918 3-21-07) of the ATF1502.EXE fitter.
+Options are essentially identical for the ATF1504 and ATF1508 devices.</summary>
+
+```
+Atmel ATF1502 Fitter Version 1918 (3-21-07)
 Copyright 1999,2000 Atmel Corporation
  Usage: FIT1502.EXE [-i] input_file[.tt2] {options}
  Options:
@@ -52,10 +56,10 @@ Copyright 1999,2000 Atmel Corporation
    -h2 (advanced help option)
    -has (advanced help option for AS)
    -hbe (advanced help option for BE)
-</code>
+````
 
 Advanced help options:
-<code>
+```
 Atmel ATF1502 Fitter Version 1918 (3-21-07)
 Copyright 1999,2000 Atmel Corporation
    -strategy c [command file name]
@@ -98,10 +102,27 @@ Copyright 1999,2000 Atmel Corporation
    -strategy logic_doubling [on | OFF]
    -strategy twoclock [clockname]
    -strategy pinfile
-</code>
+```
 </details>
 
-In instances where one would prefer the fitter handle the pin assignments <code>Preassign=ignore</code>, it can be useful to take pin mappings that have been autoassigned by the fitter and  backannotate them into the .PLD file. The <code>backpin.exe</code> utility performs this function. One should probably change to <code>Preassign=keep</code> to make these stick across future compilations.
+
+ATF1502, ATF1504, ATF1508 fitter versions
+ * WinCUPL: v 1.8.7.8 (02-05-03)
+ * ProChip: 1918 (3-21-07)
+
+<details>
+<summary>Expand here for details about the ATF1500 or the ATF2500 (not recommended)</summary>
+ ATF1500 Fitter Versions<br>
+
+ While the ATF1500 is not recommended for use (No JTAG, expensive), details are covered here for completeness.<br>
+
+ Note that the version of the ATF1500 fitter included in WinCUPL is actually newer than the version in Atmel Prochip, and so it should not be replaced. Furthermore, the Atmel Prochip version of this fitter fails to run on 64-bit machines.:<br>
+  * WinCUPL: v 2.42 Jul 14 2003
+  * ProChip: v 2.41 Nov 18 1997
+
+ATF2500 fitter<br>
+While Atmel Prochip seems to include a fitter for this chip, WinCUPL does not seem to require a fitter. It is probably best forgotten about. Furthermore, it does not appear to run on 64-bit machines.
+</details>
 
 # In this folder
 > 
