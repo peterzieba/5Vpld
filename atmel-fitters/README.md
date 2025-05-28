@@ -107,6 +107,7 @@ Copyright 1999,2000 Atmel Corporation
 
 
 ATF1502, ATF1504, ATF1508 fitter versions
+ * [1.8.1.1 Beta updated March 1, 2001](https://web.archive.org/web/20230303042911/http://db.zmitac.aei.polsl.pl/Electronics_Firm_Docs/ATMEL/Atmel/software/fit5_0.zip)
  * WinCUPL: v 1.8.7.8 (02-05-03)
  * ProChip: 1918 (3-21-07)
 
