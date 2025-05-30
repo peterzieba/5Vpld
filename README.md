@@ -340,6 +340,13 @@ These will only be covered very briefly:
 * Viewlogic's Workview/ProPLD: 90's-era software.
 * Atmel-ProPLD: (possibly Atmel's bundled version of the above?)
 
+## Galette / GALasm (Free, 16V8, 22V10)
+Useful for simpler PLD devices. Less expressive than CUPL as a language and uses different operators (AND is *, OR is +, NEGATION is /), but gets the job done if you just want to write some logic for some PLDs.<br>CUPL has the advantage that if you are making things like [address decoders](https://github.com/dbuchwald/6502/blob/d1194eb0162b50493e9f32f2d46c190da779da66/WinCUPL/DB6502.PLD#), you can clearly express the ranges in the language at a high level: `RAM       = Address:[0000..7FFF]`
+* https://github.com/simon-frankau/galette
+  * Actively maintained, written in rust.
+* https://github.com/daveho/GALasm
+* https://github.com/dwery/galasm
+
 ## Atmel Prochip (Not Free, Verilog/VHDL support for ATF150x)
 ![PDF: Example Verilog Design flows with using ProChip 5.0.1](vendor-docs/CPLD_Mentor_Verilog_tutorial[1].pdf)<br />
 Atmel Prochip is not free, however, you can <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/ProChip5.0.1.zip">download it from here</a>, and may be able to <a href="https://www.microchip.com/prochiplicensing/#/">request a trial license from Microchip</a>. This workflow supports Verilog/VHDL, which is great if one wants to move away from CUPL entirely and can afford to purchase a license.
@@ -380,7 +387,7 @@ In theory, one can use Yosys Open SYnthesis Suite (Yosys) with the help of the [
   * This example goes from plain old verilog into a .JED file by implementing a techmap.
 * https://github.com/michaelhunsberger/JsonToCupl/
   * This is an example of how to use Yosys to generate CUPL code.
-  * Potentially interesting as one could use this to generate a .PLD even for the simpiler 16V8 or 22V10 devices
+  * Potentially interesting as one could use this to generate a .PLD even for the simpler 16V8 or 22V10 devices
   * http://forum.6502.org/viewtopic.php?f=10&t=7601
 * https://github.com/annoyatron255/yosys4gal Verilog Flow for the GAL16V8 and GAL22V10
   * A Verilog flow for GAL16V8 and GAL22V10 logic chips (and pin-compatible alternatives like the ATF16V8 and ATF22V10). It leverages [Yosys](https://www.github.com/YosysHQ/yosys) and [Galette](https://www.github.com/simon-frankau/galette).
