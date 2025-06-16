@@ -440,6 +440,9 @@ This repository is merely a bunch of tips, tricks, helper scripts and documentat
 * ole00 for putting together [Afterburner](https://github.com/ole00/afterburner/) a modern, open-source device programmer that supports a majority of these devices
 * Countless other tips, tools, contributions and from all over the web and plenty of trial-and-error working around the quirks of WinCUPL and the fitters themselves.
 
+# Related Projects
+Apparently, in the [Map of Github](https://github.com/anvaka/map-of-github-data), this project lives in the [RetroSilicon Dominion](https://anvaka.github.io/map-of-github/#8/-46.243/-20.919).
+
 # References
 [^1]: From the Readme.txt of fit5_0.zip (an older version of the Atmel Fitters) found here: http://ebook.pldworld.com/_semiconductors/Atmel/Databook%20CDROM/Atmel/prod147.htm
 [^2]: https://www.eevblog.com/forum/beginners/5v-pal-or-gal-with-cmos-outputs/
