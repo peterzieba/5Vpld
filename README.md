@@ -43,6 +43,7 @@ This is a "Choose your own adventure novel". Covered here are many approaches an
 >* For the ATF150x CPLD parts specifically:
 >   * The parts ending in 'BE' are not covered here as they seem to be very expensive. In principle these are interesting because they have multiple IO bank voltages.
 >   * The parts ending in 'ASV' are 3.3V only, however, these are supported just fine in the workflows discussed here. Incidentally, the 'AS' devices can be operated at 3.3V IO through the VccIO pins. The lower pincount (44-pin) devices to not show VccIO pins in their datasheet, but it does seem to be the case that two pins are Vcc and two are VccIO, so this is possible as well.
+>* The PIC16F131xx devices have [Configurable Logic Blocks](https://www.microchip.com/en-us/products/microcontrollers/8-bit-mcus/peripherals/system-flexibility/clb/low-density-programmable-logic) that are capable of some interesting functionality. Additionally, their functionality under the hood has been documented by Mark Omo here https://mcp-clb.markomo.me/
 >* For applications where 5-Volt tolerant operation is acceptable, it might be worth considering the ispMACH4000 series. Parts such as the LC4032ZE are available in a somewhat soldering friendly TQFP, however there are likely similar challenges with software.
 >   * Vendor Tools:
 >      * ispLEVER v3.1 (2003)
