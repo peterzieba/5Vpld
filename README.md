@@ -56,6 +56,14 @@ This is a "Choose your own adventure novel". Covered here are many approaches an
 >      * Vendor Fitter: `C:\ispLEVER_Classic2_1\ispcpld\bin\lpf4k.exe`
 </details>
 
+# News and Status
+* Microchip has released the PIC16F13145 (Jan 2024?)
+  * This chip combines a microcontroller with configurable logic blocks (CLB) which may well suit the needs of what you are otherwise seeking on this page.
+* Microchip has released [WinCUPL II](https://www.microchip.com/en-us/development-tool/wincupl) (v1.0.0 beta) on August 6th, 2025
+  * The revision history only mentions adding compatability with Windows 10/11
+  * Not mentioned in the release notes is that the included fitters for the ATF150x devices are now the latest version: 1918 (3-21-07) within WinCUPL II.
+  * This repository and the utilities within were adamant about requiring the new fitters and the directions here recommended extracting these from Atmel Prochip. With WinCUPL II, this is no longer necessary -- the latest fitters come with WinCUPL II. Much of this repository is therefore out of date.
+
 # Background on digital logic.
 This repository isn't intended to be an introduction to digital logic, but a brief review and compare/contrast to similar things is provided here.
 
