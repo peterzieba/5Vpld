@@ -59,6 +59,7 @@ This is a "Choose your own adventure novel". Covered here are many approaches an
 # News and Status
 * Microchip has released the PIC16F13145 (Jan 2024?)
   * This chip combines a microcontroller with configurable logic blocks (CLB) which may well suit the needs of what you are otherwise seeking on this page.
+* Microchip has [annouced EOL for a number of ATF150x devices specifically in PLCC packages](https://www.microchip.com/product-change-notifications/#/21273/MFOL-11XDWF690) on June 2024. There are a few variants where PLCC packages are still available for these (at the very least, the ATF1502 is still available in PLCC), and all other package types are unaffected.
 * Microchip has released [WinCUPL II](https://www.microchip.com/en-us/development-tool/wincupl) (v1.0.0 beta) on August 6th, 2025
   * The revision history only mentions adding compatability with Windows 10/11
   * Not mentioned in the release notes is that the included fitters for the ATF150x devices are now the latest version: 1918 (3-21-07) within WinCUPL II.
