@@ -8,7 +8,7 @@ This repository centers around documenting modern ways of developing logic for a
 
 These parts are still active and highly worth considering wherever:
 * 5V logic is a requirement, avoiding level shifting, low latency (7ns), instant-on & non-volatile, and situations needing Hi-Z / Open-collector states.
-  * If you do need level shifting from 5V to 3.3V, the 'LV' parts (ATF16LV8C and the ATF22LV10C) can run and 3.3V and are maybe 5V tolerant at 3.3V Vcc???. See datasheets to verify this point...
+  * If you do need level shifting from 5V to 3.3V, the 'LV' parts (ATF16LV8C and the ATF22LV10C) can run at 3.3V and are maybe 5V tolerant at 3.3V Vcc???. See datasheets to verify this point...
 * Prototyping / Iteration (reprogrammable)
 * Learning about logic: Through-hole / soldering-friendly is desired: All 16V8 or 22V10 parts are available in DIP packages; ATF150x parts are available in PLCC packages that can be placed in through-hole PLCC sockets. SMD packages are available for any of the parts.
 * Replacing large quantities of various TTL/CMOS Logic Gates (74-series logic)
@@ -22,8 +22,8 @@ This is a "Choose your own adventure novel". Covered here are many approaches an
 * <a href="#5vcomp-the-cupl-compiler--your-favorite-text-editor-or-ide-16v8-22v10-and-atf150x">Using just the CUPL.EXE compiler from WinCUPL directly with some wrapper scripts here (5vcomp). Works in Windows/Linux. (recommended)</a>
 * <a href="#quartus-free-verilog-vhdl-schematic-capture-indirect-support-for-atf150x-linux-or-windows">Using Quartus (only for the CPLD. Works by first targeting a similar Altera CPLD and then using the POF2JED utility to convert.) Windows/Linux</a>
 * <a href="#absurd-approach-fusemaps-by-hand-16v8--22v10">Making your own fusemap / .JED file with nothing more than a datasheet and text editor. Maybe need some graph paper...</a>
-* Experimental approaches with Yosys (Only for the CPLD parts. EDIF is fed into the [Atmel fitter](atmel-fitters/))
-* Several Approaches to reverse-engineering a .JED file back into logic equations.
+* <a href="#yosys-open-source-with-atmel-fitters-for-atf150x-experimental">Experimental approaches with Yosys (Only for the CPLD parts. EDIF is fed into the [Atmel fitter](atmel-fitters/))</a>
+* <a href="#reversing-a-jed-file-back-into-logic-equations">Several Approaches to reverse-engineering a .JED file back into logic equations.</a>
 
 <details>
 <summary>Scope: Expand here for why similar parts not covered</summary>
