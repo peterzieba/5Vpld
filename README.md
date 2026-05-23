@@ -8,6 +8,7 @@ This repository centers around documenting modern ways of developing logic for a
 
 These parts are still active and highly worth considering wherever:
 * 5V logic is a requirement, avoiding level shifting, low latency (7ns), instant-on & non-volatile, and situations needing Hi-Z / Open-collector states.
+  * If you do need level shifting from 5V to 3.3V, the 'LV' parts (ATF16LV8C and the ATF22LV10C) can run and 3.3V and are maybe 5V tolerant at 3.3V Vcc???. See datasheets to verify this point...
 * Prototyping / Iteration (reprogrammable)
 * Learning about logic: Through-hole / soldering-friendly is desired: All 16V8 or 22V10 parts are available in DIP packages; ATF150x parts are available in PLCC packages that can be placed in through-hole PLCC sockets. SMD packages are available for any of the parts.
 * Replacing large quantities of various TTL/CMOS Logic Gates (74-series logic)
@@ -151,10 +152,10 @@ So, the recommended approach is to start here regardless and use it for document
 
 You can <a href="https://www.microchip.com/en-us/products/fpgas-and-plds/spld-cplds/pld-design-resources">Download WinCUPL from here</a>.
 
-To get it working under Linux with Wine, you'll need winetricks so you can install mfc40 and mfc42. On Ubuntu Linux, this would look something like:
+To get it working under Linux with Wine, you'll need winetricks so you can install mfc40 and mfc42, and some other packages to address things like font issues[^3] On Ubuntu Linux, this would look something like:
 
 <code>dpkg --add-architecture i386
-sudo apt-get install wine wine32:i386 winetricks playonlinux innoextract
+sudo apt-get install wine wine32:i386 winetricks playonlinux innoextract ttf-mscorefonts-installer
 WINEARCH=win32 WINEPREFIX=~/.wine wine wineboot
 winetricks mfc40 mfc42
 wine awincupl.exe
@@ -456,5 +457,5 @@ Apparently, in the [Map of Github](https://github.com/anvaka/map-of-github-data)
 # References
 [^1]: From the Readme.txt of fit5_0.zip (an older version of the Atmel Fitters) found here: http://ebook.pldworld.com/_semiconductors/Atmel/Databook%20CDROM/Atmel/prod147.htm
 [^2]: https://www.eevblog.com/forum/beginners/5v-pal-or-gal-with-cmos-outputs/
-
+[^3]: https://mike42.me/blog/2021-08-a-first-look-at-programmable-logic
 
