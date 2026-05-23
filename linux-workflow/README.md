@@ -22,7 +22,7 @@ To get Wine working on Ubuntu Linux, this could look something like:
 
 ```
 dpkg --add-architecture i386
-sudo apt-get install wine wine32:i386 winetricks playonlinux innoextract
+sudo apt-get install wine wine32:i386 winetricks playonlinux innoextract ttf-mscorefonts-installer
 WINEARCH=win32 WINEPREFIX=~/.wine wine wineboot
 winetricks mfc40 mfc42
 ```
